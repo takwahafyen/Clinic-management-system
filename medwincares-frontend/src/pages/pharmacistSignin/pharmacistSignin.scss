@@ -1,0 +1,41 @@
+.pharmacist-signin {
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(
+        to right,
+        rgba(47, 131, 241, 0.5),
+        rgba(47, 131, 241, 0.5)
+      ),
+      url("https://nationaltoday.com/wp-content/uploads/2020/04/national-nurses-week-640x514.jpg");
+    background-repeat: no-repeat;
+    background-size: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    .pharmacist-signin-wrapper {
+      width: 380px;
+      height: 350px;
+      background-color: #fff;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .pharmacist-signup-image {
+          width: 120px;
+          height: 100px;
+          object-fit: cover;
+          margin-bottom: 0px;
+      }
+      .pharmacist-register-info {
+          color: rgb(88, 87, 87);
+          font-size: 14px;
+          margin: 10px 0;
+           span {
+               color: rgb(28, 95, 182);
+           }
+      }
+    }
+  }
+  

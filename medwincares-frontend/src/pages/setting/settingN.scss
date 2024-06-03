@@ -1,0 +1,41 @@
+.settingN {
+  width: 100vw;
+  height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .settingN-wrapper {
+    width: 500px;
+    height: 280px;
+    border: 2px solid rgb(34, 105, 198);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 4px;
+   
+    .setting-item {
+      display: flex;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top:0.5rem;
+      span {
+        font-size: 15px;
+        width: 150px;
+      }
+      p {
+        font-size: 14.5px;
+        color: rgb(101, 99, 99);
+        margin-left: 0.5rem;
+        width: 300px;
+      }
+      .settingInput {
+        width: 300px;
+      }
+    }
+    button{
+      margin-bottom: 5px;
+    }
+  }
+}

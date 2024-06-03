@@ -1,0 +1,67 @@
+/* styles pour features.scss */
+
+.features {
+    text-align: center;
+    padding: 40px 0;
+    background-image: linear-gradient(to bottom right, #0a0575, #54c1ec);
+    color: #fff;
+  }
+  
+  .features-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .feature-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    width: 250px;
+  }
+  
+  .feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .feature-image {
+    margin-bottom: 20px;
+  }
+  
+  .feature-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: #fff;
+    padding: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .feature-item:hover .feature-image img {
+    transform: rotate(360deg);
+  }
+  
+  .feature-item-heading {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .feature-item-info {
+    font-size: 1rem;
+    color: #eee;
+    line-height: 1.5;
+  }
+  
+  /* Ajout d'animations supplémentaires au survol si besoin */
+  
