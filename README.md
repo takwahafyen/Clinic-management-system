@@ -106,13 +106,30 @@ Each role has its own authentication flow (`/doctor`, `/nurse`, `/pharmacist`) a
 
 ## Tests
 
-The test setup is being introduced incrementally (see [Roadmap](#roadmap)):
-- Backend: `backend/tests/` (unit + integration)
-- Frontend: tests colocated with components (`*.test.jsx`, React Testing Library already included)
+**Backend** (`backend/tests/`) — Jest + Supertest
+
+```bash
+cd backend
+npm test
+```
+
+- `tests/unit/` — pure functions (e.g. error helper), no I/O
+- `tests/integration/` — HTTP-level tests against the Express app (`app.js`) via Supertest. `app.js` exports the Express app with no side effects (no DB connection, no `listen()`), so it can be imported directly in tests; `index.js` remains the actual runtime entry point that connects to MongoDB and starts the server.
+- Routes that hit MongoDB (register/login/...) still need a test database (e.g. `mongodb-memory-server`) before they can be covered — tracked in the roadmap below.
+
+**Frontend** (`frontend/src/`) — React Testing Library (already wired via `setupTests.js`)
+
+```bash
+cd frontend
+npm test
+```
+
+- Tests are colocated with the component they cover (`Component.jsx` + `Component.test.jsx`)
 
 ## Roadmap
 
 - [x] Project README
 - [x] `.env.example` and `.gitignore` (`.env`, `node_modules`, build artifacts excluded from git)
-- [ ] Test folder scaffolding (backend + frontend)
-- [ ] Unit and integration tests
+- [x] Test folder scaffolding (backend + frontend) with one passing example test each
+- [ ] `mongodb-memory-server` (or equivalent) for DB-backed integration tests
+- [ ] Full unit and integration test coverage of controllers/routes
