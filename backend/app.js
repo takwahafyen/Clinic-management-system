@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const doctorAuthRoute = require("./routes/doctorauth");
 const nurseAuthRoute = require("./routes/nurseauth");
 const pharmacistAuthRoute = require("./routes/pharmacistauth");
@@ -12,8 +13,14 @@ const FCRoute = require("./routes/FC");
 const app = express();
 
 // middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 
 // routes
 app.use("/doctor", doctorAuthRoute);

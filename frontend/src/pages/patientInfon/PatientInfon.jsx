@@ -28,9 +28,11 @@ const PatientInfon = () => {
     e.preventDefault();
     setError(false);
     try {
-      await axios.put(`http://localhost:5000/patientauth/update/${path}`, {
-        phoneNo: phone,
-      });
+      await axios.put(
+        `http://localhost:5000/patientauth/update/${path}`,
+        { phoneNo: phone },
+        { withCredentials: true }
+      );
 
       setUpdateMode(false);
     } catch (err) {

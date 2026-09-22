@@ -33,7 +33,8 @@ const CreateVS = () => {
           doctor: doctorRef.current.value,
           Diabetic_status: Diabetic_statusRef.current.value,
           phoneNum: phoneRef.current.value,
-        }
+        },
+        { withCredentials: true }
       );
       console.log(res.data);
       res.data && window.location.replace("/allVS");

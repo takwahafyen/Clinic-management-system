@@ -33,7 +33,8 @@ const CreateFC = () => {
           doctor: doctorRef.current.value,
           medicament: medicamentRef.current.value,
           phoneNum: phoneRef.current.value,
-        }
+        },
+        { withCredentials: true }
       );
       console.log(res.data);
       res.data && window.location.replace("/allFC");

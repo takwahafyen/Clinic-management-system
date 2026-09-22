@@ -23,7 +23,8 @@ const SettingPha = () => {
           email,
           password,
           phone,
-        }
+        },
+        { withCredentials: true }
       );
       setEmail(email);
       setPassword(password);

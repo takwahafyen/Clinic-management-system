@@ -17,10 +17,14 @@ const DoctorSignin = () => {
     setError(false);
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("http://localhost:5000/doctor/login", {
-        email: doctorEmailRef.current.value,
-        password: passwordRef.current.value,
-      });
+      const res = await axios.post(
+        "http://localhost:5000/doctor/login",
+        {
+          email: doctorEmailRef.current.value,
+          password: passwordRef.current.value,
+        },
+        { withCredentials: true }
+      );
       // console.log(res.data);
       console.log(res.data);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });

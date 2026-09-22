@@ -29,9 +29,11 @@ const ClientInfo = () => {
     e.preventDefault();
     setError(false);
     try {
-      await axios.put(`http://localhost:5000/clientauth/update/${path}`, {
-        phoneNo: phone,
-      });
+      await axios.put(
+        `http://localhost:5000/clientauth/update/${path}`,
+        { phoneNo: phone },
+        { withCredentials: true }
+      );
 
       setUpdateMode(false);
     } catch (err) {
