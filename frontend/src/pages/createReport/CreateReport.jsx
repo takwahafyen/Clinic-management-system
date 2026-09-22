@@ -33,7 +33,8 @@ const CreateReport = () => {
           doctor: doctorRef.current.value,
           status: statusRef.current.value,
           phoneNum: phoneRef.current.value,
-        }
+        },
+        { withCredentials: true }
       );
       console.log(res.data);
       res.data && window.location.replace("/allReports");

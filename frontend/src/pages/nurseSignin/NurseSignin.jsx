@@ -16,10 +16,14 @@ const NurseSignin = () => {
     setError(false);
     dispatch({ type: "n_LOGIN_START" }); // Use the common LOGIN_START action type
     try {
-      const res = await axios.post("http://localhost:5000/nurse/login", {
-        email: nurseEmailRef.current.value,
-        password: passwordRef.current.value,
-      });
+      const res = await axios.post(
+        "http://localhost:5000/nurse/login",
+        {
+          email: nurseEmailRef.current.value,
+          password: passwordRef.current.value,
+        },
+        { withCredentials: true }
+      );
       console.log(res.data);
       dispatch({ type: "n_LOGIN_SUCCESS", payload: res.data }); // Use the common LOGIN_SUCCESS action type
     } catch (err) {

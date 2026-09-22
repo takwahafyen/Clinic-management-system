@@ -23,7 +23,8 @@ const SettingN = () => {
           email,
           password,
           phone,
-        }
+        },
+        { withCredentials: true }
       );
       setEmail(email);
       setPassword(password);

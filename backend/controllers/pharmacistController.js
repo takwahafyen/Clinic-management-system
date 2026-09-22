@@ -55,16 +55,29 @@ module.exports.login = async (req, res, next) => {
       return next(createError(400, "Incorrect email or password!"));
     }
 
+    const token = jwt.sign(
+      { id: pharmacist._id, role: "pharmacist" },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
     //We don't want to send password with our react application, so we will use destructuring.
     const { password, passcode, ...otherInfo } = pharmacist._doc; // Remplacement de Nurse par Pharmacist
-    return res.status(200).json(otherInfo);
+    return res
+      .cookie("token", token, {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .status(200)
+      .json(otherInfo);
   } catch (err) {
     next(err);
   }
 };
 
 module.exports.update = async (req, res, next) => {
-  if (req.body.pharmacistId === req.params.id) { // Remplacement de Nurse par Pharmacist
+  if (req.userId === req.params.id) {
     let hash;
     if (req.body.password) {
       const salt = bcrypt.genSaltSync(10);

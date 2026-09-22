@@ -17,10 +17,14 @@ const PharmacistSignin = () => {
     setError(false);
     dispatch({ type: "p_LOGIN_START" });
     try {
-      const res = await axios.post("http://localhost:5000/pharmacist/login", {
-        email: pharmacistEmailRef.current.value,
-        password: passwordRef.current.value,
-      });
+      const res = await axios.post(
+        "http://localhost:5000/pharmacist/login",
+        {
+          email: pharmacistEmailRef.current.value,
+          password: passwordRef.current.value,
+        },
+        { withCredentials: true }
+      );
       console.log(res.data);
       dispatch({ type: "p_LOGIN_SUCCESS", payload: res.data });
 
