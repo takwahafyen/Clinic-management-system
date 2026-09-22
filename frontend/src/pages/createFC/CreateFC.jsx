@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import "./createFC.scss";
 import NavbarPha from "../../components/navbar/NavbarPha";
 import axios from "axios";
+import { API_URL } from "../../config";
 import { useLocation } from "react-router-dom";
 
 const CreateFC = () => {
@@ -22,7 +23,7 @@ const CreateFC = () => {
     console.log("clicked");
     try {
       const res = await axios.post(
-        `http://localhost:5000/client/${path}/create_FC`,
+        `${API_URL}/client/${path}/create_FC`,
         {
           firstName: firstNameRef.current.value,
           lastName: lastNameRef.current.value,

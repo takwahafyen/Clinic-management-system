@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./nurseSignup.scss"; // Remplacement d'inferSignup.scss par nurseSignup.scss
 import axios from "axios";
+import { API_URL } from "../../config";
 import { Link } from "react-router-dom";
 
 const NurseSignup = () => { 
@@ -19,7 +20,7 @@ const NurseSignup = () => {
     setError(false);
     setErrorMsg("");
     try {
-      const res = await axios.post("http://localhost:5000/nurse/register", { // Remplacement d'/infer/register par /nurse/register
+      const res = await axios.post(`${API_URL}/nurse/register`, { // Remplacement d'/infer/register par /nurse/register
         firstName,
         lastName,
         email,

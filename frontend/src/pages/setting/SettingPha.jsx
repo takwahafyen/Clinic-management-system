@@ -3,6 +3,7 @@ import NavbarPha from "../../components/navbar/NavbarPha";
 import { PharmacistContext } from "../../context/PharmacistContext";
 import "./settingPha.scss";
 import axios from "axios";
+import { API_URL } from "../../config";
 
 const SettingPha = () => {
   const { pharmacist } = useContext(PharmacistContext);
@@ -17,7 +18,7 @@ const SettingPha = () => {
     setError(false);
     try {
       const res = await axios.put(
-        `http://localhost:5000/pharmacist/update/${pharmacist._id}`,
+        `${API_URL}/pharmacist/update/${pharmacist._id}`,
         {
           pharmacistId: pharmacist._id,
           email,

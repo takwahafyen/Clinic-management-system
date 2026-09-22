@@ -22,6 +22,11 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// health check (used by deployment platforms to verify the service is up)
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 // routes
 app.use("/doctor", doctorAuthRoute);
 app.use("/nurse", nurseAuthRoute);
@@ -42,7 +47,7 @@ app.use((err, req, res, next) => {
     success: false,
     status: errorStatus,
     message: errorMessage,
-    stack: err.stack,
+    ...(process.env.NODE_ENV !== "production" && { stack: err.stack }),
   });
 });
 

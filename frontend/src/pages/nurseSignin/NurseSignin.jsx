@@ -4,6 +4,7 @@ import "./nurseSignin.scss";
 import { useRef } from "react";
 import { NurseContext } from "../../context/NurseContext"; // Use the common context
 import axios from "axios";
+import { API_URL } from "../../config";
 
 const NurseSignin = () => {
   const nurseEmailRef = useRef();
@@ -17,7 +18,7 @@ const NurseSignin = () => {
     dispatch({ type: "n_LOGIN_START" }); // Use the common LOGIN_START action type
     try {
       const res = await axios.post(
-        "http://localhost:5000/nurse/login",
+        `${API_URL}/nurse/login`,
         {
           email: nurseEmailRef.current.value,
           password: passwordRef.current.value,

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import "./createReport.scss";
 import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
+import { API_URL } from "../../config";
 import { useLocation } from "react-router-dom";
 
 const CreateReport = () => {
@@ -22,7 +23,7 @@ const CreateReport = () => {
     console.log("clicked");
     try {
       const res = await axios.post(
-        `http://localhost:5000/patients/${path}/create_report`,
+        `${API_URL}/patients/${path}/create_report`,
         {
           firstName: firstNameRef.current.value,
           lastName: lastNameRef.current.value,

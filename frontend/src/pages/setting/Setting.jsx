@@ -3,6 +3,7 @@ import Navbar from "../../components/navbar/Navbar";
 import { Context } from "../../context/Context";
 import "./setting.scss";
 import axios from "axios";
+import { API_URL } from "../../config";
 
 const Setting = () => {
   const { doctor } = useContext(Context);
@@ -17,7 +18,7 @@ const Setting = () => {
     setError(false);
     try {
       const res = await axios.put(
-        `http://localhost:5000/doctor/update/${doctor._id}`,
+        `${API_URL}/doctor/update/${doctor._id}`,
         {
           doctorId: doctor._id,
           email,

@@ -3,6 +3,7 @@ import NavbarNurse from "../../components/navbar/NavbarNurse";
 import { NurseContext } from "../../context/NurseContext";
 import "./settingN.scss";
 import axios from "axios";
+import { API_URL } from "../../config";
 
 const SettingN = () => {
   const { nurse } = useContext(NurseContext);
@@ -17,7 +18,7 @@ const SettingN = () => {
     setError(false);
     try {
       const res = await axios.put(
-        `http://localhost:5000/nurse/update/${nurse._id}`,
+        `${API_URL}/nurse/update/${nurse._id}`,
         {
           nurseId: nurse._id,
           email,

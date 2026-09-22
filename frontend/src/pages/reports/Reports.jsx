@@ -4,6 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import SingleReport from "../../components/singleReport/SingleReport";
 import axios from "axios";
+import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Reports = () => {
@@ -22,7 +23,7 @@ const Reports = () => {
   // Fetch all reports
   useEffect(() => {
     const fetchReports = async () => {
-      const res = await axios.get("http://localhost:5000/patients/allReports");
+      const res = await axios.get(`${API_URL}/patients/allReports`);
 
       setReports(res.data);
     };
@@ -32,7 +33,7 @@ const Reports = () => {
   // Fetch patients
   useEffect(() => {
     const fetchPatients = async () => {
-      const res = await axios.get("http://localhost:5000/patientauth");
+      const res = await axios.get(`${API_URL}/patientauth`);
       setPatients(res.data);
     };
     fetchPatients();
@@ -76,11 +77,11 @@ const Reports = () => {
 
         if (arr.includes(path)) {
           res = await axios.get(
-            `http://localhost:5000/patients/reports/${path}`
+            `${API_URL}/patients/reports/${path}`
           );
         } else {
           res = await axios.get(
-            `http://localhost:5000/patients/${path}/all_reports`
+            `${API_URL}/patients/${path}/all_reports`
           );
         }
         setReports(res.data);
@@ -91,7 +92,7 @@ const Reports = () => {
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();
-    const res = await axios.get("http://localhost:5000/patients/allReports");
+    const res = await axios.get(`${API_URL}/patients/allReports`);
     setReports(res.data);
     history("/allReports");
   };

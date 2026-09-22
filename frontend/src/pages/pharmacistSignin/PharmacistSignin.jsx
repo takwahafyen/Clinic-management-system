@@ -5,6 +5,7 @@ import "./pharmacistSignin.scss";
 import { useRef } from "react";
 import { PharmacistContext } from "../../context/PharmacistContext";
 import axios from "axios";
+import { API_URL } from "../../config";
 
 const PharmacistSignin = () => {
   const pharmacistEmailRef = useRef();
@@ -18,7 +19,7 @@ const PharmacistSignin = () => {
     dispatch({ type: "p_LOGIN_START" });
     try {
       const res = await axios.post(
-        "http://localhost:5000/pharmacist/login",
+        `${API_URL}/pharmacist/login`,
         {
           email: pharmacistEmailRef.current.value,
           password: passwordRef.current.value,

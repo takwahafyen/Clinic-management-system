@@ -4,6 +4,7 @@ import "./doctorSignin.scss";
 import { useRef } from "react";
 import { Context } from "../../context/Context";
 import axios from "axios";
+import { API_URL } from "../../config";
 
 const DoctorSignin = () => {
   // no need to use onChange
@@ -18,7 +19,7 @@ const DoctorSignin = () => {
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post(
-        "http://localhost:5000/doctor/login",
+        `${API_URL}/doctor/login`,
         {
           email: doctorEmailRef.current.value,
           password: passwordRef.current.value,

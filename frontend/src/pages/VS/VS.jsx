@@ -4,6 +4,7 @@ import NavbarNurse from "../../components/navbar/NavbarNurse";
 import Footer from "../../components/footer/Footer";
 import SingleVS from "../../components/singleVS/SingleVS";
 import axios from "axios";
+import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const VS = () => {
@@ -24,7 +25,7 @@ const VS = () => {
   useEffect(() => {
     const fetchVS = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/patients/allVS");
+        const res = await axios.get(`${API_URL}/patients/allVS`);
         setVS(res.data);
       } catch (err) {
         console.error("Error fetching VS:", err);
@@ -37,7 +38,7 @@ const VS = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/patientauth");
+        const res = await axios.get(`${API_URL}/patientauth`);
         setPatients(res.data);
       } catch (err) {
         console.error("Error fetching patients:", err);
@@ -67,7 +68,7 @@ const VS = () => {
   // Ajoutez une nouvelle fonction pour la recherche par nom
   const searchByName = async (name) => {
     try {
-      const res = await axios.get(`http://localhost:5000/patients/VS/${encodeURIComponent(name)}`);
+      const res = await axios.get(`${API_URL}/patients/VS/${encodeURIComponent(name)}`);
       setVS(res.data);
     } catch (err) {
       console.error("Error fetching VS by name:", err);
@@ -81,9 +82,9 @@ const VS = () => {
         let res;
 
         if (arr.includes(path)) {
-          res = await axios.get(`http://localhost:5000/patients/VS/${path}`);
+          res = await axios.get(`${API_URL}/patients/VS/${path}`);
         } else {
-          res = await axios.get(`http://localhost:5000/patients/${path}/all_VS`);
+          res = await axios.get(`${API_URL}/patients/${path}/all_VS`);
         }
 
         setVS(res.data);
@@ -97,7 +98,7 @@ const VS = () => {
   const handleRefreshClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.get("http://localhost:5000/patients/allVS");
+      const res = await axios.get(`${API_URL}/patients/allVS`);
       setVS(res.data);
       history("/allVS");
     } catch (err) {

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_URL } from "../../config";
 import React, { useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import "./patientRegister.scss";
@@ -14,7 +15,7 @@ const PatientRegister = () => {
     setError(false);
     try {
       const res = await axios.post(
-        "http://localhost:5000/patientauth/register",
+        `${API_URL}/patientauth/register`,
         {
           firstName,
           lastName,

@@ -8,6 +8,10 @@ describe("app", () => {
     expect(res.status).toBe(404);
   });
 
-  // Routes that hit MongoDB (register/login/...) need a test database
-  // (e.g. mongodb-memory-server) before they can be exercised here.
+  it("responds 200 on /health", async () => {
+    const res = await request(app).get("/health");
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ status: "ok" });
+  });
 });
