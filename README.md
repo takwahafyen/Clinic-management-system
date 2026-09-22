@@ -136,6 +136,10 @@ npm test
 - [x] JWT authentication with route-level role protection
 - [x] CI (GitHub Actions) running lint + tests on every push/PR
 - [x] `mongodb-memory-server` for DB-backed integration tests (doctor flow)
+- [x] LICENSE
 - [ ] Extend DB-backed integration tests to nurse/pharmacist flows
-- [ ] LICENSE
 - [ ] Live deployment (backend + frontend)
+
+## License
+
+[MIT](LICENSE)
