@@ -84,8 +84,8 @@ module.exports.update = async (req, res, next) => {
 // GET ALL Client
 module.exports.getClient = async (req, res, next) => {
   try {
-    const Client = await Client.find();
-    return res.status(200).json(client);
+    const clients = await Client.find();
+    return res.status(200).json(clients);
   } catch (err) {
     return next(err);
   }
