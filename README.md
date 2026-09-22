@@ -1,5 +1,7 @@
 # Clinic Management System
 
+[![CI](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/ci.yml/badge.svg)](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/ci.yml)
+
 A web application for managing a clinic's patients, clients, doctors, nurses and pharmacists — covering registration, consultation reports, vital signs tracking and medication records. Built as a MERN stack app with role-based authentication.
 
 ## Table of contents
@@ -113,9 +115,9 @@ cd backend
 npm test
 ```
 
-- `tests/unit/` — pure functions (e.g. error helper), no I/O
+- `tests/unit/` — pure functions and middleware (error helper, JWT verification), no I/O
 - `tests/integration/` — HTTP-level tests against the Express app (`app.js`) via Supertest. `app.js` exports the Express app with no side effects (no DB connection, no `listen()`), so it can be imported directly in tests; `index.js` remains the actual runtime entry point that connects to MongoDB and starts the server.
-- Routes that hit MongoDB (register/login/...) still need a test database (e.g. `mongodb-memory-server`) before they can be covered — tracked in the roadmap below.
+- DB-backed routes (register/login/protected updates) are covered against a real, disposable in-memory MongoDB via [`mongodb-memory-server`](https://github.com/typegoose/mongodb-memory-server) — no dependency on the real Atlas cluster. Currently covers the doctor auth flow end-to-end; nurse/pharmacist follow the same pattern (tracked in the roadmap below).
 
 **Frontend** (`frontend/src/`) — React Testing Library (already wired via `setupTests.js`)
 
@@ -131,5 +133,9 @@ npm test
 - [x] Project README
 - [x] `.env.example` and `.gitignore` (`.env`, `node_modules`, build artifacts excluded from git)
 - [x] Test folder scaffolding (backend + frontend) with one passing example test each
-- [ ] `mongodb-memory-server` (or equivalent) for DB-backed integration tests
-- [ ] Full unit and integration test coverage of controllers/routes
+- [x] JWT authentication with route-level role protection
+- [x] CI (GitHub Actions) running lint + tests on every push/PR
+- [x] `mongodb-memory-server` for DB-backed integration tests (doctor flow)
+- [ ] Extend DB-backed integration tests to nurse/pharmacist flows
+- [ ] LICENSE
+- [ ] Live deployment (backend + frontend)
