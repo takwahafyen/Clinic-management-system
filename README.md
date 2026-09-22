@@ -67,7 +67,7 @@ frontend/
 ## Getting started
 
 ### Prerequisites
-- Node.js ≥ 16
+- Node.js ≥ 20
 - A MongoDB instance (Atlas or local)
 
 ### Backend
