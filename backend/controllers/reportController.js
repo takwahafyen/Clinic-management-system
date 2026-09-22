@@ -43,14 +43,6 @@ module.exports.reports = async (req, res, next) => {
 
 // GET ALL REPORTS OF A PATIENT
 module.exports.allReports = async (req, res, next) => {
-   try {
-     const patient = await Patient.findById(req.params.id);
-     const reports = patient.reports;
-     return res.status(200).json(reports);
-   } catch (err) {
-     return next(err);
-   }
-
   try {
     const patient = await Patient.findOne({ phoneNo: req.params.phone });
     const reports = await Report.find({ phoneNum: patient.phoneNo }).sort(
@@ -64,12 +56,6 @@ module.exports.allReports = async (req, res, next) => {
 
 // GET ALL REPORTS OF ALL PATIENTS FILTERED BY A SPECIFIC STATUS
 module.exports.statusReports = async (req, res, next) => {
-  // CUSTOMISED ERRORS
-  const failed = true;
-   //if(failed) {
-    //return next(errorPage.createError(401,"Not authenticated"));
-  // }
-
   try {
     const reports = await Report.find({ status: req.params.status }).sort(
       "-createdAt"
