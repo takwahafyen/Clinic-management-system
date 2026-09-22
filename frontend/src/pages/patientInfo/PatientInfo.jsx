@@ -3,6 +3,7 @@ import "./patientInfo.scss";
 import Navbar from "../../components/navbar/Navbar";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../../config";
 
 const PatientInfo = () => {
   const [patient, setPatient] = useState({});
@@ -16,7 +17,7 @@ const PatientInfo = () => {
     const fetchPatient = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/patientauth/patientInfo/${path}`
+          `${API_URL}/patientauth/patientInfo/${path}`
         );
         setPatient(res.data);
         setPhone(res.data.phoneNo);
@@ -30,7 +31,7 @@ const PatientInfo = () => {
     setError(false);
     try {
       await axios.put(
-        `http://localhost:5000/patientauth/update/${path}`,
+        `${API_URL}/patientauth/update/${path}`,
         { phoneNo: phone },
         { withCredentials: true }
       );

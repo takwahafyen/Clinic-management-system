@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./doctorSignup.scss";
 import axios from "axios";
+import { API_URL } from "../../config";
 import { Link } from "react-router-dom";
 
 const DoctorSignup = () => {
@@ -20,7 +21,7 @@ const DoctorSignup = () => {
     setError(false);
     setErrorMsg("");
     try {
-      const res = await axios.post("http://localhost:5000/doctor/register", {
+      const res = await axios.post(`${API_URL}/doctor/register`, {
         firstName,
         lastName,
         email,

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_URL } from "../../config";
 import React, { useState } from "react";
 import NavbarPha from "../../components/navbar/NavbarPha";
 import "./clientRegister.scss";
@@ -14,7 +15,7 @@ const ClientRegister = () => {
     setError(false);
     try {
       const res = await axios.post(
-        "http://localhost:5000/clientauth/register",
+        `${API_URL}/clientauth/register`,
         {
           firstName,
           lastName,

@@ -3,6 +3,7 @@ import "./clientInfo.scss";
 import NavbarPha from "../../components/navbar/NavbarPha";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../../config";
 
 const ClientInfo = () => {
   const [client, setClient] = useState({});
@@ -16,7 +17,7 @@ const ClientInfo = () => {
     const fetchClient = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/clientauth/clientInfo/${path}`
+          `${API_URL}/clientauth/clientInfo/${path}`
         );
         setClient(res.data);
         setPhone(res.data.phoneNo);
@@ -30,7 +31,7 @@ const ClientInfo = () => {
     setError(false);
     try {
       await axios.put(
-        `http://localhost:5000/clientauth/update/${path}`,
+        `${API_URL}/clientauth/update/${path}`,
         { phoneNo: phone },
         { withCredentials: true }
       );

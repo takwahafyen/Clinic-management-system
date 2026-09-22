@@ -4,6 +4,7 @@ import NavbarPha from "../../components/navbar/NavbarPha";
 import Footer from "../../components/footer/Footer";
 import SingleFC from "../../components/singleFC/SingleFC";
 import axios from "axios";
+import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const FC = () => {
@@ -23,7 +24,7 @@ const FC = () => {
   // Fetch all FC
   useEffect(() => {
     const fetchFC = async () => {
-      const res = await axios.get("http://localhost:5000/client/allFC");
+      const res = await axios.get(`${API_URL}/client/allFC`);
 
       setFC(res.data);
     };
@@ -33,7 +34,7 @@ const FC = () => {
   // Fetch client
   useEffect(() => {
     const fetchClient = async () => {
-      const res = await axios.get("http://localhost:5000/clientauth");
+      const res = await axios.get(`${API_URL}/clientauth`);
       setClient(res.data);
     };
     fetchClient();
@@ -77,11 +78,11 @@ const FC = () => {
 
         if (arr.includes(path)) {
           res = await axios.get(
-            `http://localhost:5000/client/FC/${path}`
+            `${API_URL}/client/FC/${path}`
           );
         } else {
           res = await axios.get(
-            `http://localhost:5000/client/${path}/all_FC`
+            `${API_URL}/client/${path}/all_FC`
           );
         }
         setFC(res.data);
@@ -92,7 +93,7 @@ const FC = () => {
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();
-    const res = await axios.get("http://localhost:5000/client/allFC");
+    const res = await axios.get(`${API_URL}/client/allFC`);
     setFC(res.data);
     history("/allFC");
   };

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import "./createVS.scss";
 import NavbarNurse from "../../components/navbar/NavbarNurse";
 import axios from "axios";
+import { API_URL } from "../../config";
 import { useLocation } from "react-router-dom";
 
 const CreateVS = () => {
@@ -22,7 +23,7 @@ const CreateVS = () => {
     console.log("clicked");
     try {
       const res = await axios.post(
-        `http://localhost:5000/patients/${path}/create_VS`,
+        `${API_URL}/patients/${path}/create_VS`,
         {
           firstName: firstNameRef.current.value,
           lastName: lastNameRef.current.value,
