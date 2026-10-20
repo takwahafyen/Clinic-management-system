@@ -3,13 +3,7 @@ const FCController = require("../controllers/FCController");
 const { verifyToken, verifyRole } = require("../middlewares/verifyToken");
 const router = express.Router();
 
-router.get(
-  "/allFC",
-  verifyToken,
-  verifyRole("pharmacist"),
-  FCController.allFC
-);
-
+router.get("/allFC", verifyToken, verifyRole("pharmacist"), FCController.allFC);
 router.get(
   "/FC/:medicament",
   verifyToken,
@@ -23,12 +17,11 @@ router.post(
   verifyRole("pharmacist"),
   FCController.createFC
 );
-
 router.get(
   "/:phone/all_FC",
   verifyToken,
   verifyRole("pharmacist"),
-  FCController.allFC
+  FCController.clientFC
 );
 
 module.exports = router;
