@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./nurseSignup.scss"; // Remplacement d'inferSignup.scss par nurseSignup.scss
+import "./nurseSignup.scss";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const NurseSignup = () => { 
+const NurseSignup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -14,13 +14,14 @@ const NurseSignup = () => {
   const [passcode, setPasscode] = useState("");
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false);
     setErrorMsg("");
     try {
-      const res = await axios.post(`${API_URL}/nurse/register`, { // Remplacement d'/infer/register par /nurse/register
+      const res = await axios.post(`${API_URL}/nurse/register`, {
         firstName,
         lastName,
         email,
@@ -29,16 +30,17 @@ const NurseSignup = () => {
         phone,
         passcode,
       });
-      res.data && window.location.replace("/nurse/login"); // Remplacement de /infer/login par /nurse/login
+      if (res.data) {
+        navigate("/nurse/login");
+      }
     } catch (err) {
-      setErrorMsg(err.msg);
+      setErrorMsg(err.response?.data?.message || "Registration failed");
       setError(true);
     }
   };
-  console.log(errorMsg);
 
   return (
-    <div className="nurse-signup"> 
+    <div className="nurse-signup">
       <Link to="/" className="link">
         <img
           src="https://cdn-icons-png.flaticon.com/512/7618/7618370.png"
@@ -46,11 +48,11 @@ const NurseSignup = () => {
           className="back-btn"
         />
       </Link>
-      <div className="nurse-signup-wrapper"> {/* Remplacement d'infer-signup-wrapper par nurse-signup-wrapper */}
+      <div className="nurse-signup-wrapper">
         <img
-          src="http://localhost:3000/assets/images/medwin-cares.png"
+          src="/assets/images/medwin-cares.png"
           alt="hospital-logo"
-          className="nurse-signup-image" 
+          className="nurse-signup-image"
         />
         <form onSubmit={handleSubmit}>
           <input
@@ -98,17 +100,17 @@ const NurseSignup = () => {
           <button type="submit">REGISTER</button>
           <p className="login-info">
             Already registered?{" "}
-            <Link to="/nurse/login"> 
+            <Link to="/nurse/login">
               <span>Login</span>
             </Link>
           </p>
         </form>
         {error && (
-          <p className="errorMsg">The email or phone is already registered!</p>
+          <p className="errorMsg">{errorMsg || "The email or phone is already registered!"}</p>
         )}
       </div>
     </div>
   );
 };
 
-export default NurseSignup; 
+export default NurseSignup;

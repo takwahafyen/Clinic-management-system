@@ -1,13 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./doctorSignin.scss";
-import { useRef } from "react";
 import { Context } from "../../context/Context";
 import axios from "axios";
 import { API_URL } from "../../config";
 
 const DoctorSignin = () => {
-  // no need to use onChange
   const doctorEmailRef = useRef();
   const passwordRef = useRef();
   const { dispatch, isFetching } = useContext(Context);
@@ -18,16 +16,10 @@ const DoctorSignin = () => {
     setError(false);
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post(
-        `${API_URL}/doctor/login`,
-        {
-          email: doctorEmailRef.current.value,
-          password: passwordRef.current.value,
-        },
-        { withCredentials: true }
-      );
-      // console.log(res.data);
-      console.log(res.data);
+      const res = await axios.post(`${API_URL}/doctor/login`, {
+        email: doctorEmailRef.current.value,
+        password: passwordRef.current.value,
+      });
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
     } catch (err) {
       setError(true);
@@ -46,7 +38,7 @@ const DoctorSignin = () => {
       </Link>
       <div className="doctor-signin-wrapper">
         <img
-          src="http://localhost:3000/assets/images/medwin-cares.png"
+          src="/assets/images/medwin-cares.png"
           alt="hospital-logo"
           className="doctor-signup-image"
         />

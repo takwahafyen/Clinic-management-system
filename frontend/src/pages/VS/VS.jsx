@@ -8,10 +8,9 @@ import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const VS = () => {
-  const [VS, setVS] = useState([]);
-  const [patients, setPatients] = useState([]);
+  const [VSList, setVSList] = useState([]);
   const [currP, setCurrP] = useState("ALL");
-  let history = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const arr = [
@@ -21,12 +20,12 @@ const VS = () => {
     "Diabete_Type3",
   ];
 
-  // Fetch all VS
+  // Fetch all VS on initial load
   useEffect(() => {
     const fetchVS = async () => {
       try {
         const res = await axios.get(`${API_URL}/patients/allVS`);
-        setVS(res.data);
+        setVSList(res.data);
       } catch (err) {
         console.error("Error fetching VS:", err);
       }
@@ -34,60 +33,46 @@ const VS = () => {
     fetchVS();
   }, []);
 
-  // Fetch patients
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/patientauth`);
-        setPatients(res.data);
-      } catch (err) {
-        console.error("Error fetching patients:", err);
-      }
-    };
-    fetchPatients();
-  }, []);
-
   const handleFilters = (e) => {
     const value = e.target.value;
-
-    if (!value) {
-      return;
-    }
+    if (!value) return;
 
     if (e.target.name === "Diabetic_status") {
-      history(`/VS/${value}`);
+      navigate(`/VS/${value}`);
     } else if (e.target.name === "patient") {
       const [nameOfPatient] = value.split(",").map((item) => item.trim());
       setCurrP(nameOfPatient);
-      history(`/VS/${nameOfPatient}`);
+      navigate(`/VS/${nameOfPatient}`);
     } else if (e.target.name === "searchByName") {
       searchByName(value);
     }
   };
 
-  // Ajoutez une nouvelle fonction pour la recherche par nom
   const searchByName = async (name) => {
     try {
-      const res = await axios.get(`${API_URL}/patients/VS/${encodeURIComponent(name)}`);
-      setVS(res.data);
+      const res = await axios.get(
+        `${API_URL}/patients/VS/${encodeURIComponent(name)}`
+      );
+      setVSList(res.data);
     } catch (err) {
       console.error("Error fetching VS by name:", err);
     }
   };
 
+  // Fetch filtered VS only when route parameter exists
   useEffect(() => {
     const fetchFilteredVS = async () => {
-      try {
-        const path = location.pathname.split("/")[2];
-        let res;
+      const path = location.pathname.split("/")[2];
+      if (!path) return;
 
+      try {
+        let res;
         if (arr.includes(path)) {
           res = await axios.get(`${API_URL}/patients/VS/${path}`);
         } else {
           res = await axios.get(`${API_URL}/patients/${path}/all_VS`);
         }
-
-        setVS(res.data);
+        setVSList(res.data);
       } catch (err) {
         console.error("Error fetching filtered VS:", err);
       }
@@ -99,8 +84,8 @@ const VS = () => {
     e.preventDefault();
     try {
       const res = await axios.get(`${API_URL}/patients/allVS`);
-      setVS(res.data);
-      history("/allVS");
+      setVSList(res.data);
+      navigate("/allVS");
     } catch (err) {
       console.error("Error refreshing VS:", err);
     }
@@ -123,7 +108,11 @@ const VS = () => {
           <div className="VS-top">
             <div className="VS-top-left">
               <label>Patient's diabetic status: </label>
-              <select name="Diabetic_status" onChange={handleFilters} defaultValue="default">
+              <select
+                name="Diabetic_status"
+                onChange={handleFilters}
+                defaultValue="default"
+              >
                 <option value="default" disabled>
                   Diabetic_Status
                 </option>
@@ -133,13 +122,14 @@ const VS = () => {
                 <option value="Diabete_Type3">Diabete_Type 3</option>
               </select>
             </div>
-            
           </div>
           <div className="VS-bottom">
-            {VS.map((singleVS) => (
+            {VSList.map((singleVS) => (
               <SingleVS key={singleVS._id} VS={singleVS} />
             ))}
-            <p className="no-results">{VS.length === 0 && "No results found"}</p>
+            <p className="no-results">
+              {VSList.length === 0 && "No results found"}
+            </p>
           </div>
         </div>
       </div>

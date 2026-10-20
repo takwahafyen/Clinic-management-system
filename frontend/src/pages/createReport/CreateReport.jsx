@@ -3,7 +3,7 @@ import "./createReport.scss";
 import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CreateReport = () => {
   const firstNameRef = useRef();
@@ -16,11 +16,11 @@ const CreateReport = () => {
   const statusRef = useRef();
   const phoneRef = useRef();
   const location = useLocation();
+  const navigate = useNavigate();
   const path = location.pathname.split("/")[2];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("clicked");
     try {
       const res = await axios.post(
         `${API_URL}/patients/${path}/create_report`,
@@ -34,13 +34,13 @@ const CreateReport = () => {
           doctor: doctorRef.current.value,
           status: statusRef.current.value,
           phoneNum: phoneRef.current.value,
-        },
-        { withCredentials: true }
+        }
       );
-      console.log(res.data);
-      res.data && window.location.replace("/allReports");
+      if (res.data) {
+        navigate("/allReports");
+      }
     } catch (err) {
-      console.log(err);
+      console.error("Create report failed:", err);
     }
   };
 
@@ -70,13 +70,12 @@ const CreateReport = () => {
               ref={ageRef}
             />
             <input type="date" placeholder="Enter DOB" ref={dobRef} />
-            <select ref={genderRef}>
-              <option disabled selected>
+            <select ref={genderRef} defaultValue="Gender">
+              <option disabled value="Gender">
                 Gender
               </option>
-              <option>Male</option>
-              <option>Female</option>
-            
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
             </select>
             <input
               type="text"
@@ -90,13 +89,12 @@ const CreateReport = () => {
               required
               ref={doctorRef}
             />
-            <select ref={statusRef}>
-              <option disabled selected>
+            <select ref={statusRef} defaultValue="Status">
+              <option disabled value="Status">
                 Status
               </option>
-              <option>Urgent</option>
-              <option>Stable</option>
-
+              <option value="Urgent">Urgent</option>
+              <option value="Stable">Stable</option>
             </select>
             <input
               type="text"

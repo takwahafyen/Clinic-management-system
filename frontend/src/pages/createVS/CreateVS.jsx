@@ -3,7 +3,7 @@ import "./createVS.scss";
 import NavbarNurse from "../../components/navbar/NavbarNurse";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CreateVS = () => {
   const firstNameRef = useRef();
@@ -16,11 +16,11 @@ const CreateVS = () => {
   const Diabetic_statusRef = useRef();
   const phoneRef = useRef();
   const location = useLocation();
+  const navigate = useNavigate();
   const path = location.pathname.split("/")[2];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("clicked");
     try {
       const res = await axios.post(
         `${API_URL}/patients/${path}/create_VS`,
@@ -34,13 +34,13 @@ const CreateVS = () => {
           doctor: doctorRef.current.value,
           Diabetic_status: Diabetic_statusRef.current.value,
           phoneNum: phoneRef.current.value,
-        },
-        { withCredentials: true }
+        }
       );
-      console.log(res.data);
-      res.data && window.location.replace("/allVS");
+      if (res.data) {
+        navigate("/allVS");
+      }
     } catch (err) {
-      console.log(err);
+      console.error("Create VS failed:", err);
     }
   };
 
@@ -76,7 +76,6 @@ const CreateVS = () => {
               </option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
-            
             </select>
             <input
               type="text"

@@ -32,8 +32,6 @@ import { NurseContext } from "./context/NurseContext";
 import { Context } from "./context/Context";
 import { PharmacistContext } from "./context/PharmacistContext";
 
-//import { NurseContext } from "./context/NurseContext";
-
 import Setting from "./pages/setting/Setting";
 import SettingN from "./pages/setting/SettingN";
 import SettingPha from "./pages/setting/SettingPha";
@@ -46,165 +44,134 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/HomeNurse" element={<HomeNurse />} />
-        <Route exact path="/HomePha" element={<HomePha />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/HomeNurse" element={<HomeNurse />} />
+        <Route path="/HomePha" element={<HomePha />} />
 
-        <Route exact path="/about" element={<About />} />
-        <Route exact path="/guidelines" element={<Guidelines />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/guidelines" element={<Guidelines />} />
+
         {/* Patient Routes */}
-
         <Route
-          exact
           path="/patient/register"
-          element={doctor ? <PatientRegister /> : <DoctorSignup />}
+          element={doctor ? <PatientRegister /> : <Navigate to="/doctor/login" />}
         />
         <Route
-          exact
           path="/patient/registerN"
-          element={nurse ? <PatientRegisterN /> : <NurseSignup />}
+          element={nurse ? <PatientRegisterN /> : <Navigate to="/nurse/login" />}
         />
-
         <Route
-          exact
           path="/client/register"
-          element={pharmacist ? <ClientRegister /> : <PharmacistSignup />}
+          element={pharmacist ? <ClientRegister /> : <Navigate to="/pharmacist/login" />}
         />
 
         <Route
-          exact
           path="/patients/patientInfo/:id"
-          element={doctor ? <PatientInfo /> : <DoctorSignin />}
+          element={doctor ? <PatientInfo /> : <Navigate to="/doctor/login" />}
         />
         <Route
-          exact
           path="/client/clientInfo/:id"
-          element={pharmacist ? <ClientInfo /> : <PharmacistSignin />}
+          element={pharmacist ? <ClientInfo /> : <Navigate to="/pharmacist/login" />}
         />
         <Route
-          exact
           path="/patients/patientInfon/:id"
-          element={nurse ? <PatientInfon /> : <NurseSignin />}
+          element={nurse ? <PatientInfon /> : <Navigate to="/nurse/login" />}
         />
 
         {/* Doctor Routes */}
         <Route
-          exact
           path="/doctor/register"
-          element={doctor ? <Home /> : <DoctorSignup />}
+          element={doctor ? <Navigate to="/" /> : <DoctorSignup />}
         />
         <Route
-          exact
           path="/doctor/login"
-          element={doctor ? <Home /> : <DoctorSignin />}
+          element={doctor ? <Navigate to="/" /> : <DoctorSignin />}
         />
+
         {/* Nurse Routes */}
         <Route
-          exact
           path="/nurse/register"
-          element={nurse ? <HomeNurse /> : <NurseSignup />}
+          element={nurse ? <Navigate to="/HomeNurse" /> : <NurseSignup />}
         />
         <Route
-          exact
           path="/nurse/login"
-          element={nurse ? <HomeNurse /> : <NurseSignin />}
+          element={nurse ? <Navigate to="/HomeNurse" /> : <NurseSignin />}
         />
+
         {/* Pharmacist Routes */}
         <Route
-          exact
           path="/pharmacist/register"
-          element={pharmacist ? <HomePha /> : <PharmacistSignup />}
+          element={pharmacist ? <Navigate to="/HomePha" /> : <PharmacistSignup />}
         />
         <Route
-          exact
           path="/pharmacist/login"
-          element={pharmacist ? <HomePha /> : <PharmacistSignin />}
+          element={pharmacist ? <Navigate to="/HomePha" /> : <PharmacistSignin />}
         />
 
         {/* Report Routes */}
         <Route
-          exact
           path="/patient/:id/create_report"
-          element={doctor ? <CreateReport /> : <DoctorSignin />}
+          element={doctor ? <CreateReport /> : <Navigate to="/doctor/login" />}
         />
         <Route
-          exact
           path="/allReports"
-          element={doctor ? <Reports /> : <DoctorSignin />}
+          element={doctor ? <Reports /> : <Navigate to="/doctor/login" />}
         />
         <Route
-          exact
           path="/reports/:status"
-          element={doctor ? <Reports /> : <DoctorSignin />}
+          element={doctor ? <Reports /> : <Navigate to="/doctor/login" />}
         />
         <Route
-          exact
           path="/reports/:phone/:nameOfPatient"
-          element={doctor ? <Reports /> : <DoctorSignin />}
+          element={doctor ? <Reports /> : <Navigate to="/doctor/login" />}
         />
+
         {/* VS Routes */}
         <Route
-          exact
           path="/patient/:id/create_VS"
-          element={nurse ? <CreateVS /> : <nurseSignin />}
+          element={nurse ? <CreateVS /> : <NurseSignin />}
         />
-
-        <Route exact path="/allVS" element={nurse ? <VS /> : <NurseSignin />} />
         <Route
-          exact
-          path="/allFC"
-          element={pharmacist ? <FC /> : <PharmacistSignin />}
+          path="/allVS"
+          element={nurse ? <VS /> : <Navigate to="/nurse/login" />}
         />
-
         <Route
-          exact
           path="/VS/:Diabetic_status"
-          element={nurse ? <VS /> : <NurseSignin />}
+          element={nurse ? <VS /> : <Navigate to="/nurse/login" />}
         />
         <Route
-          exact
           path="/VS/:phone/:nameOfPatient"
-          element={nurse ? <VS /> : <NurseSignin />}
+          element={nurse ? <VS /> : <Navigate to="/nurse/login" />}
         />
+
         {/* FC Routes */}
-
         <Route
-          exact
           path="/client/:id/create_FC"
-          element={pharmacist ? <CreateFC /> : <PharmacistSignin />}
+          element={pharmacist ? <CreateFC /> : <Navigate to="/pharmacist/login" />}
         />
-
         <Route
-          exact
+          path="/allFC"
+          element={pharmacist ? <FC /> : <Navigate to="/pharmacist/login" />}
+        />
+        <Route
           path="/FC/:status"
-          element={pharmacist ? <FC /> : <PharmacistSignin />}
+          element={pharmacist ? <FC /> : <Navigate to="/pharmacist/login" />}
         />
-
         <Route
-          exact
           path="/FC/:phone/:nameOfClient"
-          element={pharmacist ? <FC /> : <PharmacistSignin />}
+          element={pharmacist ? <FC /> : <Navigate to="/pharmacist/login" />}
         />
-        <Route exact 
-        path="/allFC" 
-        element={pharmacist ? <FC /> : <PharmacistSignin />} />
 
+        {/* Settings Routes */}
         <Route
-          exact
           path="/settings/:id"
           element={doctor ? <Setting /> : <Navigate to="/doctor/login" />}
         />
-
         <Route
-          exact
           path="/settingsPha/:id"
-          element={
-            pharmacist ? <SettingPha /> : <Navigate to="/pharmacist/login" />
-          }
+          element={pharmacist ? <SettingPha /> : <Navigate to="/pharmacist/login" />}
         />
-
         <Route
-          exact
           path="/settingsN/:id"
           element={nurse ? <SettingN /> : <Navigate to="/nurse/login" />}
         />

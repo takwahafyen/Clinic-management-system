@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_URL } from "../../config";
 import React, { useState } from "react";
 import NavbarNurse from "../../components/navbar/NavbarNurse";
+import { useNavigate } from "react-router-dom";
 import "./patientRegisterN.scss";
 
 const PatientRegisterN = () => {
@@ -9,6 +10,7 @@ const PatientRegisterN = () => {
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,8 +24,9 @@ const PatientRegisterN = () => {
           phoneNo: phone,
         }
       );
-      res.data &&
-        window.location.replace(`/patients/patientInfon/${res.data._id}`);
+      if (res.data) {
+        navigate(`/patients/patientInfon/${res.data._id}`);
+      }
     } catch (err) {
       setError(true);
     }
@@ -35,7 +38,7 @@ const PatientRegisterN = () => {
       <div className="patient-registerN">
         <div className="patient-registerN-wrapper">
           <img
-            src="http://localhost:3000/assets/images/medwin-cares.png"
+            src="/assets/images/medwin-cares.png"
             alt="website logo"
           />
           <form className="patient-registerN-form" onSubmit={handleSubmit}>
@@ -59,7 +62,7 @@ const PatientRegisterN = () => {
             />
             <button type="submit">REGISTER</button>
             {error && (
-              <p className="errorMsg">Somthing went wrong! Please try again.</p>
+              <p className="errorMsg">Something went wrong! Please try again.</p>
             )}
           </form>
         </div>

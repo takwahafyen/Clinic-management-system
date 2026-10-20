@@ -3,7 +3,7 @@ import "./createFC.scss";
 import NavbarPha from "../../components/navbar/NavbarPha";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CreateFC = () => {
   const firstNameRef = useRef();
@@ -16,11 +16,11 @@ const CreateFC = () => {
   const medicamentRef = useRef();
   const phoneRef = useRef();
   const location = useLocation();
+  const navigate = useNavigate();
   const path = location.pathname.split("/")[2];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("clicked");
     try {
       const res = await axios.post(
         `${API_URL}/client/${path}/create_FC`,
@@ -34,13 +34,13 @@ const CreateFC = () => {
           doctor: doctorRef.current.value,
           medicament: medicamentRef.current.value,
           phoneNum: phoneRef.current.value,
-        },
-        { withCredentials: true }
+        }
       );
-      console.log(res.data);
-      res.data && window.location.replace("/allFC");
+      if (res.data) {
+        navigate("/allFC");
+      }
     } catch (err) {
-      console.log(err);
+      console.error("Create FC failed:", err);
     }
   };
 
@@ -70,12 +70,12 @@ const CreateFC = () => {
               ref={ageRef}
             />
             <input type="date" placeholder="Enter DOB" ref={dobRef} />
-            <select ref={genderRef}>
-              <option disabled selected>
+            <select ref={genderRef} defaultValue="Gender">
+              <option disabled value="Gender">
                 Gender
               </option>
-              <option>Male</option>
-              <option>Female</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
             </select>
             <input
               type="text"
@@ -89,8 +89,8 @@ const CreateFC = () => {
               required
               ref={doctorRef}
             />
-            <select ref={medicamentRef} >
-              <option disabled selected>
+            <select ref={medicamentRef} defaultValue="Medicament">
+              <option disabled value="Medicament">
                 Medicament
               </option>
               <option value="doliprane">doliprane</option>
