@@ -1,23 +1,4 @@
-const mongoose = require("mongoose");
+// Unified Model: Client is an alias of Patient to maintain a single source of truth
+const Patient = require("./Patient");
 
-const ClientSchema = new mongoose.Schema(
-  {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-    },
-    phoneNo: {
-      type: String,
-      required: true,
-      unique: true
-    }
-  },
-  {
-    timestamps: true,
-  }
-);
-
-module.exports = mongoose.model("Client", ClientSchema);
+module.exports = Patient;

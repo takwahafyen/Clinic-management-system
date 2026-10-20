@@ -22,16 +22,19 @@ module.exports.createVS = async (req, res, next) => {
     }
 
     const newVS = new VS({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      age: req.body.age,
-      dob: req.body.dob,
-      sex: req.body.sex,
+      patient: patient._id,
+      nurseId: req.userId,
+      firstName: req.body.firstName || patient.firstName,
+      lastName: req.body.lastName || patient.lastName,
+      age: req.body.age !== undefined ? req.body.age : patient.age,
+      dob: req.body.dob || patient.dob,
+      sex: req.body.sex || patient.sex,
       blood_pressure: req.body.blood_pressure,
       doctor: req.body.doctor,
       Diabetic_status: req.body.Diabetic_status,
       phoneNum: req.body.phoneNum,
     });
+
     const savedVS = await newVS.save();
     return res.status(201).json(savedVS);
   } catch (err) {
@@ -42,7 +45,10 @@ module.exports.createVS = async (req, res, next) => {
 // GET ALL VS
 module.exports.allVS = async (req, res, next) => {
   try {
-    const VSList = await VS.find().sort("-createdAt");
+    const VSList = await VS.find()
+      .populate("patient", "firstName lastName phoneNo dob sex age")
+      .populate("nurseId", "firstName lastName email specialization")
+      .sort("-createdAt");
     return res.status(200).json(VSList);
   } catch (err) {
     return next(err);
@@ -58,9 +64,14 @@ module.exports.patientVS = async (req, res, next) => {
         createError(404, "Patient doesn't exist with this phone number!")
       );
     }
-    const VSList = await VS.find({ phoneNum: patient.phoneNo }).sort(
-      "-createdAt"
-    );
+
+    const VSList = await VS.find({
+      $or: [{ patient: patient._id }, { phoneNum: patient.phoneNo }],
+    })
+      .populate("patient", "firstName lastName phoneNo dob sex age")
+      .populate("nurseId", "firstName lastName email specialization")
+      .sort("-createdAt");
+
     return res.status(200).json(VSList);
   } catch (err) {
     return next(err);
@@ -72,7 +83,11 @@ module.exports.statusVS = async (req, res, next) => {
   try {
     const VSList = await VS.find({
       Diabetic_status: req.params.Diabetic_status,
-    }).sort("-createdAt");
+    })
+      .populate("patient", "firstName lastName phoneNo dob sex age")
+      .populate("nurseId", "firstName lastName email specialization")
+      .sort("-createdAt");
+
     return res.status(200).json(VSList);
   } catch (err) {
     return next(err);

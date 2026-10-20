@@ -2,24 +2,36 @@ const mongoose = require("mongoose");
 
 const VSSchema = new mongoose.Schema(
   {
+    patient: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Patient",
+      required: false,
+    },
+    nurseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+    },
     firstName: {
       type: String,
       required: true,
+      trim: true,
     },
     lastName: {
       type: String,
+      trim: true,
     },
     age: {
       type: Number,
-      required: true,
+      required: false,
     },
     dob: {
       type: Date,
-      required: true,
+      required: false,
     },
     sex: {
       type: String,
-      required: true,
+      required: false,
     },
     blood_pressure: {
       type: String,
@@ -36,6 +48,7 @@ const VSSchema = new mongoose.Schema(
     phoneNum: {
       type: String,
       required: true,
+      trim: true,
     },
   },
   {
@@ -43,4 +56,4 @@ const VSSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("VS", VSSchema);
+module.exports = mongoose.models.VS || mongoose.model("VS", VSSchema);
