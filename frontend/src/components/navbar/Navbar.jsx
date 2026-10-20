@@ -2,12 +2,18 @@ import React, { useContext } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
+import axios from "axios";
+import { API_URL } from "../../config";
 
 const Navbar = () => {
   const { doctor, dispatch } = useContext(Context);
 
-  const handleLogout = () => {
-    console.log("clicked");
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${API_URL}/doctor/logout`);
+    } catch (err) {
+      console.error("Doctor logout failed:", err);
+    }
     dispatch({ type: "LOGOUT" });
   };
 
@@ -52,7 +58,7 @@ const Navbar = () => {
               }}
             />
             <div className="down-arrow-items" id="down">
-              <Link to={"/settings/"+doctor?._id} className="link">
+              <Link to={"/settings/" + doctor?._id} className="link">
                 <span>Settings</span>
               </Link>
             </div>

@@ -27,12 +27,12 @@ const DoctorSchema = new mongoose.Schema(
     phone: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
-    passcode:{
+    passcode: {
       type: String,
-      required: true
-    }
+      required: false,
+    },
   },
   { timestamps: true }
 );

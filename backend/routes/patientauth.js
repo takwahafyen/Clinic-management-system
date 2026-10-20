@@ -3,9 +3,26 @@ const patientsController = require("../controllers/patientsController");
 const { verifyToken, verifyRole } = require("../middlewares/verifyToken");
 const router = express.Router();
 
-router.get("/", patientsController.getPatients);
-router.post("/register", patientsController.register);
-router.post("/registerN", patientsController.registerN);
+router.get(
+  "/",
+  verifyToken,
+  verifyRole("doctor", "nurse"),
+  patientsController.getPatients
+);
+
+router.post(
+  "/register",
+  verifyToken,
+  verifyRole("doctor", "nurse"),
+  patientsController.register
+);
+
+router.post(
+  "/registerN",
+  verifyToken,
+  verifyRole("nurse"),
+  patientsController.registerN
+);
 
 router.put(
   "/update/:id",
@@ -13,8 +30,19 @@ router.put(
   verifyRole("doctor", "nurse"),
   patientsController.update
 );
-router.get("/patientInfo/:id",patientsController.getPatientInfo)
-router.get("/patientInfon/:id",patientsController.getPatientInfon)
 
+router.get(
+  "/patientInfo/:id",
+  verifyToken,
+  verifyRole("doctor", "nurse"),
+  patientsController.getPatientInfo
+);
+
+router.get(
+  "/patientInfon/:id",
+  verifyToken,
+  verifyRole("nurse"),
+  patientsController.getPatientInfon
+);
 
 module.exports = router;

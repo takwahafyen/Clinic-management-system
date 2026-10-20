@@ -1,28 +1,24 @@
 import React, { useContext } from "react";
 import "./navbarNurse.scss";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NurseContext } from "../../context/NurseContext";
+import axios from "axios";
+import { API_URL } from "../../config";
 
-//const NavbarNurse = () => {
-  //const { nurse, dispatch } = useContext(NurseContext);
+const NavbarNurse = () => {
+  const { nurse, dispatch } = useContext(NurseContext);
+  const navigate = useNavigate();
 
- // const handleLogout = () => {
-    //console.log("clicked", nurse);
-    //dispatch({ type: "LOGOUT" });
- // };
-  const NavbarNurse = () => {
-    const { nurse, dispatch } = useContext(NurseContext);
-    const navigate = useNavigate(); // Initialize useNavigate
-  
-   
-      
-    const handleLogout = () => {
-      console.log("clicked", nurse);
-      dispatch({ type: "LOGOUT" });
-      
-      // Redirect to the desired route after logging out
-      navigate("/"); // Change "/" to the desired route
-    };
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${API_URL}/nurse/logout`);
+    } catch (err) {
+      console.error("Nurse logout failed:", err);
+    }
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+  };
+
   return (
     <div className="navbarNurse">
       <div className="navbarNurse-wrapper">
@@ -46,11 +42,10 @@ import { NurseContext } from "../../context/NurseContext";
           <Link to="/patient/registerN" className="link">
             <span className="middle-item">Register a patient</span>
           </Link>
-          
-            <Link to="/allVS" className="link">
-              <span className="middle-item">View all vital signs</span>
-            </Link>
-        
+
+          <Link to="/allVS" className="link">
+            <span className="middle-item">View all vital signs</span>
+          </Link>
 
           <div className="middle-item" id="down-middle-item">
             <img
@@ -64,7 +59,7 @@ import { NurseContext } from "../../context/NurseContext";
               }}
             />
             <div className="down-arrow-items" id="down">
-              <Link to={"/settingsN/"+nurse?._id} className="link">
+              <Link to={"/settingsN/" + nurse?._id} className="link">
                 <span>Settings</span>
               </Link>
             </div>

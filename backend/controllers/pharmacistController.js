@@ -1,42 +1,40 @@
-const Pharmacist = require("../models/Pharmacist"); // Remplacement de Nurse par Pharmacist
+const Pharmacist = require("../models/Pharmacist");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { createError } = require("../utils/error");
 
-// REGISTER Pharmacist
+// REGISTER PHARMACIST
 module.exports.register = async (req, res, next) => {
   if (req.body.passcode === process.env.PASSCODE) {
     try {
-      // Generating hashed password
-      const salt = bcrypt.genSaltSync(10);
-      const hash = bcrypt.hashSync(req.body.password, salt);
-      const newPharmacist = new Pharmacist({ // Remplacement de Nurse par Pharmacist
+      const hash = await bcrypt.hash(req.body.password, 10);
+      const newPharmacist = new Pharmacist({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: hash,
         specialization: req.body.specialization,
         phone: req.body.phone,
-        passcode: req.body.passcode,
       });
 
-      const savedPharmacist = await newPharmacist.save(); // Remplacement de Nurse par Pharmacist
-      return res.status(201).json(savedPharmacist); // Remplacement de Nurse par Pharmacist
+      const savedPharmacist = await newPharmacist.save();
+      const { password, passcode, ...safePharmacist } = savedPharmacist._doc;
+      return res.status(201).json(safePharmacist);
     } catch (err) {
       return next(err);
     }
   } else {
     return next(
-      createError(401, "You are not authorized to register as Pharmacist!") // Remplacement de Nurse par Pharmacist
+      createError(401, "You are not authorized to register as Pharmacist!")
     );
   }
 };
 
-// Pharmacist LOGIN
+// PHARMACIST LOGIN
 module.exports.login = async (req, res, next) => {
   try {
-    const pharmacist = await Pharmacist.findOne({ email: req.body.email }); // Remplacement de Nurse par Pharmacist
-    if (!pharmacist) { // Remplacement de Nurse par Pharmacist
+    const pharmacist = await Pharmacist.findOne({ email: req.body.email });
+    if (!pharmacist) {
       return next(
         createError(
           404,
@@ -45,10 +43,9 @@ module.exports.login = async (req, res, next) => {
       );
     }
 
-    //For comparing objects, used bcrypt compare method
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
-      pharmacist.password // Remplacement de Nurse par Pharmacist
+      pharmacist.password
     );
 
     if (!isPasswordCorrect) {
@@ -61,12 +58,12 @@ module.exports.login = async (req, res, next) => {
       { expiresIn: "7d" }
     );
 
-    //We don't want to send password with our react application, so we will use destructuring.
-    const { password, passcode, ...otherInfo } = pharmacist._doc; // Remplacement de Nurse par Pharmacist
+    const { password, passcode, ...otherInfo } = pharmacist._doc;
     return res
       .cookie("token", token, {
         httpOnly: true,
         sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .status(200)
@@ -76,35 +73,46 @@ module.exports.login = async (req, res, next) => {
   }
 };
 
+// PHARMACIST UPDATE
 module.exports.update = async (req, res, next) => {
   if (req.userId === req.params.id) {
-    let hash;
-    if (req.body.password) {
-      const salt = bcrypt.genSaltSync(10);
-      hash = bcrypt.hashSync(req.body.password, salt);
-    }
-    const pharmacistExists = await Pharmacist.findOne({ phone: req.body.phone }); // Remplacement de Nurse par Pharmacist
-
-    if (pharmacistExists && pharmacistExists.id !== req.params.id) { // Remplacement de Nurse par Pharmacist
-      return next(createError(400, "This phone number already exists!"));
-    }
     try {
+      const updateData = {};
+      if (req.body.email) updateData.email = req.body.email;
+      if (req.body.phone) {
+        const pharmacistExists = await Pharmacist.findOne({ phone: req.body.phone });
+        if (pharmacistExists && pharmacistExists._id.toString() !== req.params.id) {
+          return next(createError(400, "This phone number already exists!"));
+        }
+        updateData.phone = req.body.phone;
+      }
+      if (req.body.password) {
+        updateData.password = await bcrypt.hash(req.body.password, 10);
+      }
+
       const updatedPharmacist = await Pharmacist.findByIdAndUpdate(
         req.params.id,
-        {
-          $set: {
-            email: req.body.email,
-            password: hash,
-            phone: req.body.phone,
-          },
-        },
+        { $set: updateData },
         { new: true }
-      );
-      return res.status(200).json(updatedPharmacist); // Remplacement de Nurse par Pharmacist
+      ).select("-password -passcode");
+
+      return res.status(200).json(updatedPharmacist);
     } catch (err) {
       return next(err);
     }
   } else {
-    return next(createError(401, "You can update only your account!"));
+    return next(createError(403, "You can update only your account!"));
   }
+};
+
+// PHARMACIST LOGOUT
+module.exports.logout = (req, res) => {
+  res
+    .clearCookie("token", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    })
+    .status(200)
+    .json({ success: true, message: "Logged out successfully!" });
 };

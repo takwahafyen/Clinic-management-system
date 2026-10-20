@@ -27,14 +27,14 @@ const PharmacistSchema = new mongoose.Schema(
     phone: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
-    passcode:{
+    passcode: {
       type: String,
-      required: true
-    }
+      required: false,
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Pharmacist", PharmacistSchema); 
+module.exports = mongoose.model("Pharmacist", PharmacistSchema);

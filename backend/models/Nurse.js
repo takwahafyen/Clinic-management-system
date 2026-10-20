@@ -27,14 +27,14 @@ const NurseSchema = new mongoose.Schema(
     phone: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
-    passcode:{
+    passcode: {
       type: String,
-      required: true
-    }
+      required: false,
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Nurse", NurseSchema); // Remplacement d'Infer par Nurse
+module.exports = mongoose.model("Nurse", NurseSchema);

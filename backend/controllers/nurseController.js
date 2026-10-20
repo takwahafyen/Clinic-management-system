@@ -1,42 +1,40 @@
-const Nurse = require("../models/Nurse"); // Remplacement d'Infer par Nurse
+const Nurse = require("../models/Nurse");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { createError } = require("../utils/error");
 
-// REGISTER Nurse
+// REGISTER NURSE
 module.exports.register = async (req, res, next) => {
   if (req.body.passcode === process.env.PASSCODE) {
     try {
-      // Generating hashed password
-      const salt = bcrypt.genSaltSync(10);
-      const hash = bcrypt.hashSync(req.body.password, salt);
-      const newNurse = new Nurse({ // Remplacement d'Infer par Nurse
+      const hash = await bcrypt.hash(req.body.password, 10);
+      const newNurse = new Nurse({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: hash,
         specialization: req.body.specialization,
         phone: req.body.phone,
-        passcode: req.body.passcode,
       });
 
-      const savedNurse = await newNurse.save(); // Remplacement d'Infer par Nurse
-      return res.status(201).json(savedNurse); // Remplacement d'Infer par Nurse
+      const savedNurse = await newNurse.save();
+      const { password, passcode, ...safeNurse } = savedNurse._doc;
+      return res.status(201).json(safeNurse);
     } catch (err) {
       return next(err);
     }
   } else {
     return next(
-      createError(401, "You are not authorized to register as Nurse!") // Remplacement d'Infer par Nurse
+      createError(401, "You are not authorized to register as Nurse!")
     );
   }
 };
 
-// Nurse LOGIN
+// NURSE LOGIN
 module.exports.login = async (req, res, next) => {
   try {
-    const nurse = await Nurse.findOne({ email: req.body.email }); // Remplacement d'Infer par Nurse
-    if (!nurse) { // Remplacement d'Infer par Nurse
+    const nurse = await Nurse.findOne({ email: req.body.email });
+    if (!nurse) {
       return next(
         createError(
           404,
@@ -45,10 +43,9 @@ module.exports.login = async (req, res, next) => {
       );
     }
 
-    //For comparing objects, used bcrypt compare method
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
-      nurse.password // Remplacement d'Infer par Nurse
+      nurse.password
     );
 
     if (!isPasswordCorrect) {
@@ -61,12 +58,12 @@ module.exports.login = async (req, res, next) => {
       { expiresIn: "7d" }
     );
 
-    //We don't want to send password with our react application, so we will use destructuring.
-    const { password, passcode, ...otherInfo } = nurse._doc; // Remplacement d'Infer par Nurse
+    const { password, passcode, ...otherInfo } = nurse._doc;
     return res
       .cookie("token", token, {
         httpOnly: true,
         sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .status(200)
@@ -76,35 +73,46 @@ module.exports.login = async (req, res, next) => {
   }
 };
 
+// NURSE UPDATE
 module.exports.update = async (req, res, next) => {
   if (req.userId === req.params.id) {
-    let hash;
-    if (req.body.password) {
-      const salt = bcrypt.genSaltSync(10);
-      hash = bcrypt.hashSync(req.body.password, salt);
-    }
-    const nurseExists = await Nurse.findOne({ phone: req.body.phone }); // Remplacement d'Infer par Nurse
-
-    if (nurseExists && nurseExists.id !== req.params.id) { // Remplacement d'Infer par Nurse
-      return next(createError(400, "This phone number already exists!"));
-    }
     try {
+      const updateData = {};
+      if (req.body.email) updateData.email = req.body.email;
+      if (req.body.phone) {
+        const nurseExists = await Nurse.findOne({ phone: req.body.phone });
+        if (nurseExists && nurseExists._id.toString() !== req.params.id) {
+          return next(createError(400, "This phone number already exists!"));
+        }
+        updateData.phone = req.body.phone;
+      }
+      if (req.body.password) {
+        updateData.password = await bcrypt.hash(req.body.password, 10);
+      }
+
       const updatedNurse = await Nurse.findByIdAndUpdate(
         req.params.id,
-        {
-          $set: {
-            email: req.body.email,
-            password: hash,
-            phone: req.body.phone,
-          },
-        },
+        { $set: updateData },
         { new: true }
-      );
-      return res.status(200).json(updatedNurse); // Remplacement d'Infer par Nurse
+      ).select("-password -passcode");
+
+      return res.status(200).json(updatedNurse);
     } catch (err) {
       return next(err);
     }
   } else {
-    return next(createError(401, "You can update only your account!"));
+    return next(createError(403, "You can update only your account!"));
   }
+};
+
+// NURSE LOGOUT
+module.exports.logout = (req, res) => {
+  res
+    .clearCookie("token", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    })
+    .status(200)
+    .json({ success: true, message: "Logged out successfully!" });
 };

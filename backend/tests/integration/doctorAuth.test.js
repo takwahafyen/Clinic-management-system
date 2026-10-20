@@ -29,12 +29,13 @@ const doctorPayload = {
 };
 
 describe("POST /doctor/register", () => {
-  it("registers a doctor with the correct passcode", async () => {
+  it("registers a doctor with the correct passcode without exposing password or passcode", async () => {
     const res = await request(app).post("/doctor/register").send(doctorPayload);
 
     expect(res.status).toBe(201);
     expect(res.body.email).toBe(doctorPayload.email);
-    expect(res.body.password).not.toBe(doctorPayload.password); // hashed
+    expect(res.body.password).toBeUndefined();
+    expect(res.body.passcode).toBeUndefined();
   });
 
   it("rejects registration with an incorrect passcode", async () => {
@@ -59,6 +60,7 @@ describe("POST /doctor/login", () => {
 
     expect(res.status).toBe(200);
     expect(res.body.password).toBeUndefined();
+    expect(res.body.passcode).toBeUndefined();
     expect(res.headers["set-cookie"][0]).toMatch(/^token=/);
   });
 
@@ -78,6 +80,16 @@ describe("POST /doctor/login", () => {
     });
 
     expect(res.status).toBe(404);
+  });
+});
+
+describe("POST /doctor/logout", () => {
+  it("clears the auth cookie on logout", async () => {
+    const res = await request(app).post("/doctor/logout");
+
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.headers["set-cookie"][0]).toMatch(/^token=;/);
   });
 });
 
@@ -102,7 +114,7 @@ describe("PUT /doctor/update/:id", () => {
     expect(res.status).toBe(401);
   });
 
-  it("allows a doctor to update their own account", async () => {
+  it("allows a doctor to update their own account without leaking password", async () => {
     const { cookie, doctorId } = await login();
 
     const res = await request(app)
@@ -112,5 +124,24 @@ describe("PUT /doctor/update/:id", () => {
 
     expect(res.status).toBe(200);
     expect(res.body.phone).toBe("0611111111");
+    expect(res.body.password).toBeUndefined();
+  });
+
+  it("rejects updating a different doctor's account (IDOR)", async () => {
+    const { cookie: doctorACookie } = await login();
+
+    const doctorBRes = await request(app).post("/doctor/register").send({
+      ...doctorPayload,
+      email: "grace@example.com",
+      phone: "0622222222",
+    });
+    const doctorBId = doctorBRes.body._id;
+
+    const res = await request(app)
+      .put(`/doctor/update/${doctorBId}`)
+      .set("Cookie", doctorACookie) // doctor A's token, targeting doctor B's id
+      .send({ phone: "0699999999" });
+
+    expect(res.status).toBe(403);
   });
 });
