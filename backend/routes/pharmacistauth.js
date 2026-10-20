@@ -4,8 +4,9 @@ const { verifyToken, verifyRole } = require("../middlewares/verifyToken");
 const router = express.Router();
 
 router.post("/register", pharmacistController.register);
-
 router.post("/login", pharmacistController.login);
+router.post("/logout", pharmacistController.logout);
+
 router.put(
   "/update/:id",
   verifyToken,

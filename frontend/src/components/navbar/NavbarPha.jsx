@@ -1,19 +1,23 @@
 import React, { useContext } from "react";
 import "./navbarPha.scss";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PharmacistContext } from "../../context/PharmacistContext";
-
+import axios from "axios";
+import { API_URL } from "../../config";
 
 const NavbarPha = () => {
   const { pharmacist, dispatch } = useContext(PharmacistContext);
-const navigate =useNavigate();
-  const handleLogout = () => {
-    console.log("clicked",pharmacist);
-    dispatch({ type: "LOGOUT" });
-  
-navigate("/");
-};
+  const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${API_URL}/pharmacist/logout`);
+    } catch (err) {
+      console.error("Pharmacist logout failed:", err);
+    }
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+  };
 
   return (
     <div className="navbarPha">
@@ -55,14 +59,14 @@ navigate("/");
               }}
             />
             <div className="down-arrow-items" id="down">
-              <Link to={"/settingsPha/"+pharmacist?._id} className="link">
+              <Link to={"/settingsPha/" + pharmacist?._id} className="link">
                 <span>Settings</span>
               </Link>
             </div>
           </div>
         </div>
         <div className="right">
-          {pharmacist? (
+          {pharmacist ? (
             <button onClick={handleLogout} className="nav-btn">
               Log out
             </button>
