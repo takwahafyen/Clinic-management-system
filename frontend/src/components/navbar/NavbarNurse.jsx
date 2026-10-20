@@ -24,7 +24,7 @@ const NavbarNurse = () => {
       <div className="navbarNurse-wrapper">
         <div className="left">
           <img
-            src="http://localhost:3000/assets/images/logo-1.jpg"
+            src="/assets/images/logo-1.jpg"
             alt="hospital-logo"
             className="hospital-logo"
           />

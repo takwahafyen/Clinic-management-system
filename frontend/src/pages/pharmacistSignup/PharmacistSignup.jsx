@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./pharmacistSignup.scss";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PharmacistSignup = () => {
   const [firstName, setFirstName] = useState("");
@@ -14,7 +14,7 @@ const PharmacistSignup = () => {
   const [passcode, setPasscode] = useState("");
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,13 +30,14 @@ const PharmacistSignup = () => {
         phone,
         passcode,
       });
-      res.data && window.location.replace("/pharmacist/login");
+      if (res.data) {
+        navigate("/pharmacist/login");
+      }
     } catch (err) {
-      setErrorMsg(err.msg);
+      setErrorMsg(err.response?.data?.message || "Registration failed");
       setError(true);
     }
   };
-  console.log(errorMsg);
 
   return (
     <div className="pharmacist-signup">
@@ -49,7 +50,7 @@ const PharmacistSignup = () => {
       </Link>
       <div className="pharmacist-signup-wrapper">
         <img
-          src="http://localhost:3000/assets/images/medwin-cares.png"
+          src="/assets/images/medwin-cares.png"
           alt="hospital-logo"
           className="pharmacist-signup-image"
         />
@@ -105,7 +106,7 @@ const PharmacistSignup = () => {
           </p>
         </form>
         {error && (
-          <p className="errorMsg">The email or phone is already registered!</p>
+          <p className="errorMsg">{errorMsg || "The email or phone is already registered!"}</p>
         )}
       </div>
     </div>

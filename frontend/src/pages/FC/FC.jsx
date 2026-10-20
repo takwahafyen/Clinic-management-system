@@ -8,94 +8,68 @@ import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const FC = () => {
-  const [FC, setFC] = useState([]);
-  const [client, setClient] = useState([]);
+  const [FCList, setFCList] = useState([]);
   const [currC, setCurrC] = useState("ALL");
-  let history = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
-  const arr = [
-    "doliprane",
-    "clamoxil",
-    "maxilase",
-    "gripex",
-  ];
 
+  const arr = ["doliprane", "clamoxil", "maxilase", "gripex"];
 
-  // Fetch all FC
+  // Fetch all FC on initial load
   useEffect(() => {
     const fetchFC = async () => {
-      const res = await axios.get(`${API_URL}/client/allFC`);
-
-      setFC(res.data);
+      try {
+        const res = await axios.get(`${API_URL}/client/allFC`);
+        setFCList(res.data);
+      } catch (err) {
+        console.error("Error fetching FC:", err);
+      }
     };
     fetchFC();
   }, []);
 
-  // Fetch client
-  useEffect(() => {
-    const fetchClient = async () => {
-      const res = await axios.get(`${API_URL}/clientauth`);
-      setClient(res.data);
-    };
-    fetchClient();
-  }, []);
-
-  // const handleFilters = (e) => {
-  //   let value;
-
-  //   if (e.target.name === "status") {
-  //     value = e.target.value;
-  //   } else if (e.target.name === "client") {
-  //     value = e.target.value.split(",")[1].trim();
-  //   }
-  //   setFilters({
-  //     [e.target.name]: value,
-  //   });
-  // };
-
   const handleFilters = (e) => {
-    let value;
-    let nameOfClient;
     if (e.target.name === "medicament") {
-      value = e.target.value;
-      history(`/FC/${value}`);
+      const value = e.target.value;
+      navigate(`/FC/${value}`);
     } else if (e.target.name === "client") {
-      nameOfClient = e.target.value.split(",")[0].trim();
-      value = e.target.value.split(",")[1].trim();
+      const nameOfClient = e.target.value.split(",")[0].trim();
+      const value = e.target.value.split(",")[1].trim();
       setCurrC(nameOfClient);
-
-      history(`/FC/${value}/${nameOfClient}`);
+      navigate(`/FC/${value}/${nameOfClient}`);
     }
   };
-  console.log(currC);
 
+  // Fetch filtered FC only when route filter param is provided
   useEffect(() => {
     const fetchFilteredFC = async () => {
+      const path = location.pathname.split("/")[2];
+      if (!path) return;
+
       try {
         let res;
-
-        const path = location.pathname.split("/")[2];
-
         if (arr.includes(path)) {
-          res = await axios.get(
-            `${API_URL}/client/FC/${path}`
-          );
+          res = await axios.get(`${API_URL}/client/FC/${path}`);
         } else {
-          res = await axios.get(
-            `${API_URL}/client/${path}/all_FC`
-          );
+          res = await axios.get(`${API_URL}/client/${path}/all_FC`);
         }
-        setFC(res.data);
-      } catch (err) {}
+        setFCList(res.data);
+      } catch (err) {
+        console.error("Error fetching filtered FC:", err);
+      }
     };
     fetchFilteredFC();
   }, [location.pathname]);
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();
-    const res = await axios.get(`${API_URL}/client/allFC`);
-    setFC(res.data);
-    history("/allFC");
+    try {
+      const res = await axios.get(`${API_URL}/client/allFC`);
+      setFCList(res.data);
+      navigate("/allFC");
+    } catch (err) {
+      console.error("Error refreshing FC:", err);
+    }
   };
 
   return (
@@ -114,28 +88,29 @@ const FC = () => {
           </div>
           <div className="FC-top">
             <div className="FC-top-left">
-            <label>Client's medicament: </label>
-              <select name="medicament" onChange={handleFilters} defaultValue="default">
-              <option value="default" disabled>
+              <label>Client's medicament: </label>
+              <select
+                name="medicament"
+                onChange={handleFilters}
+                defaultValue="default"
+              >
+                <option value="default" disabled>
                   medicament
-                  </option>
-              <option value="doliprane">doliprane</option>
-              <option value="clamoxil">clamoxil</option>
-              <option value="maxilase">maxilase</option>
-              <option value="gripex">gripex</option>
+                </option>
+                <option value="doliprane">doliprane</option>
+                <option value="clamoxil">clamoxil</option>
+                <option value="maxilase">maxilase</option>
+                <option value="gripex">gripex</option>
               </select>
-             
-             
-                
-              
             </div>
-            
           </div>
           <div className="FC-bottom">
-            {FC.map((FC) => (
-              <SingleFC key={FC._id} FC={FC} />
+            {FCList.map((item) => (
+              <SingleFC key={item._id} FC={item} />
             ))}
-            <p className="no-results">{FC.length===0 && "No results found"}</p>
+            <p className="no-results">
+              {FCList.length === 0 && "No results found"}
+            </p>
           </div>
         </div>
       </div>

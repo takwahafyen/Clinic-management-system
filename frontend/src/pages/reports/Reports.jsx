@@ -9,92 +9,67 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Reports = () => {
   const [reports, setReports] = useState([]);
-  const [patients, setPatients] = useState([]);
   const [currP, setCurrP] = useState("ALL");
-  let history = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
-  const arr = [
-    "Urgent",
-    "Stable",
-   
-  ];
+  const arr = ["Urgent", "Stable"];
 
-  // Fetch all reports
+  // Fetch all reports on initial load
   useEffect(() => {
     const fetchReports = async () => {
-      const res = await axios.get(`${API_URL}/patients/allReports`);
-
-      setReports(res.data);
+      try {
+        const res = await axios.get(`${API_URL}/patients/allReports`);
+        setReports(res.data);
+      } catch (err) {
+        console.error("Error fetching reports:", err);
+      }
     };
     fetchReports();
   }, []);
 
-  // Fetch patients
-  useEffect(() => {
-    const fetchPatients = async () => {
-      const res = await axios.get(`${API_URL}/patientauth`);
-      setPatients(res.data);
-    };
-    fetchPatients();
-  }, []);
-
-  // const handleFilters = (e) => {
-  //   let value;
-
-  //   if (e.target.name === "status") {
-  //     value = e.target.value;
-  //   } else if (e.target.name === "patient") {
-  //     value = e.target.value.split(",")[1].trim();
-  //   }
-  //   setFilters({
-  //     [e.target.name]: value,
-  //   });
-  // };
-
   const handleFilters = (e) => {
-    let value;
-    let nameOfPatient;
     if (e.target.name === "status") {
-      value = e.target.value;
-      history(`/reports/${value}`);
+      const value = e.target.value;
+      navigate(`/reports/${value}`);
     } else if (e.target.name === "patient") {
-      nameOfPatient = e.target.value.split(",")[0].trim();
-      value = e.target.value.split(",")[1].trim();
+      const nameOfPatient = e.target.value.split(",")[0].trim();
+      const value = e.target.value.split(",")[1].trim();
       setCurrP(nameOfPatient);
-
-      history(`/reports/${value}/${nameOfPatient}`);
+      navigate(`/reports/${value}/${nameOfPatient}`);
     }
   };
-  console.log(currP);
 
+  // Fetch filtered reports only when a route filter param is provided
   useEffect(() => {
     const fetchFilteredReports = async () => {
+      const path = location.pathname.split("/")[2];
+      if (!path) return;
+
       try {
         let res;
-
-        const path = location.pathname.split("/")[2];
-
         if (arr.includes(path)) {
-          res = await axios.get(
-            `${API_URL}/patients/reports/${path}`
-          );
+          res = await axios.get(`${API_URL}/patients/reports/${path}`);
         } else {
-          res = await axios.get(
-            `${API_URL}/patients/${path}/all_reports`
-          );
+          res = await axios.get(`${API_URL}/patients/${path}/all_reports`);
         }
         setReports(res.data);
-      } catch (err) {}
+      } catch (err) {
+        console.error("Error fetching filtered reports:", err);
+      }
     };
     fetchFilteredReports();
   }, [location.pathname]);
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();
-    const res = await axios.get(`${API_URL}/patients/allReports`);
-    setReports(res.data);
-    history("/allReports");
+    try {
+      const res = await axios.get(`${API_URL}/patients/allReports`);
+      setReports(res.data);
+      navigate("/allReports");
+    } catch (err) {
+      console.error("Error refreshing reports:", err);
+    }
   };
 
   return (
@@ -116,19 +91,20 @@ const Reports = () => {
               <label>Patient's status: </label>
               <select name="status" onChange={handleFilters} defaultValue="default">
                 <option value="default" disabled>
-                Status
+                  Status
                 </option>
                 <option value="Urgent">Urgent</option>
                 <option value="Stable">Stable</option>
               </select>
             </div>
-            
           </div>
           <div className="reports-bottom">
             {reports.map((report) => (
               <SingleReport key={report._id} report={report} />
             ))}
-            <p className="no-results">{reports.length===0 && "No results found"}</p>
+            <p className="no-results">
+              {reports.length === 0 && "No results found"}
+            </p>
           </div>
         </div>
       </div>

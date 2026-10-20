@@ -1,35 +1,29 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import "./nurseSignin.scss"; 
-import { useRef } from "react";
-import { NurseContext } from "../../context/NurseContext"; // Use the common context
+import "./nurseSignin.scss";
+import { NurseContext } from "../../context/NurseContext";
 import axios from "axios";
 import { API_URL } from "../../config";
 
 const NurseSignin = () => {
   const nurseEmailRef = useRef();
   const passwordRef = useRef();
-  const { dispatch, isFetching } = useContext(NurseContext); // Use the common context
+  const { dispatch, isFetching } = useContext(NurseContext);
   const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false);
-    dispatch({ type: "n_LOGIN_START" }); // Use the common LOGIN_START action type
+    dispatch({ type: "n_LOGIN_START" });
     try {
-      const res = await axios.post(
-        `${API_URL}/nurse/login`,
-        {
-          email: nurseEmailRef.current.value,
-          password: passwordRef.current.value,
-        },
-        { withCredentials: true }
-      );
-      console.log(res.data);
-      dispatch({ type: "n_LOGIN_SUCCESS", payload: res.data }); // Use the common LOGIN_SUCCESS action type
+      const res = await axios.post(`${API_URL}/nurse/login`, {
+        email: nurseEmailRef.current.value,
+        password: passwordRef.current.value,
+      });
+      dispatch({ type: "n_LOGIN_SUCCESS", payload: res.data });
     } catch (err) {
       setError(true);
-      dispatch({ type: "n_LOGIN_FAILURE" }); // Use the common LOGIN_FAILURE action type
+      dispatch({ type: "n_LOGIN_FAILURE" });
     }
   };
 
@@ -44,7 +38,7 @@ const NurseSignin = () => {
       </Link>
       <div className="nurse-signin-wrapper">
         <img
-          src="http://localhost:3000/assets/images/medwin-cares.png"
+          src="/assets/images/medwin-cares.png"
           alt="hospital-logo"
           className="nurse-signup-image"
         />

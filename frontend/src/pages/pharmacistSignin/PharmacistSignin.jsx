@@ -1,8 +1,6 @@
-
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./pharmacistSignin.scss";
-import { useRef } from "react";
 import { PharmacistContext } from "../../context/PharmacistContext";
 import axios from "axios";
 import { API_URL } from "../../config";
@@ -18,18 +16,11 @@ const PharmacistSignin = () => {
     setError(false);
     dispatch({ type: "p_LOGIN_START" });
     try {
-      const res = await axios.post(
-        `${API_URL}/pharmacist/login`,
-        {
-          email: pharmacistEmailRef.current.value,
-          password: passwordRef.current.value,
-        },
-        { withCredentials: true }
-      );
-      console.log(res.data);
+      const res = await axios.post(`${API_URL}/pharmacist/login`, {
+        email: pharmacistEmailRef.current.value,
+        password: passwordRef.current.value,
+      });
       dispatch({ type: "p_LOGIN_SUCCESS", payload: res.data });
-
-
     } catch (err) {
       setError(true);
       dispatch({ type: "p_LOGIN_FAILURE" });
@@ -47,7 +38,7 @@ const PharmacistSignin = () => {
       </Link>
       <div className="pharmacist-signin-wrapper">
         <img
-          src="http://localhost:3000/assets/images/medwin-cares.png"
+          src="/assets/images/medwin-cares.png"
           alt="hospital-logo"
           className="pharmacist-signup-image"
         />
