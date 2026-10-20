@@ -1,22 +1,18 @@
 const Patient = require("../models/Patient");
 const Report = require("../models/Report");
 const { createError } = require("../utils/error");
-//connect to db, create new collection, make new document, that's why making it async as the above things will take time.
 
 // CREATE REPORT
 module.exports.createReport = async (req, res, next) => {
-  const patient = await Patient.findById(req.params.id);
-  if (patient) {
-    if (patient.phoneNo === req.body.phoneNum) {
-      try {
-        const newReport = await Report(req.body);
-        const savedReport = await newReport.save();
-       
-        return res.status(201).json(savedReport);
-      } catch (err) {
-        return next(err);
-      }
-    } else {
+  try {
+    const patient = await Patient.findById(req.params.id);
+    if (!patient) {
+      return next(
+        createError(404, "Patient doesn't exist. Please register the patient!")
+      );
+    }
+
+    if (patient.phoneNo !== req.body.phoneNum) {
       return next(
         createError(
           400,
@@ -24,10 +20,23 @@ module.exports.createReport = async (req, res, next) => {
         )
       );
     }
-  } else {
-    return next(
-      createError(404, "Patient doesn't exist. Please register the patient!")
-    );
+
+    const newReport = new Report({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      age: req.body.age,
+      dob: req.body.dob,
+      sex: req.body.sex,
+      medicament: req.body.medicament,
+      doctor: req.body.doctor,
+      status: req.body.status,
+      phoneNum: req.body.phoneNum,
+    });
+
+    const savedReport = await newReport.save();
+    return res.status(201).json(savedReport);
+  } catch (err) {
+    return next(err);
   }
 };
 
@@ -45,6 +54,12 @@ module.exports.reports = async (req, res, next) => {
 module.exports.allReports = async (req, res, next) => {
   try {
     const patient = await Patient.findOne({ phoneNo: req.params.phone });
+    if (!patient) {
+      return next(
+        createError(404, "Patient doesn't exist with this phone number!")
+      );
+    }
+
     const reports = await Report.find({ phoneNum: patient.phoneNo }).sort(
       "-createdAt"
     );
@@ -62,6 +77,6 @@ module.exports.statusReports = async (req, res, next) => {
     );
     return res.status(200).json(reports);
   } catch (err) {
-    next(err);
-  } 
+    return next(err);
+  }
 };

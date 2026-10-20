@@ -1,83 +1,80 @@
 const Patient = require("../models/Patient");
 const Report = require("../models/Report");
 const VS = require("../models/VS");
-
 const { createError } = require("../utils/error");
 
-//REGISTER PATIENT
+// REGISTER PATIENT
 module.exports.register = async (req, res, next) => {
-  const patient = await Patient.findOne({ phoneNo: req.body.phoneNo });
-  if (!patient) {
-    try {
-      const newPatient = await Patient(req.body);
-      const savedPatient = await newPatient.save();
-      return res.status(201).json(savedPatient);
-    } catch (err) {
-      return next(err);
+  try {
+    const { firstName, lastName, phoneNo } = req.body;
+    if (!phoneNo || !firstName) {
+      return next(createError(400, "First name and phone number are required!"));
     }
-  } else {
-    return res.status(200).json(patient);
-  }
-};
-//REGISTERN PATIENT
-module.exports.registerN = async (req, res, next) => {
-  const patient = await Patient.findOne({ phoneNo: req.body.phoneNo });
-  if (!patient) {
-    try {
-      const newPatient = await Patient(req.body);
-      const savedPatient = await newPatient.save();
-      return res.status(201).json(savedPatient);
-    } catch (err) {
-      return next(err);
-    }
-  } else {
-    return res.status(200).json(patient);
-  }
-};
-//UPDATE PATIENT
-module.exports.update = async (req, res, next) => {
-  const patient = await Patient.findById(req.params.id);
-  // console.log(req.body.phoneNo);
-  if (patient) {
-    const phoneExists = await Patient.findOne({ phoneNo: req.body.phone });
-    if (phoneExists && phoneExists.id !== req.params.id) {
-      return res
-        .status(500)
-        .json("Patient with same phone number is already registered!");
-    } else {
-      try {
-        const prevPhone = patient.phoneNo;
-        // console.log(prevPhone);
-        const findReports = await Report.find({ phoneNum: prevPhone });
-        // console.log(prevPhone);*
-        const findVS = await VS.find({ phoneNum: prevPhone });
-        // console.log(findReports)
-        const updatedReport = await Report.updateMany(
-          { phoneNum: prevPhone },
-          { $set: { phoneNum: req.body.phoneNo } }
-        );
-         // console.log(findvs)*
-         const updateVS = await VS.updateMany(
-          { phoneNum: prevPhone },
-          { $set: { phoneNum: req.body.phoneNo } }
-        );
-        // console.log(updatedReport);
-        const updatedPatient = await Patient.findByIdAndUpdate(
-          req.params.id,
-          {
-            $set: req.body,
-          },
-          { new: true }
-        );
-         
 
-        return res.status(200).json(updatedPatient);
-      } catch (err) {
-        return next(err);
-      }
+    const patient = await Patient.findOne({ phoneNo });
+    if (!patient) {
+      const newPatient = new Patient({
+        firstName,
+        lastName,
+        phoneNo,
+      });
+      const savedPatient = await newPatient.save();
+      return res.status(201).json(savedPatient);
+    } else {
+      return res.status(200).json(patient);
     }
-  } else {
-    return res.status(404).json("Patient doesn't exist!");
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// REGISTER PATIENT (NURSE)
+module.exports.registerN = async (req, res, next) => {
+  return module.exports.register(req, res, next);
+};
+
+// UPDATE PATIENT
+module.exports.update = async (req, res, next) => {
+  try {
+    const patient = await Patient.findById(req.params.id);
+    if (!patient) {
+      return next(createError(404, "Patient doesn't exist!"));
+    }
+
+    const { firstName, lastName, phoneNo } = req.body;
+    const updateData = {};
+    if (firstName) updateData.firstName = firstName;
+    if (lastName !== undefined) updateData.lastName = lastName;
+
+    if (phoneNo && phoneNo !== patient.phoneNo) {
+      const phoneExists = await Patient.findOne({ phoneNo });
+      if (phoneExists && phoneExists._id.toString() !== req.params.id) {
+        return next(
+          createError(409, "Patient with same phone number is already registered!")
+        );
+      }
+
+      const prevPhone = patient.phoneNo;
+      await Report.updateMany(
+        { phoneNum: prevPhone },
+        { $set: { phoneNum: phoneNo } }
+      );
+      await VS.updateMany(
+        { phoneNum: prevPhone },
+        { $set: { phoneNum: phoneNo } }
+      );
+      updateData.phoneNo = phoneNo;
+    }
+
+    const updatedPatient = await Patient.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(200).json(updatedPatient);
+  } catch (err) {
+    return next(err);
   }
 };
 
@@ -95,17 +92,16 @@ module.exports.getPatients = async (req, res, next) => {
 module.exports.getPatientInfo = async (req, res, next) => {
   try {
     const patientInfo = await Patient.findById(req.params.id);
+    if (!patientInfo) {
+      return next(createError(404, "Patient not found!"));
+    }
     return res.status(200).json(patientInfo);
   } catch (err) {
     return next(err);
   }
 };
-// GET A SINGLE PATIENT INFON
+
+// GET A SINGLE PATIENT INFO (NURSE)
 module.exports.getPatientInfon = async (req, res, next) => {
-  try {
-    const patientInfon = await Patient.findById(req.params.id);
-    return res.status(200).json(patientInfon);
-  } catch (err) {
-    return next(err);
-  }
+  return module.exports.getPatientInfo(req, res, next);
 };

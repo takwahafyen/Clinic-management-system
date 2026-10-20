@@ -1,87 +1,79 @@
 const Client = require("../models/Client");
-const Report = require("../models/Report");
 const FC = require("../models/FC");
-
 const { createError } = require("../utils/error");
 
-//REGISTER Client
+// REGISTER CLIENT
 module.exports.register = async (req, res, next) => {
-  const client = await Client.findOne({ phoneNo: req.body.phoneNo });
-  if (!client) {
-    try {
-      const newClient = await Client(req.body);
+  try {
+    const { firstName, lastName, phoneNo } = req.body;
+    if (!phoneNo || !firstName) {
+      return next(createError(400, "First name and phone number are required!"));
+    }
+
+    const client = await Client.findOne({ phoneNo });
+    if (!client) {
+      const newClient = new Client({
+        firstName,
+        lastName,
+        phoneNo,
+      });
       const savedClient = await newClient.save();
       return res.status(201).json(savedClient);
-    } catch (err) {
-      return next(err);
-    }
-  } else {
-    return res.status(200).json(client);
-  }
-};
-//REGISTERN Client
-module.exports.registerN = async (req, res, next) => {
-    const client = await Client.findOne({ phoneNo: req.body.phoneNo });
-    if (!client) {
-      try {
-        const newClient = await Client(req.body);
-        const savedClient = await newClient.save();
-        return res.status(201).json(savedClient);
-      } catch (err) {
-        return next(err);
-      }
     } else {
       return res.status(200).json(client);
     }
-  };
-//UPDATE Client
-module.exports.update = async (req, res, next) => {
-  const client = await Client.findById(req.params.id);
-  // console.log(req.body.phoneNo);
-  if (client) {
-    const phoneExists = await Client.findOne({ phoneNo: req.body.phone });
-    if (phoneExists && phoneExists.id !== req.params.id) {
-      return res
-        .status(500)
-        .json("Client with same phone number is already registered!");
-    } else {
-      try {
-        const prevPhone = client.phoneNo;
-        // console.log(prevPhone);
-        const findReports = await Report.find({ phoneNum: prevPhone });
-        // console.log(prevPhone);*
-        const findFC = await FC.find({ phoneNum: prevPhone });
-        // console.log(findReports)
-        const updatedReport = await Report.updateMany(
-          { phoneNum: prevPhone },
-          { $set: { phoneNum: req.body.phoneNo } }
-        );
-         // console.log(findFC)*
-         const updateFC = await FC.updateMany(
-          { phoneNum: prevPhone },
-          { $set: { phoneNum: req.body.phoneNo } }
-        );
-        // console.log(updatedReport);
-        const updatedClient = await Client.findByIdAndUpdate(
-          req.params.id,
-          {
-            $set: req.body,
-          },
-          { new: true }
-        );
-         
-
-        return res.status(200).json(updatedClient);
-      } catch (err) {
-        return next(err);
-      }
-    }
-  } else {
-    return res.status(404).json("Client doesn't exist!");
+  } catch (err) {
+    return next(err);
   }
 };
 
-// GET ALL Client
+// REGISTER CLIENT (PHARMACIST / NURSE)
+module.exports.registerN = async (req, res, next) => {
+  return module.exports.register(req, res, next);
+};
+
+// UPDATE CLIENT
+module.exports.update = async (req, res, next) => {
+  try {
+    const client = await Client.findById(req.params.id);
+    if (!client) {
+      return next(createError(404, "Client doesn't exist!"));
+    }
+
+    const { firstName, lastName, phoneNo } = req.body;
+    const updateData = {};
+    if (firstName) updateData.firstName = firstName;
+    if (lastName !== undefined) updateData.lastName = lastName;
+
+    if (phoneNo && phoneNo !== client.phoneNo) {
+      const phoneExists = await Client.findOne({ phoneNo });
+      if (phoneExists && phoneExists._id.toString() !== req.params.id) {
+        return next(
+          createError(409, "Client with same phone number is already registered!")
+        );
+      }
+
+      const prevPhone = client.phoneNo;
+      await FC.updateMany(
+        { phoneNum: prevPhone },
+        { $set: { phoneNum: phoneNo } }
+      );
+      updateData.phoneNo = phoneNo;
+    }
+
+    const updatedClient = await Client.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(200).json(updatedClient);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// GET ALL CLIENTS
 module.exports.getClient = async (req, res, next) => {
   try {
     const clients = await Client.find();
@@ -91,21 +83,20 @@ module.exports.getClient = async (req, res, next) => {
   }
 };
 
-// GET A SINGLE Client INFO
+// GET A SINGLE CLIENT INFO
 module.exports.getClientInfo = async (req, res, next) => {
   try {
     const clientInfo = await Client.findById(req.params.id);
+    if (!clientInfo) {
+      return next(createError(404, "Client not found!"));
+    }
     return res.status(200).json(clientInfo);
   } catch (err) {
     return next(err);
   }
 };
-// GET A SINGLE Client INFON
+
+// GET A SINGLE CLIENT INFO (SECONDARY)
 module.exports.getClientInfon = async (req, res, next) => {
-  try {
-    const clientInfon = await Client.findById(req.params.id);
-    return res.status(200).json(clientInfon);
-  } catch (err) {
-    return next(err);
-  }
+  return module.exports.getClientInfo(req, res, next);
 };

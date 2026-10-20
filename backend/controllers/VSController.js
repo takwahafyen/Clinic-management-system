@@ -21,7 +21,17 @@ module.exports.createVS = async (req, res, next) => {
       );
     }
 
-    const newVS = new VS(req.body);
+    const newVS = new VS({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      age: req.body.age,
+      dob: req.body.dob,
+      sex: req.body.sex,
+      blood_pressure: req.body.blood_pressure,
+      doctor: req.body.doctor,
+      Diabetic_status: req.body.Diabetic_status,
+      phoneNum: req.body.phoneNum,
+    });
     const savedVS = await newVS.save();
     return res.status(201).json(savedVS);
   } catch (err) {
@@ -39,12 +49,30 @@ module.exports.allVS = async (req, res, next) => {
   }
 };
 
+// GET ALL VS OF A SPECIFIC PATIENT
+module.exports.patientVS = async (req, res, next) => {
+  try {
+    const patient = await Patient.findOne({ phoneNo: req.params.phone });
+    if (!patient) {
+      return next(
+        createError(404, "Patient doesn't exist with this phone number!")
+      );
+    }
+    const VSList = await VS.find({ phoneNum: patient.phoneNo }).sort(
+      "-createdAt"
+    );
+    return res.status(200).json(VSList);
+  } catch (err) {
+    return next(err);
+  }
+};
+
 // GET ALL VS OF ALL PATIENTS FILTERED BY A SPECIFIC STATUS
 module.exports.statusVS = async (req, res, next) => {
   try {
-    const VSList = await VS.find({ Diabetic_status: req.params.Diabetic_status }).sort(
-      "-createdAt"
-    );
+    const VSList = await VS.find({
+      Diabetic_status: req.params.Diabetic_status,
+    }).sort("-createdAt");
     return res.status(200).json(VSList);
   } catch (err) {
     return next(err);

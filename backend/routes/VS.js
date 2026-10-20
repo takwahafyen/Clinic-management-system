@@ -28,7 +28,7 @@ router.get(
   "/:phone/all_VS",
   verifyToken,
   verifyRole("nurse", "doctor"),
-  VSController.allVS
+  VSController.patientVS
 );
 
 module.exports = router;
