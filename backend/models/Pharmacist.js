@@ -1,40 +1,9 @@
 const mongoose = require("mongoose");
+const User = require("./User");
 
-const PharmacistSchema = new mongoose.Schema(
-  {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 6,
-    },
-    specialization: {
-      type: String,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    passcode: {
-      type: String,
-      required: false,
-    },
-  },
-  { timestamps: true }
-);
+const Pharmacist =
+  User.discriminators && User.discriminators.pharmacist
+    ? User.discriminators.pharmacist
+    : User.discriminator("pharmacist", new mongoose.Schema({}));
 
-module.exports = mongoose.model("Pharmacist", PharmacistSchema);
+module.exports = Pharmacist;

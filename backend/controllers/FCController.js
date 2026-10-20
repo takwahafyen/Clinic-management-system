@@ -22,16 +22,19 @@ module.exports.createFC = async (req, res, next) => {
     }
 
     const newFC = new FC({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      age: req.body.age,
-      dob: req.body.dob,
-      sex: req.body.sex,
+      client: client._id,
+      pharmacistId: req.userId,
+      firstName: req.body.firstName || client.firstName,
+      lastName: req.body.lastName || client.lastName,
+      age: req.body.age !== undefined ? req.body.age : client.age,
+      dob: req.body.dob || client.dob,
+      sex: req.body.sex || client.sex,
       quantite: req.body.quantite,
       doctor: req.body.doctor,
       medicament: req.body.medicament,
       phoneNum: req.body.phoneNum,
     });
+
     const savedFC = await newFC.save();
     return res.status(201).json(savedFC);
   } catch (err) {
@@ -42,7 +45,10 @@ module.exports.createFC = async (req, res, next) => {
 // GET ALL FC
 module.exports.allFC = async (req, res, next) => {
   try {
-    const FCList = await FC.find().sort("-createdAt");
+    const FCList = await FC.find()
+      .populate("client", "firstName lastName phoneNo dob sex age")
+      .populate("pharmacistId", "firstName lastName email specialization")
+      .sort("-createdAt");
     return res.status(200).json(FCList);
   } catch (err) {
     return next(err);
@@ -58,9 +64,14 @@ module.exports.clientFC = async (req, res, next) => {
         createError(404, "Client doesn't exist with this phone number!")
       );
     }
-    const FCList = await FC.find({ phoneNum: client.phoneNo }).sort(
-      "-createdAt"
-    );
+
+    const FCList = await FC.find({
+      $or: [{ client: client._id }, { phoneNum: client.phoneNo }],
+    })
+      .populate("client", "firstName lastName phoneNo dob sex age")
+      .populate("pharmacistId", "firstName lastName email specialization")
+      .sort("-createdAt");
+
     return res.status(200).json(FCList);
   } catch (err) {
     return next(err);
@@ -70,9 +81,11 @@ module.exports.clientFC = async (req, res, next) => {
 // GET ALL FC FILTERED BY MEDICAMENT
 module.exports.statusFC = async (req, res, next) => {
   try {
-    const FCList = await FC.find({ medicament: req.params.medicament }).sort(
-      "-createdAt"
-    );
+    const FCList = await FC.find({ medicament: req.params.medicament })
+      .populate("client", "firstName lastName phoneNo dob sex age")
+      .populate("pharmacistId", "firstName lastName email specialization")
+      .sort("-createdAt");
+
     return res.status(200).json(FCList);
   } catch (err) {
     return next(err);

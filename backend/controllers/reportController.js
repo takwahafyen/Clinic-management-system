@@ -22,11 +22,13 @@ module.exports.createReport = async (req, res, next) => {
     }
 
     const newReport = new Report({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      age: req.body.age,
-      dob: req.body.dob,
-      sex: req.body.sex,
+      patient: patient._id,
+      doctorId: req.userId,
+      firstName: req.body.firstName || patient.firstName,
+      lastName: req.body.lastName || patient.lastName,
+      age: req.body.age !== undefined ? req.body.age : patient.age,
+      dob: req.body.dob || patient.dob,
+      sex: req.body.sex || patient.sex,
       medicament: req.body.medicament,
       doctor: req.body.doctor,
       status: req.body.status,
@@ -43,7 +45,10 @@ module.exports.createReport = async (req, res, next) => {
 // GET ALL REPORTS
 module.exports.reports = async (req, res, next) => {
   try {
-    const reports = await Report.find().sort("-createdAt");
+    const reports = await Report.find()
+      .populate("patient", "firstName lastName phoneNo dob sex age")
+      .populate("doctorId", "firstName lastName email specialization")
+      .sort("-createdAt");
     return res.status(200).json(reports);
   } catch (err) {
     return next(err);
@@ -60,9 +65,13 @@ module.exports.allReports = async (req, res, next) => {
       );
     }
 
-    const reports = await Report.find({ phoneNum: patient.phoneNo }).sort(
-      "-createdAt"
-    );
+    const reports = await Report.find({
+      $or: [{ patient: patient._id }, { phoneNum: patient.phoneNo }],
+    })
+      .populate("patient", "firstName lastName phoneNo dob sex age")
+      .populate("doctorId", "firstName lastName email specialization")
+      .sort("-createdAt");
+
     return res.status(200).json(reports);
   } catch (err) {
     return next(err);
@@ -72,9 +81,10 @@ module.exports.allReports = async (req, res, next) => {
 // GET ALL REPORTS OF ALL PATIENTS FILTERED BY A SPECIFIC STATUS
 module.exports.statusReports = async (req, res, next) => {
   try {
-    const reports = await Report.find({ status: req.params.status }).sort(
-      "-createdAt"
-    );
+    const reports = await Report.find({ status: req.params.status })
+      .populate("patient", "firstName lastName phoneNo dob sex age")
+      .populate("doctorId", "firstName lastName email specialization")
+      .sort("-createdAt");
     return res.status(200).json(reports);
   } catch (err) {
     return next(err);

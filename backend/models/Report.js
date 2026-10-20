@@ -2,24 +2,36 @@ const mongoose = require("mongoose");
 
 const ReportSchema = new mongoose.Schema(
   {
+    patient: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Patient",
+      required: false,
+    },
+    doctorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+    },
     firstName: {
       type: String,
       required: true,
+      trim: true,
     },
     lastName: {
       type: String,
+      trim: true,
     },
     age: {
       type: Number,
-      required: true,
+      required: false,
     },
     dob: {
       type: Date,
-      required: true,
+      required: false,
     },
     sex: {
       type: String,
-      required: true,
+      required: false,
     },
     medicament: {
       type: String,
@@ -36,6 +48,7 @@ const ReportSchema = new mongoose.Schema(
     phoneNum: {
       type: String,
       required: true,
+      trim: true,
     },
   },
   {
@@ -43,4 +56,5 @@ const ReportSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Report", ReportSchema);
+module.exports =
+  mongoose.models.Report || mongoose.model("Report", ReportSchema);
