@@ -1,0 +1,39 @@
+# render.yaml — Infrastructure-as-code for Render
+# https://render.com/docs/blueprint-spec
+#
+# On every push to `main` that passes CI, Render will:
+#   1. Pull the latest code
+#   2. Run the build command
+#   3. Restart the web service
+#
+# One-time setup:
+#   1. Go to https://dashboard.render.com → New → Blueprint
+#   2. Connect your GitHub repo — Render picks this file up automatically
+#   3. Set the environment variables listed below in the Render dashboard
+#      (they are intentionally NOT stored here)
+
+services:
+  - type: web
+    name: clinic-management-backend
+    runtime: node
+    rootDir: backend
+    region: frankfurt          # change to your preferred region
+    plan: free                 # upgrade to "starter" ($7/mo) for always-on
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health   # Render hits this to confirm the service is up
+    autoDeploy: true           # redeploy automatically on every push to main
+    envVars:
+      # Set these in the Render dashboard (Environment tab) — never commit real values
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000            # Render assigns this port internally
+      - key: MONGO_URL
+        sync: false             # secret — fill in the Render dashboard
+      - key: JWT_SECRET
+        sync: false             # secret — fill in the Render dashboard
+      - key: PASSCODE
+        sync: false             # secret — fill in the Render dashboard
+      - key: CLIENT_URL
+        sync: false             # set to your Vercel frontend URL after first deploy
