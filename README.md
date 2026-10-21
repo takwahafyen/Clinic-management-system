@@ -1,11 +1,24 @@
 # Clinic Management System
 
 [![CI](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/ci.yml/badge.svg)](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/ci.yml)
+[![CD](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/deploy.yml/badge.svg)](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/deploy.yml)
 
 A web application for managing a clinic's patients, clients, doctors, nurses and pharmacists — covering registration, consultation reports, vital signs tracking and medication records. Built as a MERN stack app with role-based authentication.
 
+## 🚀 Live Demo
+
+- **Frontend (Web App)**: [clinic-management-system.vercel.app](https://clinic-management-system.vercel.app) *(or your specific Vercel URL)*
+- **Backend API**: [clinic-management-backend-lpki.onrender.com](https://clinic-management-backend-lpki.onrender.com/health)
+
+> **Test Credentials:**
+> - **Doctor**: `ada@example.com` / `password123`
+> - **Nurse**: `florence@example.com` / `password123`
+> - **Pharmacist**: `marie@example.com` / `password123`
+> - *(Passcode for new staff registration)*: set via environment variable.
+
 ## Table of contents
 
+- [Live Demo](#-live-demo)
 - [Architecture](#architecture)
 - [Data model](#data-model)
 - [Tech stack](#tech-stack)
@@ -223,7 +236,7 @@ Tests are colocated with the component they cover (`Component.jsx` + `Component.
 - [x] ObjectId relations on Report, VS, FC
 - [x] Extend DB-backed integration tests to nurse and pharmacist flows
 - [x] LICENSE (MIT)
-- [ ] Live deployment (backend + frontend)
+- [x] Live deployment (backend on Render + frontend on Vercel) with automated CI/CD
 
 ## License
 
