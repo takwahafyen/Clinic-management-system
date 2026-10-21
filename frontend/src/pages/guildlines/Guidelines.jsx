@@ -1,4 +1,4 @@
-// HospitalGuide.jsx
+// Guidelines.jsx
 
 import React from "react";
 import Navbar from "../../components/navbar/Navbar";
@@ -12,136 +12,139 @@ const HospitalGuide = () => {
       <div className="hospital-guide">
         <div className="guide-wrapper">
           <section className="guide-section card">
-            <h2 className="card-content"> Introduction</h2>
+            <h2 className="card-content">Introduction</h2>
             <p className="card-content">
-              Bienvenue à l'Hôpital Medwin Cares, où nous nous engageons à
-              fournir des soins de santé exceptionnels et un environnement
-              chaleureux pour nos patients.
+              Welcome to the Clinic Management System — a modern platform
+              dedicated to delivering exceptional healthcare and a warm,
+              supportive environment for every patient.
             </p>
             <img
-              src="http://localhost:3000/assets/images/img-1.jpg"
-              alt="Hôpital Medwin Cares"
+              src="/assets/images/img-1.jpg"
+              alt="Clinic Management System"
               className="hospital-image"
             />
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Informations Générales</h2>
+            <h2 className="card-content">General Information</h2>
             <p className="card-content">
-              <h3>Adresse et Coordonnées : </h3> 123 Rue de la Santé, Villeville
+              <h3>Address &amp; Contact:</h3> 123 Health Street, Medicity
               <br />
-              <h3>Heures d'Ouverture :</h3>   Ouvert 24/7
+              <h3>Opening Hours:</h3> Open 24 / 7
               <br />
-              <h3> Accès aux Urgences :</h3>  Situé à l'aile nord.
+              <h3>Emergency Access:</h3> Located in the north wing.
             </p>
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Services Offerts</h2>
+            <h2 className="card-content">Services Offered</h2>
             <p className="card-content">
-            <h3>Départements Médicaux : </h3>  Chirurgie, Médecine interne, Pédiatrie,
-              etc.
+              <h3>Medical Departments:</h3> Surgery, Internal Medicine,
+              Pediatrics, and more.
               <br />
-              <h3> Spécialités Médicales :</h3>  Cardiologie, Orthopédie, Neurologie, etc.
+              <h3>Medical Specialties:</h3> Cardiology, Orthopedics, Neurology,
+              and more.
               <br />
-              <h3>Services d'Urgence :</h3>  Ouvert en permanence pour les urgences.
+              <h3>Emergency Services:</h3> Always open for urgent cases.
             </p>
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Personnel Médical</h2>
+            <h2 className="card-content">Medical Staff</h2>
             <p className="card-content">
-            <h3>Liste des Médecins :</h3>       Disponible sur notre site web.
+              <h3>Doctors Directory:</h3> Available on our website.
               <br />
-              <h3> Horaires de Consultation :</h3>     Affichés à la réception.
+              <h3>Consultation Schedules:</h3> Displayed at the reception desk.
               <br />
-              <h3>  Contact des Infirmières :</h3>   Appuyez sur le bouton d'appel dans la
-              chambre.
+              <h3>Nurse Contact:</h3> Press the call button in your room.
             </p>
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Admission et Enregistrement</h2>
+            <h2 className="card-content">Admission &amp; Registration</h2>
             <p className="card-content">
-            <h3>Processus d'Admission :</h3>  Présentez-vous à la réception.
+              <h3>Admission Process:</h3> Please check in at the reception desk.
               <br />
-              <h3>Documents Nécessaires :</h3>    Carte d'identité, carte d'assurance
-              maladie.
+              <h3>Required Documents:</h3> National ID card and health insurance
+              card.
               <br />
-              Acceptons la plupart des assurances.
+              We accept most major insurance providers.
             </p>
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Installation et Équipement</h2>
+            <h2 className="card-content">Facilities &amp; Equipment</h2>
             <p className="card-content">
-              <h3>Description des Installations :</h3> Salles modernes avec équipement
-              avancé.
+              <h3>Facility Overview:</h3> Modern rooms equipped with advanced
+              medical technology.
               <br />
-             <h3> Équipement Médical : </h3> De pointe et régulièrement mis à jour.
+              <h3>Medical Equipment:</h3> State-of-the-art and regularly
+              updated.
               <br />
-             <h3>Chambres et Commodités :</h3>  Chambres individuelles avec salle de
-              bains privée.
+              <h3>Rooms &amp; Amenities:</h3> Private rooms with en-suite
+              bathrooms.
             </p>
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Règles et Réglementations</h2>
+            <h2 className="card-content">Rules &amp; Regulations</h2>
             <p className="card-content">
-              Politiques de Visite : De 10h à 20h, un visiteur à la fois.
+              Visiting Hours: 10 AM – 8 PM, one visitor at a time.
               <br />
-             <h3>Instructions pour les Patients :</h3>  Respectez les consignes
-              médicales.
+              <h3>Patient Instructions:</h3> Please follow all medical
+              guidelines provided by staff.
               <br />
-              <h3>Protocoles de Sécurité :</h3> Conformez-vous aux procédures
-              d'évacuation.
+              <h3>Safety Protocols:</h3> Comply with all evacuation and safety
+              procedures.
             </p>
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Services aux Patients</h2>
+            <h2 className="card-content">Patient Services</h2>
             <p className="card-content">
-             <h3>Services Sociaux :</h3>  Aide aux patients et aux familles.
+              <h3>Social Services:</h3> Assistance available for patients and
+              families.
               <br />
-            <h3>Services de Nutrition :</h3>  Menus adaptés aux besoins médicaux.
+              <h3>Nutrition Services:</h3> Menus tailored to medical
+              requirements.
               <br />
-             <h3>Services de Physiothérapie :</h3>  Disponibles sur rendez-vous.
+              <h3>Physiotherapy Services:</h3> Available by appointment.
             </p>
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Salle d'Attente et Cafétéria</h2>
+            <h2 className="card-content">Waiting Area &amp; Cafeteria</h2>
             <p className="card-content">
-              Règles de la Salle d'Attente : Gardez le calme et respectez la
-              confidentialité.
+              Waiting Area Rules: Please keep noise to a minimum and respect
+              patient privacy.
               <br />
-             <h3>Emplacement de la Cafétéria :</h3>  Au rez-de-chaussée.
+              <h3>Cafeteria Location:</h3> Ground floor.
               <br />
-             <h3>Options de Restauration :</h3>  Repas sains disponibles.
+              <h3>Dining Options:</h3> Healthy meals available throughout the
+              day.
             </p>
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Contact et Rétroaction</h2>
+            <h2 className="card-content">Contact &amp; Feedback</h2>
             <p className="card-content">
-              Coordonnées pour les Questions : info@medwincares-hospital.com
+              General Enquiries: info@clinic-management-system.com
               <br />
-              Procédure de Rétroaction : Formulaire en ligne sur notre site.
+              Feedback Process: Online form available on our website.
               <br />
-              Réseaux Sociaux et Site Web : Suivez-nous sur Facebook et Twitter.
+              Social Media &amp; Website: Follow us on Facebook and Twitter.
             </p>
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Ressources Utiles</h2>
+            <h2 className="card-content">Useful Resources</h2>
             <p className="card-content">
-              Liens vers des Ressources Médicales : Bibliothèque en ligne sur la
-              santé.
+              Medical Resource Links: Online health library available on our
+              portal.
               <br />
-             <h3>Informations sur les Associations de Patients :</h3>  Associations
-              locales recommandées.
+              <h3>Patient Associations:</h3> Recommended local support groups.
               <br />
-              <h3>Glossaire Médical :</h3> Termes médicaux courants expliqués.
+              <h3>Medical Glossary:</h3> Common medical terms explained in plain
+              language.
             </p>
           </section>
           <section className="guide-section card">
-            <h2 className="card-content"> Foire aux Questions (FAQ)</h2>
+            <h2 className="card-content">Frequently Asked Questions (FAQ)</h2>
             <p className="card-content">
-              <h3>Questions Courantes des Patients :</h3> Trouvez des réponses utiles
-              ici.
+              <h3>Common Patient Questions:</h3> Find helpful answers below.
               <br />
-              <h3>Réponses Utiles : </h3>Informations sur les services, les horaires,
-              etc.
+              <h3>Useful Answers:</h3> Information on services, schedules, and
+              more.
             </p>
           </section>
         </div>

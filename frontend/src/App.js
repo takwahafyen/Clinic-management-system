@@ -5,7 +5,7 @@ import HomeNurse from "./pages/home/HomeNurse";
 import HomePha from "./pages/home/HomePha";
 
 import About from "./pages/about/About";
-import Guidelines from "./pages/guildlines/Guidelines";
+import Guidelines from "./pages/guidelines/Guidelines";
 import DoctorSignin from "./pages/doctorSignin/DoctorSignin";
 import DoctorSignup from "./pages/doctorSignup/DoctorSignup";
 import NurseSignin from "./pages/nurseSignin/NurseSignin";
