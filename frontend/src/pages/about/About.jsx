@@ -14,33 +14,33 @@ const About = () => {
               Your reason to <span>Smile</span>.
             </h1>
             <p>
-              Medwin Cares is a professional hospital that includes General,
-              Cosmetic, Aesthetic and Emergency services & facilities for you
-              and your family with a team of professional doctors at friendly
-              prices.
+              The Clinic Management System is a professional healthcare platform
+              that covers General, Cosmetic, Aesthetic and Emergency services
+              &amp; facilities for you and your family — with a dedicated team
+              of doctors, nurses and pharmacists at your service.
             </p>
           </div>
           <div className="about-bottom">
             <h1>
-              Why <span>Medwin Cares</span>?
+              Why <span>Choose Us</span>?
             </h1>
             <p>
-              Handled directly by general doctors and professional and
-              experienced specialists. As well as cooperating with various
-              insurances for the convenience of patients.
+              Managed directly by experienced general practitioners and
+              specialist physicians, and cooperating with major insurance
+              providers for the convenience of our patients.
             </p>
             <ul>
               <li>
-                Professional care of the highest standards in a Comfortable and
-                Relaxed environment.
+                Professional care of the highest standards in a comfortable and
+                relaxed environment.
               </li>
               <li>
-                Provides on-site healthcare services to schools, corporate and
-                senior home.
+                On-site healthcare services available to schools, corporate
+                organisations and senior-care homes.
               </li>
               <li>
-                We utilize up-to-date clinical technologies to help you achieve
-                a smile.
+                Up-to-date clinical technologies to support your health journey
+                every step of the way.
               </li>
             </ul>
           </div>
