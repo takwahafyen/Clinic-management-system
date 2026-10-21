@@ -8,11 +8,5 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "env": {
-    "REACT_APP_API_URL": {
-      "description": "Base URL of the deployed backend API (no trailing slash)",
-      "required": true
-    }
-  }
+  ]
 }
