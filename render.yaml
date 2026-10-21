@@ -27,8 +27,6 @@ services:
       # Set these in the Render dashboard (Environment tab) — never commit real values
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 10000            # Render assigns this port internally
       - key: MONGO_URL
         sync: false             # secret — fill in the Render dashboard
       - key: JWT_SECRET
