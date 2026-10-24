@@ -1,0 +1,9 @@
+{
+  "_id": "64d0a1b2c3d4e5f6a7b8c9d2",
+  "firstName": "Marie",
+  "lastName": "Curie",
+  "email": "marie@example.com",
+  "specialization": "Clinical Pharmacy",
+  "phone": "0800000000",
+  "role": "pharmacist"
+}

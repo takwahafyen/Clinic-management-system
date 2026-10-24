@@ -1,0 +1,9 @@
+{
+  "_id": "64d0a1b2c3d4e5f6a7b8c9d1",
+  "firstName": "Florence",
+  "lastName": "Nightingale",
+  "email": "florence@example.com",
+  "specialization": "Critical Care",
+  "phone": "0700000000",
+  "role": "nurse"
+}
