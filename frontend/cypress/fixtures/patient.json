@@ -1,0 +1,9 @@
+{
+  "_id": "64d0a1b2c3d4e5f6a7b8c9d3",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phoneNo": "0612345678",
+  "dob": "1990-01-01",
+  "sex": "Male",
+  "age": 36
+}

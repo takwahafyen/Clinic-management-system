@@ -222,6 +222,26 @@ npm test
 
 Tests are colocated with the component they cover (`Component.jsx` + `Component.test.jsx`).
 
+**End-to-End (E2E) Tests** (`frontend/cypress/`) — Cypress
+
+```bash
+cd frontend
+
+# Interactive Cypress Test Runner (GUI)
+npm run cypress:open
+
+# Headless E2E Execution (CI/Terminal mode)
+npm run test:e2e
+```
+
+| E2E Spec | What it verifies |
+|---|---|
+| `01-navigation.cy.js` | Public landing page, header, features, footer, About Us, Guidelines, responsive viewports |
+| `02-authentication.cy.js` | Doctor login with form validation, API interception (`cy.intercept`), error alerts, logout and session reset |
+| `03-route-protection.cy.js` | Route guards: redirects unauthenticated users to `/doctor/login`, `/nurse/login`, `/pharmacist/login`; allows authenticated access |
+| `04-patient-registration.cy.js` | Doctor patient creation form, payload verification, redirection to patient dashboard, error handling |
+| `05-nurse-and-pharmacist.cy.js` | Nurse & Pharmacist login flows, role-specific navigation to `/HomeNurse` and `/HomePha`, access to vital signs and medication records |
+
 ## Roadmap
 
 - [x] Project README
@@ -235,6 +255,7 @@ Tests are colocated with the component they cover (`Component.jsx` + `Component.
 - [x] Unified `Patient`/`Client` schema with virtual `age`
 - [x] ObjectId relations on Report, VS, FC
 - [x] Extend DB-backed integration tests to nurse and pharmacist flows
+- [x] Comprehensive Cypress E2E automated test suite
 - [x] LICENSE (MIT)
 - [x] Live deployment (backend on Render + frontend on Vercel) with automated CI/CD
 
