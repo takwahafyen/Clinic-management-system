@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./clientInfo.scss";
 import NavbarPha from "../../components/navbar/NavbarPha";
+import { SkeletonCard } from "../../components/skeleton/SkeletonCard";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../config";
 
 const ClientInfo = () => {
   const [client, setClient] = useState({});
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const path = location.pathname.split("/")[3];
   const [updateMode, setUpdateMode] = useState(false);
@@ -15,13 +17,17 @@ const ClientInfo = () => {
 
   useEffect(() => {
     const fetchClient = async () => {
+      setLoading(true);
       try {
         const res = await axios.get(
           `${API_URL}/clientauth/clientInfo/${path}`
         );
         setClient(res.data);
         setPhone(res.data.phoneNo);
-      } catch (err) {}
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
     };
     fetchClient();
   }, [path]);
@@ -46,52 +52,54 @@ const ClientInfo = () => {
     <div>
       <NavbarPha />
       <div className="client-info">
-        <div className="client-info-wrapper">
-          <div className="client-info-item">
-            <span>First name: </span>
-            <p>{client.firstName}</p>
-          </div>
-          <div className="client-info-item">
-            <span>Last name: </span>
-            <p>{client.lastName}</p>
-          </div>
-          <div className="client-info-item">
-            <span>Phone number: </span>
-            {updateMode ? (
-              <input
-                type="text"
-                placeholder="Phone number"
-                value={phone}
-                required
-                autoFocus={true}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            ) : (
-              <p>{phone}</p>
+        {loading ? (
+          <SkeletonCard />
+        ) : (
+          <div className="client-info-wrapper">
+            <div className="client-info-item">
+              <span>First name: </span>
+              <p>{client.firstName}</p>
+            </div>
+            <div className="client-info-item">
+              <span>Last name: </span>
+              <p>{client.lastName}</p>
+            </div>
+            <div className="client-info-item">
+              <span>Phone number: </span>
+              {updateMode ? (
+                <input
+                  type="text"
+                  placeholder="Phone number"
+                  value={phone}
+                  required
+                  autoFocus={true}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              ) : (
+                <p>{phone}</p>
+              )}
+            </div>
+            <div className="client-info-item">
+              <Link to={`/client/${path}/create_FC`}>
+                <button>CREATE A FACTURE</button>
+              </Link>
+              {updateMode ? (
+                <button onClick={handleUpdate}>CLICK TO UPDATE</button>
+              ) : (
+                <button onClick={(e) => setUpdateMode(true)}>
+                  UPDATE Client
+                </button>
+              )}
+              <Link to="/allFC">
+                <button>VIEW FACTURE</button>
+              </Link>
+            </div>
+
+            {error && (
+              <p className="errorMsg">Something went wrong! Please try again.</p>
             )}
           </div>
-          <div className="client-info-item">
-            <Link to={`/client/${path}/create_FC`}>
-              <button>CREATE A FACTURE</button>
-            </Link>
-            {updateMode ? (
-              <button onClick={handleUpdate}>CLICK TO UPDATE</button>
-            ) : (
-              <button onClick={(e) => setUpdateMode(true)}>
-                UPDATE Client
-              </button>
-            )}
-            <Link to="/allFC">
-              <button>VIEW FACTURE</button>
-            </Link>
-           
-          </div>
-        
-        
-          {error && (
-            <p className="errorMsg">Something went wrong! Please try again.</p>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );

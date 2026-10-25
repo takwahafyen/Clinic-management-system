@@ -1,46 +1,74 @@
 .create-report {
-    width: 100vw;
-    height: calc(100vh - 100px);
+  width: 100%;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background: radial-gradient(circle at top, rgba(2, 132, 199, 0.08) 0%, var(--bg-primary) 75%);
+  transition: background 0.3s ease;
+
+  h2 {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.75rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(90deg, #0284c7, #2563eb);
+      border-radius: 2px;
+    }
+  }
+
+  .create-report-wrapper {
+    width: 460px;
+    max-width: 100%;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow), 0 12px 32px -8px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem 2rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    h2 {
-      color: #fff;
-      font-weight: 500;
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-    background: linear-gradient(
-        to right,
-        rgba(47, 131, 241, 0.5),
-        rgba(47, 131, 241, 0.5)
-      ),
-      url("https://media.springernature.com/m685/springer-static/image/art%3A10.1038%2Fs41404-020-0589-z/MediaObjects/41404_2020_589_Fig1_HTML.jpg");
-      background-repeat: no-repeat;
-      background-size: 100vw;
-    .create-report-wrapper {
-      width: 400px;
-      height: 490px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    .create-report-form {
+      width: 100%;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #fff;
-      border-radius: 5px;
-      .create-report-form {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        height: 450px;
-        select {
-          width: 350px;
-          height: 30px;
-          border: 2px solid rgb(34, 105, 198);
-          border-radius: 4px;
-          margin-top: 12px;
-          outline: none;
-        }
+      flex-direction: column;
+      gap: 0.75rem;
+
+      input, select {
+        width: 100%;
+        margin-top: 0.25rem;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 1rem;
       }
     }
   }
-  
+}
+
+@media (max-width: 500px) {
+  .create-report {
+    padding: 2rem 1rem;
+
+    .create-report-wrapper {
+      padding: 1.75rem 1.25rem;
+    }
+  }
+}

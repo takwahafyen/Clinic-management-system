@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./patientInfon.scss";
 import NavbarNurse from "../../components/navbar/NavbarNurse";
+import { SkeletonCard } from "../../components/skeleton/SkeletonCard";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../config";
+
 const PatientInfon = () => {
   const [patient, setPatient] = useState({});
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const path = location.pathname.split("/")[3];
   const [updateMode, setUpdateMode] = useState(false);
@@ -14,13 +17,17 @@ const PatientInfon = () => {
 
   useEffect(() => {
     const fetchPatient = async () => {
+      setLoading(true);
       try {
         const res = await axios.get(
           `${API_URL}/patientauth/patientInfon/${path}`
         );
         setPatient(res.data);
         setPhone(res.data.phoneNo);
-      } catch (err) {}
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
     };
     fetchPatient();
   }, [path]);
@@ -42,59 +49,59 @@ const PatientInfon = () => {
   };
 
   return (
-  
     <div>
       <NavbarNurse />
-      <div className="patient-info">
-        <div className="patient-info-wrapper">
-          <div className="patient-infon-item">
-            <span>First name: </span>
-            <p>{patient.firstName}</p>
-          </div>
-          <div className="patient-infon-item">
-            <span>Last name: </span>
-            <p>{patient.lastName}</p>
-          </div>
-          <div className="patient-infon-item">
-            <span>Phone number: </span>
-            {updateMode ? (
-              <input
-                type="text"
-                placeholder="Phone number"
-                value={phone}
-                required
-                autoFocus={true}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            ) : (
-              <p>{phone}</p>
+      <div className="patient-infon">
+        {loading ? (
+          <SkeletonCard />
+        ) : (
+          <div className="patient-infon-wrapper">
+            <div className="patient-infon-item">
+              <span>First name: </span>
+              <p>{patient.firstName}</p>
+            </div>
+            <div className="patient-infon-item">
+              <span>Last name: </span>
+              <p>{patient.lastName}</p>
+            </div>
+            <div className="patient-infon-item">
+              <span>Phone number: </span>
+              {updateMode ? (
+                <input
+                  type="text"
+                  placeholder="Phone number"
+                  value={phone}
+                  required
+                  autoFocus={true}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              ) : (
+                <p>{phone}</p>
+              )}
+            </div>
+            <div className="patient-infon-item">
+              <Link to={`/patient/${path}/create_VS`}>
+                <button>CREATE A VITAL SIGN</button>
+              </Link>
+              {updateMode ? (
+                <button onClick={handleUpdate}>CLICK TO UPDATE</button>
+              ) : (
+                <button onClick={(e) => setUpdateMode(true)}>
+                  UPDATE PATIENT
+                </button>
+              )}
+              <Link to="/allVS">
+                <button>VIEW ALL VITAL SIGNS</button>
+              </Link>
+            </div>
+
+            {error && (
+              <p className="errorMsg">Something went wrong! Please try again.</p>
             )}
           </div>
-          <div className="patient-infon-item">
-            <Link to={`/patient/${path}/create_VS`}>
-              <button>CREATE A VITAL SIGN</button>
-            </Link>
-            {updateMode ? (
-              <button onClick={handleUpdate}>CLICK TO UPDATE</button>
-            ) : (
-              <button onClick={(e) => setUpdateMode(true)}>
-                UPDATE PATIENT
-              </button>
-            )}
-            <Link to="/allVS">
-              <button>VIEW ALL VITAL SIGNS</button>
-            </Link>
-            
-          </div>
-        
-        
-          {error && (
-            <p className="errorMsg">Something went wrong! Please try again.</p>
-          )}
-        </div>
+        )}
       </div>
     </div>
-    
   );
 };
 

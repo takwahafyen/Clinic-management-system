@@ -1,5 +1,6 @@
 .link {
   text-decoration: none;
+  color: inherit;
 }
 
 form {
@@ -11,44 +12,70 @@ form {
   height: 70%;
 }
 
-input {
+input, select {
   width: 350px;
+  max-width: 100%;
   background-color: var(--input-bg);
   color: var(--text-primary);
-  border: 2px solid rgb(34, 105, 198);
-  border-radius: 4px;
-  padding: 8px 10px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
   outline: none;
   margin-top: 12px;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+input:focus, select:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18);
+}
+
+input::placeholder {
+  color: var(--text-muted);
 }
 
 button {
-  background-color: rgb(34, 105, 198);
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
   border: none;
-  padding: 8px 18px;
+  padding: 10px 24px;
   color: #fff;
-  margin-top: 12px;
+  margin-top: 14px;
   cursor: pointer;
-  border-radius: 4px;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button:hover {
-  background-color: rgb(24, 88, 172);
+  background: linear-gradient(135deg, #0369a1 0%, #1d4ed8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+}
+
+button:active {
+  transform: translateY(0);
 }
 
 button:disabled {
   cursor: not-allowed;
-  background-color: rgb(94, 154, 234);
+  opacity: 0.65;
+  transform: none;
+  box-shadow: none;
 }
 
 .errorMsg {
-  font-size: 15px;
-  margin: 1rem 0 1.5rem;
+  font-size: 0.9rem;
+  margin: 0.75rem 0 1rem;
   color: #ef4444;
-  font-weight: 500;
+  font-weight: 600;
+  text-align: center;
 }
 
 .back-btn {
@@ -58,6 +85,14 @@ button:disabled {
   position: fixed;
   top: 40px;
   left: 50px;
+  z-index: 10;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.back-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 /* ========================================================
@@ -76,7 +111,7 @@ button:disabled {
 }
 
 .navbar .middle-item:hover, .navbarNurse .middle-item:hover, .navbarPha .middle-item:hover {
-  color: #2f83f1 !important;
+  color: #0284c7 !important;
 }
 
 .left-header {
@@ -93,8 +128,12 @@ button:disabled {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   box-shadow: var(--card-shadow);
-  border-radius: 8px;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-3px);
 }
 
 .feature-item-heading {
@@ -109,6 +148,7 @@ button:disabled {
   background-color: var(--bg-card) !important;
   border: 1px solid var(--border-color) !important;
   box-shadow: var(--card-shadow) !important;
+  border-radius: 12px !important;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -126,26 +166,4 @@ button:disabled {
 
 .about-top p, .about-bottom p, .about-bottom li {
   color: var(--text-secondary) !important;
-}
-
-.footer {
-  background-color: var(--bg-secondary) !important;
-  border-top: 1px solid var(--border-color);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.footer-top-left h2, .ftop-right h2 {
-  color: var(--text-primary) !important;
-}
-
-.ftop-right p, .footer-bottom-left p {
-  color: var(--text-secondary) !important;
-}
-
-.footer-bottom-right span {
-  color: var(--text-secondary) !important;
-}
-
-.footer-bottom-right span:hover {
-  color: #2f83f1 !important;
 }
