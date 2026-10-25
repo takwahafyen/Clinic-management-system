@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import "./navbarNurse.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { NurseContext } from "../../context/NurseContext";
+import ThemeToggle from "../themeToggle/ThemeToggle";
 import axios from "axios";
 import { API_URL } from "../../config";
 
 const NavbarNurse = () => {
   const { nurse, dispatch } = useContext(NurseContext);
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -15,8 +15,7 @@ const NavbarNurse = () => {
     } catch (err) {
       console.error("Nurse logout failed:", err);
     }
-    dispatch({ type: "LOGOUT" });
-    navigate("/");
+    dispatch({ type: "n_LOGOUT" });
   };
 
   return (
@@ -42,10 +41,11 @@ const NavbarNurse = () => {
           <Link to="/patient/registerN" className="link">
             <span className="middle-item">Register a patient</span>
           </Link>
-
-          <Link to="/allVS" className="link">
-            <span className="middle-item">View all vital signs</span>
-          </Link>
+          {nurse && (
+            <Link to="/allVS" className="link">
+              <span className="middle-item">View all VS</span>
+            </Link>
+          )}
 
           <div className="middle-item" id="down-middle-item">
             <img
@@ -66,6 +66,7 @@ const NavbarNurse = () => {
           </div>
         </div>
         <div className="right">
+          <ThemeToggle />
           {nurse ? (
             <button onClick={handleLogout} className="nav-btn">
               Log out

@@ -48,15 +48,9 @@
           span {
             font-size: 14px;
             padding: 8px 17px;
-            color: rgb(105, 105, 105);
-          }
-          span:hover {
-            background-color: #0b6eee;
-            color: #fff;
           }
         }
       }
-
       #down-middle-item:hover {
         #down {
           display: flex;
@@ -67,7 +61,10 @@
       }
     }
     .right {
-      flex: 1;
+      flex: 1.2;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
 
       .nav-btn {
         border: none;
@@ -76,6 +73,7 @@
         font-size: 15px;
         background: linear-gradient(to bottom right, #2f83f1, #0b6eee);
         cursor: pointer;
+        border-radius: 4px;
       }
     }
   }
