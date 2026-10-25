@@ -12,6 +12,9 @@ const FCRoute = require("./routes/FC");
 
 const app = express();
 
+// Trust reverse proxies (Render, Nginx, Vercel) for accurate client IP detection in rate limiting
+app.set("trust proxy", 1);
+
 // middleware
 app.use(
   cors({
