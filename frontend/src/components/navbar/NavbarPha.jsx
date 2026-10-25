@@ -3,11 +3,14 @@ import "./navbarPha.scss";
 import { Link } from "react-router-dom";
 import { PharmacistContext } from "../../context/PharmacistContext";
 import ThemeToggle from "../themeToggle/ThemeToggle";
+import LanguageToggle from "../languageToggle/LanguageToggle";
+import { useLanguage } from "../../context/LanguageContext";
 import axios from "axios";
 import { API_URL } from "../../config";
 
 const NavbarPha = () => {
   const { pharmacist, dispatch } = useContext(PharmacistContext);
+  const { t } = useLanguage();
 
   const handleLogout = async () => {
     try {
@@ -30,20 +33,20 @@ const NavbarPha = () => {
         </div>
         <div className="middle">
           <Link to="/HomePha" className="link">
-            <span className="middle-item">Home</span>
+            <span className="middle-item">{t("navbar.home")}</span>
           </Link>
           <Link to="/about" className="link">
-            <span className="middle-item">About Us</span>
+            <span className="middle-item">{t("navbar.about")}</span>
           </Link>
           <Link to="/guidelines" className="link">
-            <span className="middle-item">Guidelines</span>
+            <span className="middle-item">{t("navbar.guidelines")}</span>
           </Link>
           <Link to="/client/register" className="link">
-            <span className="middle-item">Register a client</span>
+            <span className="middle-item">{t("navbar.registerClient")}</span>
           </Link>
           {pharmacist && (
             <Link to="/allFC" className="link">
-              <span className="middle-item">View all FC</span>
+              <span className="middle-item">{t("navbar.viewFC")}</span>
             </Link>
           )}
 
@@ -60,20 +63,21 @@ const NavbarPha = () => {
             />
             <div className="down-arrow-items" id="down">
               <Link to={"/settingsPha/" + pharmacist?._id} className="link">
-                <span>Settings</span>
+                <span>{t("navbar.settings")}</span>
               </Link>
             </div>
           </div>
         </div>
         <div className="right">
+          <LanguageToggle />
           <ThemeToggle />
           {pharmacist ? (
             <button onClick={handleLogout} className="nav-btn">
-              Log out
+              {t("navbar.logout")}
             </button>
           ) : (
             <Link to="/pharmacist/login">
-              <button className="nav-btn">Log in</button>
+              <button className="nav-btn">{t("navbar.login")}</button>
             </Link>
           )}
         </div>

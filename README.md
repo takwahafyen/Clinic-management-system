@@ -282,6 +282,7 @@ npm run test:e2e
 - [x] Comprehensive Cypress E2E automated test suite
 - [x] Pagination & metadata headers on unbounded list endpoints
 - [x] Modern animated Light / Dark mode with system preference auto-detection
+- [x] Bilingual i18n translation system (English default & French) with zero runtime dependencies
 - [x] Docker & Docker Compose containerization for single-command deployment
 - [x] LICENSE (MIT)
 - [x] Live deployment (backend on Render + frontend on Vercel) with automated CI/CD
