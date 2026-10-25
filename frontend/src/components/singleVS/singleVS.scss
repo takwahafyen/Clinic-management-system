@@ -1,19 +1,37 @@
 .VS-item {
-  padding: 10px;
-  width: 400px;
-  border: 2px solid rgba(34, 105, 198);
+  padding: 1.25rem 1.5rem;
+  width: 440px;
+  max-width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   margin-bottom: 1.5rem;
-  border-radius: 4px;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.1);
+  }
 
   .VS-item-row {
     display: flex;
+    align-items: center;
+    margin-bottom: 0.4rem;
+
     span {
-      font-size: 15px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
       width: 150px;
+      flex-shrink: 0;
     }
+
     p {
-      font-size: 14px;
-      color: rgb(101, 101, 101);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin: 0;
+      word-break: break-word;
     }
   }
 }

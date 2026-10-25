@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./patientInfo.scss";
 import Navbar from "../../components/navbar/Navbar";
+import { SkeletonCard } from "../../components/skeleton/SkeletonCard";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../config";
 
 const PatientInfo = () => {
   const [patient, setPatient] = useState({});
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const path = location.pathname.split("/")[3];
   const [updateMode, setUpdateMode] = useState(false);
@@ -15,13 +17,17 @@ const PatientInfo = () => {
 
   useEffect(() => {
     const fetchPatient = async () => {
+      setLoading(true);
       try {
         const res = await axios.get(
           `${API_URL}/patientauth/patientInfo/${path}`
         );
         setPatient(res.data);
         setPhone(res.data.phoneNo);
-      } catch (err) {}
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
     };
     fetchPatient();
   }, [path]);
@@ -46,52 +52,54 @@ const PatientInfo = () => {
     <div>
       <Navbar />
       <div className="patient-info">
-        <div className="patient-info-wrapper">
-          <div className="patient-info-item">
-            <span>First name: </span>
-            <p>{patient.firstName}</p>
-          </div>
-          <div className="patient-info-item">
-            <span>Last name: </span>
-            <p>{patient.lastName}</p>
-          </div>
-          <div className="patient-info-item">
-            <span>Phone number: </span>
-            {updateMode ? (
-              <input
-                type="text"
-                placeholder="Phone number"
-                value={phone}
-                required
-                autoFocus={true}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            ) : (
-              <p>{phone}</p>
+        {loading ? (
+          <SkeletonCard />
+        ) : (
+          <div className="patient-info-wrapper">
+            <div className="patient-info-item">
+              <span>First name: </span>
+              <p>{patient.firstName}</p>
+            </div>
+            <div className="patient-info-item">
+              <span>Last name: </span>
+              <p>{patient.lastName}</p>
+            </div>
+            <div className="patient-info-item">
+              <span>Phone number: </span>
+              {updateMode ? (
+                <input
+                  type="text"
+                  placeholder="Phone number"
+                  value={phone}
+                  required
+                  autoFocus={true}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              ) : (
+                <p>{phone}</p>
+              )}
+            </div>
+            <div className="patient-info-item">
+              <Link to={`/patient/${path}/create_report`}>
+                <button>CREATE A REPORT</button>
+              </Link>
+              {updateMode ? (
+                <button onClick={handleUpdate}>CLICK TO UPDATE</button>
+              ) : (
+                <button onClick={(e) => setUpdateMode(true)}>
+                  UPDATE PATIENT
+                </button>
+              )}
+              <Link to="/allReports">
+                <button>VIEW REPORTS</button>
+              </Link>
+            </div>
+
+            {error && (
+              <p className="errorMsg">Something went wrong! Please try again.</p>
             )}
           </div>
-          <div className="patient-info-item">
-            <Link to={`/patient/${path}/create_report`}>
-              <button>CREATE A REPORT</button>
-            </Link>
-            {updateMode ? (
-              <button onClick={handleUpdate}>CLICK TO UPDATE</button>
-            ) : (
-              <button onClick={(e) => setUpdateMode(true)}>
-                UPDATE PATIENT
-              </button>
-            )}
-            <Link to="/allReports">
-              <button>VIEW REPORTS</button>
-            </Link>
-           
-          </div>
-        
-        
-          {error && (
-            <p className="errorMsg">Something went wrong! Please try again.</p>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );

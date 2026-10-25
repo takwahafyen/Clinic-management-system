@@ -2,48 +2,107 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-bottom: 4rem;
+
   .about-wrapper {
-    width: 74.5%;
+    width: 90%;
+    max-width: 900px;
     display: flex;
     flex-direction: column;
+
     .about-top {
       flex: 1;
-      margin-bottom: 1.5rem;
-      padding-top: 4rem;
+      margin-bottom: 2rem;
+      padding-top: 3.5rem;
 
       h1 {
-        color: rgb(95, 95, 95);
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+
         span {
-          color: #2f83f1;
+          background: linear-gradient(135deg, #0284c7, #2563eb);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
       }
+
       p {
-        color: grey;
+        color: var(--text-secondary);
         margin-top: 1rem;
-        line-height: 2rem;
+        line-height: 1.9;
+        font-size: 1rem;
       }
     }
+
     .about-bottom {
       flex: 2;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem 2.5rem;
+      box-shadow: var(--card-shadow);
+
       h1 {
-        color: rgb(95, 95, 95);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+
         span {
-          color: #2f83f1;
+          background: linear-gradient(135deg, #0284c7, #2563eb);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
       }
+
       p {
-        color: grey;
-        margin-top: 1rem;
-        line-height: 2rem;
+        color: var(--text-secondary);
+        margin-top: 0.75rem;
+        line-height: 1.85;
+        font-size: 0.98rem;
       }
+
       ul {
-        list-style-type: square;
-        line-height: 2rem;
+        list-style-type: none;
+        padding: 0;
+        margin-top: 1rem;
+
         li {
-          margin-top: 0.6rem;
-          color: gray;
-          font-size: 15px;
+          margin-top: 0.65rem;
+          color: var(--text-secondary);
+          font-size: 0.95rem;
+          padding: 0.5rem 0.75rem;
+          border-radius: 8px;
+          transition: background 0.2s ease;
+          position: relative;
+          padding-left: 1.5rem;
+
+          &::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #0284c7;
+            font-weight: 700;
+          }
+
+          &:hover {
+            background: rgba(2, 132, 199, 0.06);
+          }
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    .about-wrapper {
+      width: 95%;
+
+      .about-bottom {
+        padding: 1.5rem;
       }
     }
   }

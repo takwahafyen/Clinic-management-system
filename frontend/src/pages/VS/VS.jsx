@@ -3,12 +3,14 @@ import "./VS.scss";
 import NavbarNurse from "../../components/navbar/NavbarNurse";
 import Footer from "../../components/footer/Footer";
 import SingleVS from "../../components/singleVS/SingleVS";
+import { SkeletonGrid } from "../../components/skeleton/SkeletonCard";
 import axios from "axios";
 import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const VS = () => {
   const [VSList, setVSList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currP, setCurrP] = useState("ALL");
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,11 +25,14 @@ const VS = () => {
   // Fetch all VS on initial load
   useEffect(() => {
     const fetchVS = async () => {
+      setLoading(true);
       try {
         const res = await axios.get(`${API_URL}/patients/allVS`);
         setVSList(res.data);
       } catch (err) {
         console.error("Error fetching VS:", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchVS();
@@ -49,6 +54,7 @@ const VS = () => {
   };
 
   const searchByName = async (name) => {
+    setLoading(true);
     try {
       const res = await axios.get(
         `${API_URL}/patients/VS/${encodeURIComponent(name)}`
@@ -56,6 +62,8 @@ const VS = () => {
       setVSList(res.data);
     } catch (err) {
       console.error("Error fetching VS by name:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -65,6 +73,7 @@ const VS = () => {
       const path = location.pathname.split("/")[2];
       if (!path) return;
 
+      setLoading(true);
       try {
         let res;
         if (arr.includes(path)) {
@@ -75,6 +84,8 @@ const VS = () => {
         setVSList(res.data);
       } catch (err) {
         console.error("Error fetching filtered VS:", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchFilteredVS();
@@ -82,12 +93,15 @@ const VS = () => {
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.get(`${API_URL}/patients/allVS`);
       setVSList(res.data);
       navigate("/allVS");
     } catch (err) {
       console.error("Error refreshing VS:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -124,12 +138,15 @@ const VS = () => {
             </div>
           </div>
           <div className="VS-bottom">
-            {VSList.map((singleVS) => (
-              <SingleVS key={singleVS._id} VS={singleVS} />
-            ))}
-            <p className="no-results">
-              {VSList.length === 0 && "No results found"}
-            </p>
+            {loading ? (
+              <SkeletonGrid count={3} />
+            ) : VSList.length > 0 ? (
+              VSList.map((singleVS) => (
+                <SingleVS key={singleVS._id} VS={singleVS} />
+              ))
+            ) : (
+              <p className="no-results">No results found</p>
+            )}
           </div>
         </div>
       </div>

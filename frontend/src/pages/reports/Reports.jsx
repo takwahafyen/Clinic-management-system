@@ -3,12 +3,14 @@ import "./reports.scss";
 import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import SingleReport from "../../components/singleReport/SingleReport";
+import { SkeletonGrid } from "../../components/skeleton/SkeletonCard";
 import axios from "axios";
 import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Reports = () => {
   const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currP, setCurrP] = useState("ALL");
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,11 +20,14 @@ const Reports = () => {
   // Fetch all reports on initial load
   useEffect(() => {
     const fetchReports = async () => {
+      setLoading(true);
       try {
         const res = await axios.get(`${API_URL}/patients/allReports`);
         setReports(res.data);
       } catch (err) {
         console.error("Error fetching reports:", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchReports();
@@ -46,6 +51,7 @@ const Reports = () => {
       const path = location.pathname.split("/")[2];
       if (!path) return;
 
+      setLoading(true);
       try {
         let res;
         if (arr.includes(path)) {
@@ -56,6 +62,8 @@ const Reports = () => {
         setReports(res.data);
       } catch (err) {
         console.error("Error fetching filtered reports:", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchFilteredReports();
@@ -63,12 +71,15 @@ const Reports = () => {
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.get(`${API_URL}/patients/allReports`);
       setReports(res.data);
       navigate("/allReports");
     } catch (err) {
       console.error("Error refreshing reports:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,12 +110,15 @@ const Reports = () => {
             </div>
           </div>
           <div className="reports-bottom">
-            {reports.map((report) => (
-              <SingleReport key={report._id} report={report} />
-            ))}
-            <p className="no-results">
-              {reports.length === 0 && "No results found"}
-            </p>
+            {loading ? (
+              <SkeletonGrid count={3} />
+            ) : reports.length > 0 ? (
+              reports.map((report) => (
+                <SingleReport key={report._id} report={report} />
+              ))
+            ) : (
+              <p className="no-results">No results found</p>
+            )}
           </div>
         </div>
       </div>

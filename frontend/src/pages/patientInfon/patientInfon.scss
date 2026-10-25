@@ -1,36 +1,59 @@
 .patient-infon {
-  width: 100vw;
-  height: calc(100vh - 100px);
+  width: 100%;
+  min-height: calc(100vh - 100px);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 3rem 1.5rem;
+  background: radial-gradient(circle at top, rgba(2, 132, 199, 0.08) 0%, var(--bg-primary) 75%);
+  transition: background 0.3s ease;
+
   .patient-infon-wrapper {
-    width: 500px;
-    height: 280px;
-    border: 2px solid rgb(34, 105, 198);
+    width: 520px;
+    max-width: 100%;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow), 0 12px 32px -8px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem 2rem;
     display: flex;
-    align-items: center;
     flex-direction: column;
-    border-radius: 4px;
+    gap: 1.25rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
     .patient-infon-item {
       display: flex;
-      height: 60px;
-      display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border-color);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
       span {
-        font-size: 15px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text-primary);
       }
+
       p {
-        font-size: 14.5px;
-        color: rgb(101, 99, 99);
-        margin-left: 0.5rem;
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        margin: 0;
       }
-      button{
-          margin: 0 3px;
+
+      button {
+        margin: 0 4px;
+        padding: 6px 14px;
+        font-size: 0.85rem;
       }
+
       input {
-        margin-left: 1rem;
+        width: 180px;
+        margin-top: 0;
+        padding: 6px 10px;
       }
     }
   }

@@ -3,12 +3,14 @@ import "./FC.scss";
 import NavbarPha from "../../components/navbar/NavbarPha";
 import Footer from "../../components/footer/Footer";
 import SingleFC from "../../components/singleFC/SingleFC";
+import { SkeletonGrid } from "../../components/skeleton/SkeletonCard";
 import axios from "axios";
 import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const FC = () => {
   const [FCList, setFCList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currC, setCurrC] = useState("ALL");
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,11 +20,14 @@ const FC = () => {
   // Fetch all FC on initial load
   useEffect(() => {
     const fetchFC = async () => {
+      setLoading(true);
       try {
         const res = await axios.get(`${API_URL}/client/allFC`);
         setFCList(res.data);
       } catch (err) {
         console.error("Error fetching FC:", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchFC();
@@ -46,6 +51,7 @@ const FC = () => {
       const path = location.pathname.split("/")[2];
       if (!path) return;
 
+      setLoading(true);
       try {
         let res;
         if (arr.includes(path)) {
@@ -56,6 +62,8 @@ const FC = () => {
         setFCList(res.data);
       } catch (err) {
         console.error("Error fetching filtered FC:", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchFilteredFC();
@@ -63,12 +71,15 @@ const FC = () => {
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.get(`${API_URL}/client/allFC`);
       setFCList(res.data);
       navigate("/allFC");
     } catch (err) {
       console.error("Error refreshing FC:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,12 +116,15 @@ const FC = () => {
             </div>
           </div>
           <div className="FC-bottom">
-            {FCList.map((item) => (
-              <SingleFC key={item._id} FC={item} />
-            ))}
-            <p className="no-results">
-              {FCList.length === 0 && "No results found"}
-            </p>
+            {loading ? (
+              <SkeletonGrid count={3} />
+            ) : FCList.length > 0 ? (
+              FCList.map((item) => (
+                <SingleFC key={item._id} FC={item} />
+              ))
+            ) : (
+              <p className="no-results">No results found</p>
+            )}
           </div>
         </div>
       </div>
