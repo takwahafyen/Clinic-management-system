@@ -10,6 +10,11 @@ const Speciality = () => {
     dispatch({ type: "LOGOUT" });
   };
 
+  const handleImageError = (e) => {
+    e.target.onerror = null;
+    e.target.src = "/assets/images/team-1.jpg";
+  };
+
   return (
     <div className="speciality">
       <div className="speciality-wrapper">
@@ -20,6 +25,7 @@ const Speciality = () => {
               <img
                 src="/assets/images/chur.png"
                 alt="laboratory"
+                onError={handleImageError}
               />
             </div>
             <div className="sitem-bottom">
@@ -35,6 +41,7 @@ const Speciality = () => {
               <img
                 src="/assets/images/team-3.jpg"
                 alt="ophthalmology"
+                onError={handleImageError}
               />
             </div>
             <div className="sitem-bottom">
@@ -50,6 +57,7 @@ const Speciality = () => {
               <img
                 src="/assets/images/team-2.jpg"
                 alt="pediatrics"
+                onError={handleImageError}
               />
             </div>
             <div className="sitem-bottom">
@@ -65,6 +73,7 @@ const Speciality = () => {
               <img
                 src="/assets/images/team-1.jpg"
                 alt="orthopedics"
+                onError={handleImageError}
               />
             </div>
             <div className="sitem-bottom">
