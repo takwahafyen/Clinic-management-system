@@ -10,6 +10,12 @@ const Pharmacist = () => {
     dispatch({ type: "LOGOUT" });
   };
 
+  const handleImageError = (e) => {
+    // Fallback to a guaranteed available pharmacist image if specific image fails
+    e.target.onerror = null;
+    e.target.src = "/assets/images/phar.jpg";
+  };
+
   return (
     <div className="pharmacist">
       <div className="pharmacist-wrapper">
@@ -19,8 +25,9 @@ const Pharmacist = () => {
             <div className="pharmacist-top">
               <img
                 src="/assets/images/ppp.jpg"
-                alt="rapid test"
+                alt="pharmacist Asma"
                 className="pharmacist-image"
+                onError={handleImageError}
               />
             </div>
             <p className="pharmacist-bottom">ASMA</p>
@@ -29,8 +36,9 @@ const Pharmacist = () => {
             <div className="pharmacist-top">
               <img
                 src="/assets/images/opp.jpg"
-                alt="pcr test"
+                alt="pharmacist Ali"
                 className="pharmacist-image"
+                onError={handleImageError}
               />
             </div>
             <p className="pharmacist-bottom">ALI</p>
@@ -39,8 +47,9 @@ const Pharmacist = () => {
             <div className="pharmacist-top">
               <img
                 src="/assets/images/phhh.jpg"
-                alt="drive thru test"
+                alt="pharmacist Sana"
                 className="pharmacist-image"
+                onError={handleImageError}
               />
             </div>
             <p className="pharmacist-bottom">SANA</p>
@@ -49,8 +58,9 @@ const Pharmacist = () => {
             <div className="pharmacist-top">
               <img
                 src="/assets/images/phar.jpg"
-                alt="pharmacist"
+                alt="pharmacist Senda"
                 className="pharmacist-image"
+                onError={handleImageError}
               />
             </div>
             <p className="pharmacist-bottom">SENDA</p>

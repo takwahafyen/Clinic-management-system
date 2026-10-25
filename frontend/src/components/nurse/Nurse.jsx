@@ -10,30 +10,35 @@ const Nurse = () => {
     dispatch({ type: "LOGOUT" });
   };
 
+  const handleImageError = (e) => {
+    e.target.onerror = null;
+    e.target.src = "/assets/images/nurse-1.jpg";
+  };
+
   const nursesImages = [
     {
       id: 1,
       src: "/assets/images/nurse-1.jpg",
       alt: "nurse 1",
-      contentHead: "nurse1",
+      contentHead: "Nurse 1",
     },
     {
       id: 2,
       src: "/assets/images/nurse-2.jpg",
       alt: "nurse 2",
-      contentHead: "nurse 2",
+      contentHead: "Nurse 2",
     },
     {
       id: 3,
       src: "/assets/images/nurse-3.jpg",
       alt: "nurse 3",
-      contentHead: "nurse3",
+      contentHead: "Nurse 3",
     },
     {
       id: 4,
       src: "/assets/images/gyna.jpg",
       alt: "nurse 4",
-      contentHead: "nurse4",
+      contentHead: "Nurse 4",
     },
   ];
 
@@ -45,7 +50,12 @@ const Nurse = () => {
           <div className="fdesc-item" key={nurse.id}>
             <div className="fimagecontainer">
               <div className="fcolor">
-                <img src={nurse.src} alt={nurse.alt} className={`fimage${nurse.id}`} />
+                <img
+                  src={nurse.src}
+                  alt={nurse.alt}
+                  className={`fimage${nurse.id}`}
+                  onError={handleImageError}
+                />
               </div>
             </div>
             <div className={`fcontent${nurse.id}`}>
