@@ -58,7 +58,7 @@ const Footer = () => {
         <div className="footer-bottom">
           <div className="footer-bottom-left">
             <img
-              src="http://localhost:3000/assets/images/medwin-cares.png"
+              src="/assets/images/medwin-cares.png"
               alt="hospital-logo"
               className="footer-logo"
             />
@@ -82,19 +82,16 @@ const Footer = () => {
             <Link to="/" className="link">
               <span>Home</span>
             </Link>
-            <Link to="/" className="link">
+            <Link to="/about" className="link">
               <span>About Us</span>
             </Link>
-            <Link to="/" className="link">
+            <Link to="/guidelines" className="link">
               <span>Guidelines</span>
             </Link>
-            <Link to="/" className="link">
-              <span>Ask a Question</span>
-            </Link>
-            <Link to="/" className="link">
+            <Link to="/doctor/register" className="link">
               <span>Register</span>
             </Link>
-            <Link to="/" className="link">
+            <Link to="/doctor/login" className="link">
               <span>Our Doctors</span>
             </Link>
           </div>

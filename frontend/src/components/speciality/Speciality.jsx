@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
-import './speciality.scss';
+import "./speciality.scss";
 
 const Speciality = () => {
   const { doctor, dispatch } = useContext(Context);
 
   const handleLogout = () => {
-    console.log("clicked");
     dispatch({ type: "LOGOUT" });
   };
 
@@ -19,16 +18,14 @@ const Speciality = () => {
           <div className="speciality-item">
             <div className="sitem-top">
               <img
-                src="http://localhost:3000/assets/images/chur.png"
+                src="/assets/images/chur.png"
                 alt="laboratory"
               />
             </div>
             <div className="sitem-bottom">
-              <span className="speciality-subheading">
-                Docteur Mohamed
-              </span>
+              <span className="speciality-subheading">Docteur Mohamed</span>
               <div className="speciality-info">
-                <span>churgien</span>
+                <span>Surgeon</span>
                 <button>More info</button>
               </div>
             </div>
@@ -36,14 +33,14 @@ const Speciality = () => {
           <div className="speciality-item">
             <div className="sitem-top">
               <img
-                src="http://localhost:3000/assets/images/team-3.jpg"
-                alt="gynecology"
+                src="/assets/images/team-3.jpg"
+                alt="ophthalmology"
               />
             </div>
             <div className="sitem-bottom">
-              <span className="speciality-subheading"> Docteur Ali</span>
+              <span className="speciality-subheading">Docteur Ali</span>
               <div className="speciality-info">
-                <span>ophthalmologist</span>
+                <span>Ophthalmologist</span>
                 <button>More info</button>
               </div>
             </div>
@@ -51,14 +48,14 @@ const Speciality = () => {
           <div className="speciality-item">
             <div className="sitem-top">
               <img
-                src="http://localhost:3000/assets/images/team-2.jpg"
-                alt="machines"
+                src="/assets/images/team-2.jpg"
+                alt="pediatrics"
               />
             </div>
             <div className="sitem-bottom">
-              <span className="speciality-subheading">D.Houda</span>
+              <span className="speciality-subheading">Dr. Houda</span>
               <div className="speciality-info">
-                <span>pediatrician</span>
+                <span>Pediatrician</span>
                 <button>More info</button>
               </div>
             </div>
@@ -66,14 +63,14 @@ const Speciality = () => {
           <div className="speciality-item">
             <div className="sitem-top">
               <img
-                src="http://localhost:3000/assets/images/team-1.jpg"
-                alt="machines"
+                src="/assets/images/team-1.jpg"
+                alt="orthopedics"
               />
             </div>
             <div className="sitem-bottom">
-              <span className="speciality-subheading">Docteur hani</span>
+              <span className="speciality-subheading">Docteur Hani</span>
               <div className="speciality-info">
-                <span>orthopedist</span>
+                <span>Orthopedist</span>
                 <button>More info</button>
               </div>
             </div>

@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import { PharmacistContext } from "../../context/PharmacistContext";
 import "./pharmacist.scss";
 
-const Pharmacist= () => {
+const Pharmacist = () => {
   const { pharmacist, dispatch } = useContext(PharmacistContext);
 
   const handleLogout = () => {
-    console.log("clicked");
     dispatch({ type: "LOGOUT" });
   };
 
@@ -19,7 +18,7 @@ const Pharmacist= () => {
           <div className="pharmacist-item">
             <div className="pharmacist-top">
               <img
-                src="http://localhost:3000/assets/images/ppp.jpg"
+                src="/assets/images/ppp.jpg"
                 alt="rapid test"
                 className="pharmacist-image"
               />
@@ -29,7 +28,7 @@ const Pharmacist= () => {
           <div className="pharmacist-item">
             <div className="pharmacist-top">
               <img
-                src="http://localhost:3000/assets/images/opp.jpg"
+                src="/assets/images/opp.jpg"
                 alt="pcr test"
                 className="pharmacist-image"
               />
@@ -39,7 +38,7 @@ const Pharmacist= () => {
           <div className="pharmacist-item">
             <div className="pharmacist-top">
               <img
-                src="http://localhost:3000/assets/images/phhh.jpg"
+                src="/assets/images/phhh.jpg"
                 alt="drive thru test"
                 className="pharmacist-image"
               />
@@ -49,16 +48,16 @@ const Pharmacist= () => {
           <div className="pharmacist-item">
             <div className="pharmacist-top">
               <img
-                src="http://localhost:3000/assets/images/phar.jpg"
+                src="/assets/images/phar.jpg"
                 alt="pharmacist"
                 className="pharmacist-image"
               />
             </div>
             <p className="pharmacist-bottom">SENDA</p>
           </div>
-         </div>
-            
-            <div className="right">
+        </div>
+
+        <div className="right">
           {pharmacist ? (
             <button onClick={handleLogout} className="nav-btn">
               Logout Pharmacist
