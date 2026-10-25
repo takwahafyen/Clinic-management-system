@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { NurseContext } from "../../context/NurseContext";
+import { useLanguage } from "../../context/LanguageContext";
 import "./nurse.scss";
 
 const Nurse = () => {
   const { nurse, dispatch } = useContext(NurseContext);
+  const { t } = useLanguage();
 
   const handleLogout = () => {
     dispatch({ type: "n_LOGOUT" });
@@ -21,28 +23,28 @@ const Nurse = () => {
       name: "Florence Nightingale",
       role: "Head Nurse • Critical Care",
       src: "/assets/images/nurse-1.jpg",
-      status: "On Shift",
+      status: t("nurses.onShift"),
     },
     {
       id: 2,
       name: "Sarah Jenkins",
       role: "Emergency & Trauma",
       src: "/assets/images/nurse-2.jpg",
-      status: "On Shift",
+      status: t("nurses.onShift"),
     },
     {
       id: 3,
       name: "Claire Bennett",
       role: "Pediatric Care",
       src: "/assets/images/nurse-3.jpg",
-      status: "Available",
+      status: t("nurses.onShift"),
     },
     {
       id: 4,
       name: "Emma Watson",
       role: "Gynecology & Maternity",
       src: "/assets/images/gyna.jpg",
-      status: "On Shift",
+      status: t("nurses.onShift"),
     },
   ];
 
@@ -50,11 +52,9 @@ const Nurse = () => {
     <section className="nurse nurses-section">
       <div className="section-container">
         <div className="section-header">
-          <span className="badge-tag">Nursing & Patient Care</span>
-          <h2 className="title">Our Dedicated Nurses</h2>
-          <p className="subtitle">
-            24/7 continuous monitoring, patient assessment, and compassionate bedside care.
-          </p>
+          <span className="badge-tag">{t("nurses.tag")}</span>
+          <h2 className="title">{t("nurses.title")}</h2>
+          <p className="subtitle">{t("nurses.desc")}</p>
         </div>
 
         <div className="nurses-grid">
@@ -83,11 +83,11 @@ const Nurse = () => {
         <div className="section-footer-action">
           {nurse ? (
             <button onClick={handleLogout} className="action-btn logout">
-              Log out Nurse
+              {t("nurses.logout")}
             </button>
           ) : (
             <Link to="/nurse/login">
-              <button className="action-btn login">Nurse Portal Access →</button>
+              <button className="action-btn login">{t("nurses.portal")}</button>
             </Link>
           )}
         </div>

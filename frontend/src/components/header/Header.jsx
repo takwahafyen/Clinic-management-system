@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../../context/LanguageContext";
 import "./header.scss";
 
 const Header = () => {
+  const { t } = useLanguage();
+
   return (
     <header className="header">
       <div className="header-container">
@@ -10,23 +13,19 @@ const Header = () => {
         <div className="hero-content">
           <div className="hero-badge">
             <span className="badge-dot" />
-            <span className="badge-text">Next-Gen Healthcare Management Platform</span>
+            <span className="badge-text">{t("hero.badge")}</span>
           </div>
 
           <h1 className="hero-title">
-            Healthcare Management, <br />
-            <span className="gradient-text">Intelligently Unified.</span>
+            {t("hero.titlePart1")} <br />
+            <span className="gradient-text">{t("hero.titleGradient")}</span>
           </h1>
 
-          <p className="hero-subtitle">
-            Seamlessly coordinate doctors, nurses, and pharmacists in one secure,
-            role-protected clinical workspace. Real-time vital signs, consultation
-            reports, and medication tracking.
-          </p>
+          <p className="hero-subtitle">{t("hero.subtitle")}</p>
 
           <div className="hero-actions">
             <Link to="/patient/register" className="btn-primary">
-              Register a Patient
+              {t("hero.ctaRegister")}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -43,24 +42,24 @@ const Header = () => {
               </svg>
             </Link>
             <Link to="/about" className="btn-secondary">
-              Explore Services
+              {t("hero.ctaExplore")}
             </Link>
           </div>
 
           <div className="hero-stats">
             <div className="stat-item">
               <span className="stat-number">99.9%</span>
-              <span className="stat-label">System Uptime</span>
+              <span className="stat-label">{t("hero.statUptime")}</span>
             </div>
             <div className="stat-divider" />
             <div className="stat-item">
               <span className="stat-number">3 Roles</span>
-              <span className="stat-label">Doctor, Nurse, Pharma</span>
+              <span className="stat-label">{t("hero.statRoles")}</span>
             </div>
             <div className="stat-divider" />
             <div className="stat-item">
               <span className="stat-number">100%</span>
-              <span className="stat-label">RBAC Secured</span>
+              <span className="stat-label">{t("hero.statSecured")}</span>
             </div>
           </div>
         </div>
@@ -74,35 +73,35 @@ const Header = () => {
                 <img src="/assets/images/nurse-1.jpg" alt="Patient Care Specialist" />
               </div>
               <div className="patient-details">
-                <span className="patient-name">Live Consultation Desk</span>
-                <span className="patient-id">Dr. Ada Lovelace • Cardiology</span>
+                <span className="patient-name">{t("hero.liveDesk")}</span>
+                <span className="patient-id">{t("hero.specialty")}</span>
               </div>
-              <span className="status-chip active">Active Session</span>
+              <span className="status-chip active">{t("hero.activeSession")}</span>
             </div>
 
             <div className="vital-grid">
               <div className="vital-box">
-                <span className="vital-label">Heart Rate</span>
+                <span className="vital-label">{t("hero.heartRate")}</span>
                 <div className="vital-value-row">
                   <span className="vital-value">72</span>
                   <span className="vital-unit">bpm</span>
                 </div>
-                <span className="vital-status normal">● Normal Rhythm</span>
+                <span className="vital-status normal">● {t("hero.normalRhythm")}</span>
               </div>
               <div className="vital-box">
-                <span className="vital-label">Blood Pressure</span>
+                <span className="vital-label">{t("hero.bloodPressure")}</span>
                 <div className="vital-value-row">
                   <span className="vital-value">120/80</span>
                   <span className="vital-unit">mmHg</span>
                 </div>
-                <span className="vital-status normal">● Optimal</span>
+                <span className="vital-status normal">● {t("hero.optimal")}</span>
               </div>
               <div className="vital-box">
-                <span className="vital-label">Diabetic Status</span>
+                <span className="vital-label">{t("hero.diabeticStatus")}</span>
                 <div className="vital-value-row">
-                  <span className="vital-value">Non-Diabetic</span>
+                  <span className="vital-value">{t("hero.nonDiabetic")}</span>
                 </div>
-                <span className="vital-status verified">✓ Verified</span>
+                <span className="vital-status verified">✓ {t("hero.verified")}</span>
               </div>
             </div>
 
@@ -110,8 +109,8 @@ const Header = () => {
             <div className="floating-badge">
               <div className="badge-icon">💊</div>
               <div className="badge-info">
-                <strong>Prescription Ready</strong>
-                <span>Pharmacist validated</span>
+                <strong>{t("hero.prescriptionReady")}</strong>
+                <span>{t("hero.pharmacistValidated")}</span>
               </div>
             </div>
           </div>

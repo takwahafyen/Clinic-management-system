@@ -1,13 +1,16 @@
 import React from "react";
+import { useLanguage } from "../../context/LanguageContext";
 import "./features.scss";
 
 const Features = () => {
+  const { t } = useLanguage();
+
   const featuresList = [
     {
       id: 1,
-      title: "Patient Registration & RBAC",
-      desc: "Fast, centralized intake with strict role-based access control protecting medical confidentiality at every step.",
-      badge: "Security",
+      title: t("features.f1Title"),
+      desc: t("features.f1Desc"),
+      badge: t("features.f1Badge"),
       iconSvg: (
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -16,9 +19,9 @@ const Features = () => {
     },
     {
       id: 2,
-      title: "Real-Time Vital Signs & Reports",
-      desc: "Instant logging of blood pressure, blood glucose, and consultation summaries with direct doctor-nurse synchronization.",
-      badge: "Clinical Care",
+      title: t("features.f2Title"),
+      desc: t("features.f2Desc"),
+      badge: t("features.f2Badge"),
       iconSvg: (
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
@@ -27,9 +30,9 @@ const Features = () => {
     },
     {
       id: 3,
-      title: "Medication & Pharmacy Records",
-      desc: "Comprehensive drug inventory tracking and prescription delivery management directly handled by licensed pharmacists.",
-      badge: "Pharmacy",
+      title: t("features.f3Title"),
+      desc: t("features.f3Desc"),
+      badge: t("features.f3Badge"),
       iconSvg: (
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z" />
@@ -43,11 +46,9 @@ const Features = () => {
     <section className="features features-section">
       <div className="features-container">
         <div className="features-header">
-          <span className="section-tag">Platform Core Capabilities</span>
-          <h2 className="section-title">Engineered for Clinical Excellence</h2>
-          <p className="section-desc">
-            Everything your medical staff needs to deliver prompt, accurate, and coordinated patient care.
-          </p>
+          <span className="section-tag">{t("features.tag")}</span>
+          <h2 className="section-title">{t("features.title")}</h2>
+          <p className="section-desc">{t("features.desc")}</p>
         </div>
 
         <div className="features-grid">

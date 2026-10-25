@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
+import { useLanguage } from "../../context/LanguageContext";
 import "./speciality.scss";
 
 const Speciality = () => {
   const { doctor, dispatch } = useContext(Context);
+  const { t } = useLanguage();
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
@@ -50,11 +52,9 @@ const Speciality = () => {
     <section className="speciality practitioners-section">
       <div className="section-container">
         <div className="section-header">
-          <span className="badge-tag">Medical Specialists</span>
-          <h2 className="title">Our Physician Staff</h2>
-          <p className="subtitle">
-            Board-certified practitioners delivering personalized, evidence-based care across major disciplines.
-          </p>
+          <span className="badge-tag">{t("doctors.tag")}</span>
+          <h2 className="title">{t("doctors.title")}</h2>
+          <p className="subtitle">{t("doctors.desc")}</p>
         </div>
 
         <div className="practitioners-grid">
@@ -83,11 +83,11 @@ const Speciality = () => {
         <div className="section-footer-action">
           {doctor ? (
             <button onClick={handleLogout} className="action-btn logout">
-              Log out Doctor
+              {t("doctors.logout")}
             </button>
           ) : (
             <Link to="/doctor/login">
-              <button className="action-btn login">Doctor Portal Access →</button>
+              <button className="action-btn login">{t("doctors.portal")}</button>
             </Link>
           )}
         </div>

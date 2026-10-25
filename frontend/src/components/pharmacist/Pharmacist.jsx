@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { PharmacistContext } from "../../context/PharmacistContext";
+import { useLanguage } from "../../context/LanguageContext";
 import "./pharmacist.scss";
 
 const Pharmacist = () => {
   const { pharmacist, dispatch } = useContext(PharmacistContext);
+  const { t } = useLanguage();
 
   const handleLogout = () => {
     dispatch({ type: "p_LOGOUT" });
@@ -50,11 +52,9 @@ const Pharmacist = () => {
     <section className="pharmacist pharmacists-section">
       <div className="section-container">
         <div className="section-header">
-          <span className="badge-tag">Licensed Dispensary</span>
-          <h2 className="title">Our Pharmacist Team</h2>
-          <p className="subtitle">
-            Ensuring safe medication delivery, prescription validation, and patient counseling.
-          </p>
+          <span className="badge-tag">{t("pharmacists.tag")}</span>
+          <h2 className="title">{t("pharmacists.title")}</h2>
+          <p className="subtitle">{t("pharmacists.desc")}</p>
         </div>
 
         <div className="pharmacists-grid">
@@ -80,11 +80,11 @@ const Pharmacist = () => {
         <div className="section-footer-action">
           {pharmacist ? (
             <button onClick={handleLogout} className="action-btn logout">
-              Log out Pharmacist
+              {t("pharmacists.logout")}
             </button>
           ) : (
             <Link to="/pharmacist/login">
-              <button className="action-btn login">Pharmacist Portal Access →</button>
+              <button className="action-btn login">{t("pharmacists.portal")}</button>
             </Link>
           )}
         </div>

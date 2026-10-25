@@ -3,11 +3,14 @@ import "./navbarNurse.scss";
 import { Link } from "react-router-dom";
 import { NurseContext } from "../../context/NurseContext";
 import ThemeToggle from "../themeToggle/ThemeToggle";
+import LanguageToggle from "../languageToggle/LanguageToggle";
+import { useLanguage } from "../../context/LanguageContext";
 import axios from "axios";
 import { API_URL } from "../../config";
 
 const NavbarNurse = () => {
   const { nurse, dispatch } = useContext(NurseContext);
+  const { t } = useLanguage();
 
   const handleLogout = async () => {
     try {
@@ -30,20 +33,20 @@ const NavbarNurse = () => {
         </div>
         <div className="middle">
           <Link to="/HomeNurse" className="link">
-            <span className="middle-item">Home</span>
+            <span className="middle-item">{t("navbar.home")}</span>
           </Link>
           <Link to="/about" className="link">
-            <span className="middle-item">About Us</span>
+            <span className="middle-item">{t("navbar.about")}</span>
           </Link>
           <Link to="/guidelines" className="link">
-            <span className="middle-item">Guidelines</span>
+            <span className="middle-item">{t("navbar.guidelines")}</span>
           </Link>
           <Link to="/patient/registerN" className="link">
-            <span className="middle-item">Register a patient</span>
+            <span className="middle-item">{t("navbar.registerPatient")}</span>
           </Link>
           {nurse && (
             <Link to="/allVS" className="link">
-              <span className="middle-item">View all VS</span>
+              <span className="middle-item">{t("navbar.viewVS")}</span>
             </Link>
           )}
 
@@ -60,20 +63,21 @@ const NavbarNurse = () => {
             />
             <div className="down-arrow-items" id="down">
               <Link to={"/settingsN/" + nurse?._id} className="link">
-                <span>Settings</span>
+                <span>{t("navbar.settings")}</span>
               </Link>
             </div>
           </div>
         </div>
         <div className="right">
+          <LanguageToggle />
           <ThemeToggle />
           {nurse ? (
             <button onClick={handleLogout} className="nav-btn">
-              Log out
+              {t("navbar.logout")}
             </button>
           ) : (
             <Link to="/nurse/login">
-              <button className="nav-btn">Log in</button>
+              <button className="nav-btn">{t("navbar.login")}</button>
             </Link>
           )}
         </div>

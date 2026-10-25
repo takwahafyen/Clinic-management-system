@@ -1,0 +1,81 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About Us",
+    "guidelines": "Guidelines",
+    "registerPatient": "Register a patient",
+    "registerClient": "Register a client",
+    "viewReports": "View all reports",
+    "viewVS": "View all VS",
+    "viewFC": "View all FC",
+    "settings": "Settings",
+    "login": "Log in",
+    "logout": "Log out"
+  },
+  "hero": {
+    "badge": "Next-Gen Healthcare Management Platform",
+    "titlePart1": "Healthcare Management,",
+    "titleGradient": "Intelligently Unified.",
+    "subtitle": "Seamlessly coordinate doctors, nurses, and pharmacists in one secure, role-protected clinical workspace. Real-time vital signs, consultation reports, and medication tracking.",
+    "ctaRegister": "Register a Patient",
+    "ctaExplore": "Explore Services",
+    "statUptime": "System Uptime",
+    "statRoles": "Doctor, Nurse, Pharma",
+    "statSecured": "RBAC Secured",
+    "liveDesk": "Live Consultation Desk",
+    "specialty": "Dr. Ada Lovelace • Cardiology",
+    "activeSession": "Active Session",
+    "heartRate": "Heart Rate",
+    "normalRhythm": "Normal Rhythm",
+    "bloodPressure": "Blood Pressure",
+    "optimal": "Optimal",
+    "diabeticStatus": "Diabetic Status",
+    "nonDiabetic": "Non-Diabetic",
+    "verified": "Verified",
+    "prescriptionReady": "Prescription Ready",
+    "pharmacistValidated": "Pharmacist validated"
+  },
+  "features": {
+    "tag": "Platform Core Capabilities",
+    "title": "Engineered for Clinical Excellence",
+    "desc": "Everything your medical staff needs to deliver prompt, accurate, and coordinated patient care.",
+    "f1Title": "Patient Registration & RBAC",
+    "f1Desc": "Fast, centralized intake with strict role-based access control protecting medical confidentiality at every step.",
+    "f1Badge": "Security",
+    "f2Title": "Real-Time Vital Signs & Reports",
+    "f2Desc": "Instant logging of blood pressure, blood glucose, and consultation summaries with direct doctor-nurse synchronization.",
+    "f2Badge": "Clinical Care",
+    "f3Title": "Medication & Pharmacy Records",
+    "f3Desc": "Comprehensive drug inventory tracking and prescription delivery management directly handled by licensed pharmacists.",
+    "f3Badge": "Pharmacy"
+  },
+  "doctors": {
+    "tag": "Medical Specialists",
+    "title": "Our Physician Staff",
+    "desc": "Board-certified practitioners delivering personalized, evidence-based care across major disciplines.",
+    "portal": "Doctor Portal Access →",
+    "logout": "Log out Doctor"
+  },
+  "nurses": {
+    "tag": "Nursing & Patient Care",
+    "title": "Our Dedicated Nurses",
+    "desc": "24/7 continuous monitoring, patient assessment, and compassionate bedside care.",
+    "portal": "Nurse Portal Access →",
+    "logout": "Log out Nurse",
+    "onShift": "On Shift"
+  },
+  "pharmacists": {
+    "tag": "Licensed Dispensary",
+    "title": "Our Pharmacist Team",
+    "desc": "Ensuring safe medication delivery, prescription validation, and patient counseling.",
+    "portal": "Pharmacist Portal Access →",
+    "logout": "Log out Pharmacist"
+  },
+  "footer": {
+    "contactUs": "Contact Us",
+    "emergency24": "24 Hours Emergency",
+    "facilities": "Excellant Facilities",
+    "fastestDept": "Fastest emergency departments",
+    "mission": "Excellant service by prioritizing the safety and security of patients."
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "navbar": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "guidelines": "Guide",
+    "registerPatient": "Enregistrer un patient",
+    "registerClient": "Enregistrer un client",
+    "viewReports": "Voir tous les rapports",
+    "viewVS": "Voir les constantes",
+    "viewFC": "Voir les ordonnances",
+    "settings": "Paramètres",
+    "login": "Connexion",
+    "logout": "Déconnexion"
+  },
+  "hero": {
+    "badge": "Plateforme Moderne de Gestion Médicale",
+    "titlePart1": "La Gestion Médicale,",
+    "titleGradient": "Intelligemment Unifiée.",
+    "subtitle": "Coordonnez facilement médecins, infirmiers et pharmaciens au sein d'un espace clinique sécurisé avec contrôle d'accès strict. Suivi des constantes, rapports de consultation et gestion des ordonnances en temps réel.",
+    "ctaRegister": "Enregistrer un Patient",
+    "ctaExplore": "Découvrir les Services",
+    "statUptime": "Disponibilité Système",
+    "statRoles": "Médecin, Infirmier, Pharma",
+    "statSecured": "Sécurité RBAC",
+    "liveDesk": "Poste de Consultation en Direct",
+    "specialty": "Dr. Ada Lovelace • Cardiologie",
+    "activeSession": "Session Active",
+    "heartRate": "Fréquence Cardiaque",
+    "normalRhythm": "Rythme Normal",
+    "bloodPressure": "Pression Artérielle",
+    "optimal": "Optimale",
+    "diabeticStatus": "Statut Diabétique",
+    "nonDiabetic": "Non-Diabétique",
+    "verified": "Vérifié",
+    "prescriptionReady": "Ordonnance Prête",
+    "pharmacistValidated": "Validée par le pharmacien"
+  },
+  "features": {
+    "tag": "Fonctionnalités Clés de la Plateforme",
+    "title": "Conçu pour l'Excellence Clinique",
+    "desc": "Tous les outils indispensables au personnel médical pour des soins rapides, précis et coordonnés.",
+    "f1Title": "Enregistrement & Sécurité RBAC",
+    "f1Desc": "Admission rapide et centralisée avec contrôle d'accès strict par rôle protégeant le secret médical à chaque étape.",
+    "f1Badge": "Sécurité",
+    "f2Title": "Constantes & Rapports en Direct",
+    "f2Desc": "Enregistrement immédiat de la tension, glycémie et comptes-rendus avec synchronisation directe médecin-infirmier.",
+    "f2Badge": "Soins Cliniques",
+    "f3Title": "Gestion Pharmacie & Ordonnances",
+    "f3Desc": "Suivi complet des stocks de médicaments et délivrance des prescriptions gérés directement par des pharmaciens certifiés.",
+    "f3Badge": "Pharmacie"
+  },
+  "doctors": {
+    "tag": "Médecins Spécialistes",
+    "title": "Notre Corps Médical",
+    "desc": "Praticiens certifiés dispensant des soins personnalisés basés sur des protocoles médicaux rigoureux.",
+    "portal": "Accès Espace Médecin →",
+    "logout": "Déconnexion Médecin"
+  },
+  "nurses": {
+    "tag": "Soins Infirmiers & Monitoring",
+    "title": "Notre Équipe Infirmière",
+    "desc": "Surveillance continue 24/7, évaluation clinique des patients et soins bienveillants au chevet.",
+    "portal": "Accès Espace Infirmier →",
+    "logout": "Déconnexion Infirmière",
+    "onShift": "En Service"
+  },
+  "pharmacists": {
+    "tag": "Dispensaire Agréé",
+    "title": "Notre Équipe Officinale",
+    "desc": "Délivrance sécurisée des médicaments, validation rigoureuse des ordonnances et conseil aux patients.",
+    "portal": "Accès Espace Pharmacie →",
+    "logout": "Déconnexion Pharmacien"
+  },
+  "footer": {
+    "contactUs": "Contactez-nous",
+    "emergency24": "Urgences 24h/24",
+    "facilities": "Équipements de Pointe",
+    "fastestDept": "Service d'Urgences Rapide",
+    "mission": "Un service d'excellence en accordant la priorité absolue à la sécurité et au bien-être des patients."
+  }
+}

@@ -4,8 +4,8 @@ describe("Public Navigation & UI Smoke Tests", () => {
     cy.visit("/");
   });
 
-  it("loads the home page with header, features, and footer", () => {
-    // Navbar exists with logo and public links
+  it("loads the home page with header, features, and footer in English by default", () => {
+    // Navbar exists with logo and public links in English
     cy.get(".navbar").should("be.visible");
     cy.get(".navbar .hospital-logo").should("be.visible");
     cy.get(".navbar").contains("Home").should("be.visible");
@@ -17,6 +17,23 @@ describe("Public Navigation & UI Smoke Tests", () => {
     cy.get(".features").should("exist");
     cy.get(".speciality").should("exist");
     cy.get(".footer").should("be.visible");
+  });
+
+  it("toggles between English and French dynamically", () => {
+    // Language toggle is visible with default English flag
+    cy.get(".language-toggle-btn").should("be.visible");
+    cy.get(".language-toggle-btn .lang-code").should("contain.text", "EN");
+
+    // Click toggle to switch to French
+    cy.get(".language-toggle-btn").click();
+    cy.get(".language-toggle-btn .lang-code").should("contain.text", "FR");
+    cy.get(".navbar").contains("Accueil").should("be.visible");
+    cy.get(".navbar").contains("Guide").should("be.visible");
+
+    // Click again to return to English
+    cy.get(".language-toggle-btn").click();
+    cy.get(".language-toggle-btn .lang-code").should("contain.text", "EN");
+    cy.get(".navbar").contains("Home").should("be.visible");
   });
 
   it("toggles between Light and Dark mode smoothly", () => {
