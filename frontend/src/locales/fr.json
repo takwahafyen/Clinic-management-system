@@ -73,9 +73,24 @@
   },
   "footer": {
     "contactUs": "Contactez-nous",
-    "emergency24": "Urgences 24h/24",
-    "facilities": "Équipements de Pointe",
-    "fastestDept": "Service d'Urgences Rapide",
-    "mission": "Un service d'excellence en accordant la priorité absolue à la sécurité et au bien-être des patients."
+    "emergency24": "Urgences Médicales 24h/24",
+    "facilities": "Équipements & Blocs Cliniques",
+    "fastestDept": "Service d'Admission d'Urgence",
+    "mission": "Une plateforme clinique professionnelle garantissant la coordination parfaite entre médecins, infirmiers et pharmaciens dans le strict respect du secret médical.",
+    "clinicalPortals": "Espaces Praticiens",
+    "doctorPortal": "Poste de Consultation Médecin",
+    "nursePortal": "Poste Constantes Infirmière",
+    "pharmaPortal": "Dispensaire Pharmacie",
+    "patientReg": "Enregistrement Nouveau Patient",
+    "allReports": "Dossiers & Comptes-Rendus",
+    "platform": "Plateforme & Guides",
+    "aboutUs": "À Propos de la Clinique",
+    "guidelines": "Directives & Accueil Patient",
+    "systemStatus": "État de l'API & Disponibilité",
+    "security": "Sécurité d'Accès RBAC",
+    "support": "Urgences & Assistance",
+    "hours": "Ouvert 24h/24 • 7j/7 • 365j/an",
+    "triage": "Aile Urgences : Pavillon Nord",
+    "copyright": "Tous droits réservés. Développé sur la stack moderne MERN."
   }
 }
