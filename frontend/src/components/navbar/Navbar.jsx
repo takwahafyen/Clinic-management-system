@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
+import ThemeToggle from "../themeToggle/ThemeToggle";
 import axios from "axios";
 import { API_URL } from "../../config";
 
@@ -65,6 +66,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="right">
+          <ThemeToggle />
           {doctor ? (
             <button onClick={handleLogout} className="nav-btn">
               Log out

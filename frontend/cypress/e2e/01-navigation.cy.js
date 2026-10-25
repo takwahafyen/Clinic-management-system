@@ -19,6 +19,21 @@ describe("Public Navigation & UI Smoke Tests", () => {
     cy.get(".footer").should("be.visible");
   });
 
+  it("toggles between Light and Dark mode smoothly", () => {
+    // Should have theme toggle button visible
+    cy.get(".theme-toggle-btn").should("be.visible");
+
+    // Click toggle to switch theme
+    cy.get(".theme-toggle-btn").click();
+    cy.get("html").should("have.attr", "data-theme", "dark");
+    cy.get("body").should("have.attr", "data-theme", "dark");
+
+    // Click again to switch back to light
+    cy.get(".theme-toggle-btn").click();
+    cy.get("html").should("have.attr", "data-theme", "light");
+    cy.get("body").should("have.attr", "data-theme", "light");
+  });
+
   it("navigates to the About Us page and verifies content", () => {
     cy.get(".navbar").contains("About Us").click();
     cy.url().should("include", "/about");

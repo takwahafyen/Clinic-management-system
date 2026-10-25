@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import "./navbarPha.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PharmacistContext } from "../../context/PharmacistContext";
+import ThemeToggle from "../themeToggle/ThemeToggle";
 import axios from "axios";
 import { API_URL } from "../../config";
 
 const NavbarPha = () => {
   const { pharmacist, dispatch } = useContext(PharmacistContext);
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -15,8 +15,7 @@ const NavbarPha = () => {
     } catch (err) {
       console.error("Pharmacist logout failed:", err);
     }
-    dispatch({ type: "LOGOUT" });
-    navigate("/");
+    dispatch({ type: "p_LOGOUT" });
   };
 
   return (
@@ -42,10 +41,11 @@ const NavbarPha = () => {
           <Link to="/client/register" className="link">
             <span className="middle-item">Register a client</span>
           </Link>
-
-          <Link to="/allFC" className="link">
-            <span className="middle-item">View all Factures</span>
-          </Link>
+          {pharmacist && (
+            <Link to="/allFC" className="link">
+              <span className="middle-item">View all FC</span>
+            </Link>
+          )}
 
           <div className="middle-item" id="down-middle-item">
             <img
@@ -66,6 +66,7 @@ const NavbarPha = () => {
           </div>
         </div>
         <div className="right">
+          <ThemeToggle />
           {pharmacist ? (
             <button onClick={handleLogout} className="nav-btn">
               Log out
