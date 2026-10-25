@@ -140,7 +140,28 @@ frontend/
 
 ## Getting started
 
-### Prerequisites
+### Quickstart with Docker (Recommended)
+
+Run the full stack (Frontend + Backend + MongoDB) with a single command:
+
+```bash
+docker compose up -d --build
+```
+
+- **Frontend**: `http://localhost:3000`
+- **Backend API**: `http://localhost:5000`
+- **MongoDB**: `localhost:27017` (data persisted in a named Docker volume `mongo-data`)
+
+To stop all containers:
+```bash
+docker compose down
+```
+
+---
+
+### Manual Setup (Without Docker)
+
+#### Prerequisites
 - Node.js ≥ 20
 - A MongoDB instance (Atlas or local)
 
@@ -256,6 +277,7 @@ npm run test:e2e
 - [x] ObjectId relations on Report, VS, FC
 - [x] Extend DB-backed integration tests to nurse and pharmacist flows
 - [x] Comprehensive Cypress E2E automated test suite
+- [x] Docker & Docker Compose containerization for single-command deployment
 - [x] LICENSE (MIT)
 - [x] Live deployment (backend on Render + frontend on Vercel) with automated CI/CD
 
