@@ -67,7 +67,7 @@ const Reports = () => {
       }
     };
     fetchFilteredReports();
-  }, [location.pathname]);
+  }, [location.pathname, arr]);
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();

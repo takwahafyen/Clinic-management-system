@@ -3,9 +3,9 @@ import "./skeleton.scss";
 
 export const SkeletonCard = () => {
   return (
-    <div className="skeleton-card" aria-hidden="true">
+    <div className="skeleton-card" aria-hidden="true" data-testid="skeleton-card">
       <div className="skeleton-header">
-        <div className="skeleton-avatar" />
+        <div className="skeleton-avatar" data-testid="skeleton-avatar" />
         <div className="skeleton-title-group">
           <div className="skeleton-title" />
           <div className="skeleton-subtitle" />
