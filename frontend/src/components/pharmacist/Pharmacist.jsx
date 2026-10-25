@@ -7,79 +7,89 @@ const Pharmacist = () => {
   const { pharmacist, dispatch } = useContext(PharmacistContext);
 
   const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
+    dispatch({ type: "p_LOGOUT" });
   };
 
   const handleImageError = (e) => {
-    // Fallback to a guaranteed available pharmacist image if specific image fails
     e.target.onerror = null;
     e.target.src = "/assets/images/phar.jpg";
   };
 
+  const pharmacistsList = [
+    {
+      id: 1,
+      name: "Asma Trabelsi",
+      specialty: "Clinical Pharmacist",
+      src: "/assets/images/ppp.jpg",
+      license: "Lic. #PH-8921",
+    },
+    {
+      id: 2,
+      name: "Ali Mansour",
+      specialty: "Prescription Specialist",
+      src: "/assets/images/opp.jpg",
+      license: "Lic. #PH-7714",
+    },
+    {
+      id: 3,
+      name: "Sana Bouaziz",
+      specialty: "Hospital Dispensary",
+      src: "/assets/images/phhh.jpg",
+      license: "Lic. #PH-9042",
+    },
+    {
+      id: 4,
+      name: "Senda Ben Amor",
+      specialty: "Drug Safety & Interactions",
+      src: "/assets/images/phar.jpg",
+      license: "Lic. #PH-6530",
+    },
+  ];
+
   return (
-    <div className="pharmacist">
-      <div className="pharmacist-wrapper">
-        <h2 className="pharmacist-heading">Our Pharmacists</h2>
-        <div className="pharmacist-list">
-          <div className="pharmacist-item">
-            <div className="pharmacist-top">
-              <img
-                src="/assets/images/ppp.jpg"
-                alt="pharmacist Asma"
-                className="pharmacist-image"
-                onError={handleImageError}
-              />
-            </div>
-            <p className="pharmacist-bottom">ASMA</p>
-          </div>
-          <div className="pharmacist-item">
-            <div className="pharmacist-top">
-              <img
-                src="/assets/images/opp.jpg"
-                alt="pharmacist Ali"
-                className="pharmacist-image"
-                onError={handleImageError}
-              />
-            </div>
-            <p className="pharmacist-bottom">ALI</p>
-          </div>
-          <div className="pharmacist-item">
-            <div className="pharmacist-top">
-              <img
-                src="/assets/images/phhh.jpg"
-                alt="pharmacist Sana"
-                className="pharmacist-image"
-                onError={handleImageError}
-              />
-            </div>
-            <p className="pharmacist-bottom">SANA</p>
-          </div>
-          <div className="pharmacist-item">
-            <div className="pharmacist-top">
-              <img
-                src="/assets/images/phar.jpg"
-                alt="pharmacist Senda"
-                className="pharmacist-image"
-                onError={handleImageError}
-              />
-            </div>
-            <p className="pharmacist-bottom">SENDA</p>
-          </div>
+    <section className="pharmacist pharmacists-section">
+      <div className="section-container">
+        <div className="section-header">
+          <span className="badge-tag">Licensed Dispensary</span>
+          <h2 className="title">Our Pharmacist Team</h2>
+          <p className="subtitle">
+            Ensuring safe medication delivery, prescription validation, and patient counseling.
+          </p>
         </div>
 
-        <div className="right">
+        <div className="pharmacists-grid">
+          {pharmacistsList.map((item) => (
+            <div className="pharmacist-card" key={item.id}>
+              <div className="card-image-wrapper">
+                <img
+                  src={item.src}
+                  alt={item.name}
+                  onError={handleImageError}
+                  className="pharmacist-photo"
+                />
+                <span className="license-badge">{item.license}</span>
+              </div>
+              <div className="card-body">
+                <h3 className="pharmacist-name">{item.name}</h3>
+                <span className="pharmacist-specialty">{item.specialty}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="section-footer-action">
           {pharmacist ? (
-            <button onClick={handleLogout} className="nav-btn">
-              Logout Pharmacist
+            <button onClick={handleLogout} className="action-btn logout">
+              Log out Pharmacist
             </button>
           ) : (
             <Link to="/pharmacist/login">
-              <button className="nav-btn">Login Pharmacist</button>
+              <button className="action-btn login">Pharmacist Portal Access →</button>
             </Link>
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -15,89 +15,84 @@ const Speciality = () => {
     e.target.src = "/assets/images/team-1.jpg";
   };
 
+  const doctorsList = [
+    {
+      id: 1,
+      name: "Dr. Mohamed",
+      specialty: "General Surgery",
+      rating: "4.9",
+      img: "/assets/images/chur.png",
+    },
+    {
+      id: 2,
+      name: "Dr. Ali",
+      specialty: "Ophthalmology",
+      rating: "4.8",
+      img: "/assets/images/team-3.jpg",
+    },
+    {
+      id: 3,
+      name: "Dr. Houda",
+      specialty: "Pediatrics",
+      rating: "5.0",
+      img: "/assets/images/team-2.jpg",
+    },
+    {
+      id: 4,
+      name: "Dr. Hani",
+      specialty: "Orthopedics",
+      rating: "4.9",
+      img: "/assets/images/team-1.jpg",
+    },
+  ];
+
   return (
-    <div className="speciality">
-      <div className="speciality-wrapper">
-        <h2 className="speciality-heading">Our Doctors</h2>
-        <div className="speciality-list">
-          <div className="speciality-item">
-            <div className="sitem-top">
-              <img
-                src="/assets/images/chur.png"
-                alt="laboratory"
-                onError={handleImageError}
-              />
-            </div>
-            <div className="sitem-bottom">
-              <span className="speciality-subheading">Docteur Mohamed</span>
-              <div className="speciality-info">
-                <span>Surgeon</span>
-                <button>More info</button>
-              </div>
-            </div>
-          </div>
-          <div className="speciality-item">
-            <div className="sitem-top">
-              <img
-                src="/assets/images/team-3.jpg"
-                alt="ophthalmology"
-                onError={handleImageError}
-              />
-            </div>
-            <div className="sitem-bottom">
-              <span className="speciality-subheading">Docteur Ali</span>
-              <div className="speciality-info">
-                <span>Ophthalmologist</span>
-                <button>More info</button>
-              </div>
-            </div>
-          </div>
-          <div className="speciality-item">
-            <div className="sitem-top">
-              <img
-                src="/assets/images/team-2.jpg"
-                alt="pediatrics"
-                onError={handleImageError}
-              />
-            </div>
-            <div className="sitem-bottom">
-              <span className="speciality-subheading">Dr. Houda</span>
-              <div className="speciality-info">
-                <span>Pediatrician</span>
-                <button>More info</button>
-              </div>
-            </div>
-          </div>
-          <div className="speciality-item">
-            <div className="sitem-top">
-              <img
-                src="/assets/images/team-1.jpg"
-                alt="orthopedics"
-                onError={handleImageError}
-              />
-            </div>
-            <div className="sitem-bottom">
-              <span className="speciality-subheading">Docteur Hani</span>
-              <div className="speciality-info">
-                <span>Orthopedist</span>
-                <button>More info</button>
-              </div>
-            </div>
-          </div>
+    <section className="speciality practitioners-section">
+      <div className="section-container">
+        <div className="section-header">
+          <span className="badge-tag">Medical Specialists</span>
+          <h2 className="title">Our Physician Staff</h2>
+          <p className="subtitle">
+            Board-certified practitioners delivering personalized, evidence-based care across major disciplines.
+          </p>
         </div>
-        <div className="right">
+
+        <div className="practitioners-grid">
+          {doctorsList.map((doc) => (
+            <div className="doctor-card" key={doc.id}>
+              <div className="card-image-wrapper">
+                <img
+                  src={doc.img}
+                  alt={doc.name}
+                  onError={handleImageError}
+                  className="doctor-photo"
+                />
+                <span className="rating-badge">★ {doc.rating}</span>
+              </div>
+              <div className="card-body">
+                <div className="name-row">
+                  <h3 className="doctor-name">{doc.name}</h3>
+                  <span className="verified-badge" title="Board Certified">✓</span>
+                </div>
+                <span className="specialty-chip">{doc.specialty}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="section-footer-action">
           {doctor ? (
-            <button onClick={handleLogout} className="nav-btn">
-              Log out doctor
+            <button onClick={handleLogout} className="action-btn logout">
+              Log out Doctor
             </button>
           ) : (
             <Link to="/doctor/login">
-              <button className="nav-btn">Login Doctor</button>
+              <button className="action-btn login">Doctor Portal Access →</button>
             </Link>
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

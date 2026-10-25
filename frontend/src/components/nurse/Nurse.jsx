@@ -1,13 +1,13 @@
-import "./nurse.scss";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { NurseContext } from "../../context/NurseContext";
+import "./nurse.scss";
 
 const Nurse = () => {
   const { nurse, dispatch } = useContext(NurseContext);
 
   const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
+    dispatch({ type: "n_LOGOUT" });
   };
 
   const handleImageError = (e) => {
@@ -15,70 +15,84 @@ const Nurse = () => {
     e.target.src = "/assets/images/nurse-1.jpg";
   };
 
-  const nursesImages = [
+  const nursesList = [
     {
       id: 1,
+      name: "Florence Nightingale",
+      role: "Head Nurse • Critical Care",
       src: "/assets/images/nurse-1.jpg",
-      alt: "nurse 1",
-      contentHead: "Nurse 1",
+      status: "On Shift",
     },
     {
       id: 2,
+      name: "Sarah Jenkins",
+      role: "Emergency & Trauma",
       src: "/assets/images/nurse-2.jpg",
-      alt: "nurse 2",
-      contentHead: "Nurse 2",
+      status: "On Shift",
     },
     {
       id: 3,
+      name: "Claire Bennett",
+      role: "Pediatric Care",
       src: "/assets/images/nurse-3.jpg",
-      alt: "nurse 3",
-      contentHead: "Nurse 3",
+      status: "Available",
     },
     {
       id: 4,
+      name: "Emma Watson",
+      role: "Gynecology & Maternity",
       src: "/assets/images/gyna.jpg",
-      alt: "nurse 4",
-      contentHead: "Nurse 4",
+      status: "On Shift",
     },
   ];
 
   return (
-    <div className="nurse">
-      <div className="nurse-wrapper">
-        <h2 className="nurse-heading">Our Nurses</h2>
-        {nursesImages.map((nurse) => (
-          <div className="fdesc-item" key={nurse.id}>
-            <div className="fimagecontainer">
-              <div className="fcolor">
+    <section className="nurse nurses-section">
+      <div className="section-container">
+        <div className="section-header">
+          <span className="badge-tag">Nursing & Patient Care</span>
+          <h2 className="title">Our Dedicated Nurses</h2>
+          <p className="subtitle">
+            24/7 continuous monitoring, patient assessment, and compassionate bedside care.
+          </p>
+        </div>
+
+        <div className="nurses-grid">
+          {nursesList.map((item) => (
+            <div className="nurse-card" key={item.id}>
+              <div className="card-image-wrapper">
                 <img
-                  src={nurse.src}
-                  alt={nurse.alt}
-                  className={`fimage${nurse.id}`}
+                  src={item.src}
+                  alt={item.name}
                   onError={handleImageError}
+                  className="nurse-photo"
                 />
+                <span className="status-badge">
+                  <span className="dot" />
+                  {item.status}
+                </span>
+              </div>
+              <div className="card-body">
+                <h3 className="nurse-name">{item.name}</h3>
+                <span className="nurse-role">{item.role}</span>
               </div>
             </div>
-            <div className={`fcontent${nurse.id}`}>
-              <div className="fcontent-text">
-                <h3>{nurse.contentHead}</h3>
-                <p>{nurse.contentInfo}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-        <div className="right">
+          ))}
+        </div>
+
+        <div className="section-footer-action">
           {nurse ? (
-            <button onClick={handleLogout} className="nav-btn">
-              Logout Nurse
+            <button onClick={handleLogout} className="action-btn logout">
+              Log out Nurse
             </button>
           ) : (
             <Link to="/nurse/login">
-              <button className="nav-btn">Login Nurses</button>
+              <button className="action-btn login">Nurse Portal Access →</button>
             </Link>
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
