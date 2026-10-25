@@ -74,8 +74,23 @@
   "footer": {
     "contactUs": "Contact Us",
     "emergency24": "24 Hours Emergency",
-    "facilities": "Excellant Facilities",
+    "facilities": "Excellent Facilities",
     "fastestDept": "Fastest emergency departments",
-    "mission": "Excellant service by prioritizing the safety and security of patients."
+    "mission": "An enterprise-grade clinical management system unifying doctors, nurses, and pharmacists for coordinated, secure patient care.",
+    "clinicalPortals": "Clinical Portals",
+    "doctorPortal": "Doctor Consultation Workspace",
+    "nursePortal": "Nurse Vital Signs Desk",
+    "pharmaPortal": "Pharmacist Dispensary",
+    "patientReg": "New Patient Registration",
+    "allReports": "Consultation Reports",
+    "platform": "Platform & Guidelines",
+    "aboutUs": "About Our Clinic",
+    "guidelines": "Hospital Guidelines",
+    "systemStatus": "API Health & Status",
+    "security": "Role-Based Security",
+    "support": "Emergency & Support",
+    "hours": "Open 24/7 / 365 Days",
+    "triage": "Emergency Wing: North Gate",
+    "copyright": "All rights reserved. Powered by Modern MERN Stack."
   }
 }
