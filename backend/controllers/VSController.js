@@ -1,6 +1,12 @@
 const Patient = require("../models/Patient");
 const VS = require("../models/VS");
 const { createError } = require("../utils/error");
+const paginate = require("../utils/paginate");
+
+const vsPopulateOptions = [
+  { path: "patient", select: "firstName lastName phoneNo dob sex age" },
+  { path: "nurseId", select: "firstName lastName email specialization" },
+];
 
 // CREATE VS
 module.exports.createVS = async (req, res, next) => {
@@ -42,20 +48,23 @@ module.exports.createVS = async (req, res, next) => {
   }
 };
 
-// GET ALL VS
+// GET ALL VS (Paginated)
 module.exports.allVS = async (req, res, next) => {
   try {
-    const VSList = await VS.find()
-      .populate("patient", "firstName lastName phoneNo dob sex age")
-      .populate("nurseId", "firstName lastName email specialization")
-      .sort("-createdAt");
-    return res.status(200).json(VSList);
+    const result = await paginate({
+      model: VS,
+      filter: {},
+      reqQuery: req.query,
+      res,
+      populateOptions: vsPopulateOptions,
+    });
+    return res.status(200).json(result);
   } catch (err) {
     return next(err);
   }
 };
 
-// GET ALL VS OF A SPECIFIC PATIENT
+// GET ALL VS OF A SPECIFIC PATIENT (Paginated)
 module.exports.patientVS = async (req, res, next) => {
   try {
     const patient = await Patient.findOne({ phoneNo: req.params.phone });
@@ -65,30 +74,33 @@ module.exports.patientVS = async (req, res, next) => {
       );
     }
 
-    const VSList = await VS.find({
-      $or: [{ patient: patient._id }, { phoneNum: patient.phoneNo }],
-    })
-      .populate("patient", "firstName lastName phoneNo dob sex age")
-      .populate("nurseId", "firstName lastName email specialization")
-      .sort("-createdAt");
+    const result = await paginate({
+      model: VS,
+      filter: {
+        $or: [{ patient: patient._id }, { phoneNum: patient.phoneNo }],
+      },
+      reqQuery: req.query,
+      res,
+      populateOptions: vsPopulateOptions,
+    });
 
-    return res.status(200).json(VSList);
+    return res.status(200).json(result);
   } catch (err) {
     return next(err);
   }
 };
 
-// GET ALL VS OF ALL PATIENTS FILTERED BY A SPECIFIC STATUS
+// GET ALL VS OF ALL PATIENTS FILTERED BY A SPECIFIC STATUS (Paginated)
 module.exports.statusVS = async (req, res, next) => {
   try {
-    const VSList = await VS.find({
-      Diabetic_status: req.params.Diabetic_status,
-    })
-      .populate("patient", "firstName lastName phoneNo dob sex age")
-      .populate("nurseId", "firstName lastName email specialization")
-      .sort("-createdAt");
-
-    return res.status(200).json(VSList);
+    const result = await paginate({
+      model: VS,
+      filter: { Diabetic_status: req.params.Diabetic_status },
+      reqQuery: req.query,
+      res,
+      populateOptions: vsPopulateOptions,
+    });
+    return res.status(200).json(result);
   } catch (err) {
     return next(err);
   }

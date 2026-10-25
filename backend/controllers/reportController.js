@@ -1,6 +1,12 @@
 const Patient = require("../models/Patient");
 const Report = require("../models/Report");
 const { createError } = require("../utils/error");
+const paginate = require("../utils/paginate");
+
+const reportPopulateOptions = [
+  { path: "patient", select: "firstName lastName phoneNo dob sex age" },
+  { path: "doctorId", select: "firstName lastName email specialization" },
+];
 
 // CREATE REPORT
 module.exports.createReport = async (req, res, next) => {
@@ -42,20 +48,23 @@ module.exports.createReport = async (req, res, next) => {
   }
 };
 
-// GET ALL REPORTS
+// GET ALL REPORTS (Paginated)
 module.exports.reports = async (req, res, next) => {
   try {
-    const reports = await Report.find()
-      .populate("patient", "firstName lastName phoneNo dob sex age")
-      .populate("doctorId", "firstName lastName email specialization")
-      .sort("-createdAt");
-    return res.status(200).json(reports);
+    const result = await paginate({
+      model: Report,
+      filter: {},
+      reqQuery: req.query,
+      res,
+      populateOptions: reportPopulateOptions,
+    });
+    return res.status(200).json(result);
   } catch (err) {
     return next(err);
   }
 };
 
-// GET ALL REPORTS OF A PATIENT
+// GET ALL REPORTS OF A PATIENT (Paginated)
 module.exports.allReports = async (req, res, next) => {
   try {
     const patient = await Patient.findOne({ phoneNo: req.params.phone });
@@ -65,27 +74,33 @@ module.exports.allReports = async (req, res, next) => {
       );
     }
 
-    const reports = await Report.find({
-      $or: [{ patient: patient._id }, { phoneNum: patient.phoneNo }],
-    })
-      .populate("patient", "firstName lastName phoneNo dob sex age")
-      .populate("doctorId", "firstName lastName email specialization")
-      .sort("-createdAt");
+    const result = await paginate({
+      model: Report,
+      filter: {
+        $or: [{ patient: patient._id }, { phoneNum: patient.phoneNo }],
+      },
+      reqQuery: req.query,
+      res,
+      populateOptions: reportPopulateOptions,
+    });
 
-    return res.status(200).json(reports);
+    return res.status(200).json(result);
   } catch (err) {
     return next(err);
   }
 };
 
-// GET ALL REPORTS OF ALL PATIENTS FILTERED BY A SPECIFIC STATUS
+// GET ALL REPORTS OF ALL PATIENTS FILTERED BY A SPECIFIC STATUS (Paginated)
 module.exports.statusReports = async (req, res, next) => {
   try {
-    const reports = await Report.find({ status: req.params.status })
-      .populate("patient", "firstName lastName phoneNo dob sex age")
-      .populate("doctorId", "firstName lastName email specialization")
-      .sort("-createdAt");
-    return res.status(200).json(reports);
+    const result = await paginate({
+      model: Report,
+      filter: { status: req.params.status },
+      reqQuery: req.query,
+      res,
+      populateOptions: reportPopulateOptions,
+    });
+    return res.status(200).json(result);
   } catch (err) {
     return next(err);
   }
