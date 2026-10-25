@@ -17,5 +17,5 @@ test("renders the contact section and navigation portals", () => {
 
   // Assert emergency number and brand are rendered
   expect(screen.getByText(/0-298-014/i)).toBeInTheDocument();
-  expect(screen.getByText(/Clinic Management System/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/Clinic Management System/i).length).toBeGreaterThanOrEqual(1);
 });
