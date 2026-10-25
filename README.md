@@ -234,6 +234,7 @@ npm test
 | `integration/protectedRoutes.test.js` | Route-level RBAC (401 without token, 403 on role mismatch) |
 | `integration/dataBugsAndFiltering.test.js` | Per-patient VS/FC/Report filtering by phone |
 | `integration/architectureAndRelations.test.js` | ObjectId references populated on GET |
+| `integration/pagination.test.js` | Pagination query parameters (?page, ?limit) & headers |
 
 **Frontend** (`frontend/src/`) — React Testing Library (already wired via `setupTests.js`)
 
@@ -279,6 +280,7 @@ npm run test:e2e
 - [x] ObjectId relations on Report, VS, FC
 - [x] Extend DB-backed integration tests to nurse and pharmacist flows
 - [x] Comprehensive Cypress E2E automated test suite
+- [x] Pagination & metadata headers on unbounded list endpoints
 - [x] Docker & Docker Compose containerization for single-command deployment
 - [x] LICENSE (MIT)
 - [x] Live deployment (backend on Render + frontend on Vercel) with automated CI/CD

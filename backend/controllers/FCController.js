@@ -1,6 +1,12 @@
 const Client = require("../models/Client");
 const FC = require("../models/FC");
 const { createError } = require("../utils/error");
+const paginate = require("../utils/paginate");
+
+const fcPopulateOptions = [
+  { path: "client", select: "firstName lastName phoneNo dob sex age" },
+  { path: "pharmacistId", select: "firstName lastName email specialization" },
+];
 
 // CREATE FC
 module.exports.createFC = async (req, res, next) => {
@@ -42,20 +48,23 @@ module.exports.createFC = async (req, res, next) => {
   }
 };
 
-// GET ALL FC
+// GET ALL FC (Paginated)
 module.exports.allFC = async (req, res, next) => {
   try {
-    const FCList = await FC.find()
-      .populate("client", "firstName lastName phoneNo dob sex age")
-      .populate("pharmacistId", "firstName lastName email specialization")
-      .sort("-createdAt");
-    return res.status(200).json(FCList);
+    const result = await paginate({
+      model: FC,
+      filter: {},
+      reqQuery: req.query,
+      res,
+      populateOptions: fcPopulateOptions,
+    });
+    return res.status(200).json(result);
   } catch (err) {
     return next(err);
   }
 };
 
-// GET ALL FC OF A SPECIFIC CLIENT
+// GET ALL FC OF A SPECIFIC CLIENT (Paginated)
 module.exports.clientFC = async (req, res, next) => {
   try {
     const client = await Client.findOne({ phoneNo: req.params.phone });
@@ -65,28 +74,33 @@ module.exports.clientFC = async (req, res, next) => {
       );
     }
 
-    const FCList = await FC.find({
-      $or: [{ client: client._id }, { phoneNum: client.phoneNo }],
-    })
-      .populate("client", "firstName lastName phoneNo dob sex age")
-      .populate("pharmacistId", "firstName lastName email specialization")
-      .sort("-createdAt");
+    const result = await paginate({
+      model: FC,
+      filter: {
+        $or: [{ client: client._id }, { phoneNum: client.phoneNo }],
+      },
+      reqQuery: req.query,
+      res,
+      populateOptions: fcPopulateOptions,
+    });
 
-    return res.status(200).json(FCList);
+    return res.status(200).json(result);
   } catch (err) {
     return next(err);
   }
 };
 
-// GET ALL FC FILTERED BY MEDICAMENT
+// GET ALL FC FILTERED BY MEDICAMENT (Paginated)
 module.exports.statusFC = async (req, res, next) => {
   try {
-    const FCList = await FC.find({ medicament: req.params.medicament })
-      .populate("client", "firstName lastName phoneNo dob sex age")
-      .populate("pharmacistId", "firstName lastName email specialization")
-      .sort("-createdAt");
-
-    return res.status(200).json(FCList);
+    const result = await paginate({
+      model: FC,
+      filter: { medicament: req.params.medicament },
+      reqQuery: req.query,
+      res,
+      populateOptions: fcPopulateOptions,
+    });
+    return res.status(200).json(result);
   } catch (err) {
     return next(err);
   }
