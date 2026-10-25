@@ -227,6 +227,7 @@ npm test
 |---|---|
 | `unit/error.test.js` | Error helper utility |
 | `unit/verifyToken.test.js` | JWT middleware |
+| `unit/rateLimiter.test.js` | Brute-force rate limiting (HTTP 429 & RateLimit headers) |
 | `integration/doctorAuth.test.js` | Doctor register / login / logout / update (incl. IDOR check) |
 | `integration/nurseAuth.test.js` | Nurse register / login / logout / update (incl. IDOR check) |
 | `integration/pharmacistAuth.test.js` | Pharmacist register / login / logout / update (incl. IDOR check) |
@@ -269,6 +270,7 @@ npm run test:e2e
 - [x] `.env.example` (backend **and** frontend) and `.gitignore` (`.env`, `node_modules`, build artifacts excluded from git)
 - [x] Test folder scaffolding (backend + frontend) with one passing example test each
 - [x] JWT authentication with route-level role protection (RBAC)
+- [x] Brute-force rate limiting on authentication routes (HTTP 429)
 - [x] CI (GitHub Actions) running lint + tests on every push/PR
 - [x] `mongodb-memory-server` for DB-backed integration tests
 - [x] `POST /logout` endpoint for all three roles
