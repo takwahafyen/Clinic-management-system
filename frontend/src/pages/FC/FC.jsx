@@ -8,14 +8,14 @@ import axios from "axios";
 import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
+const MEDICAMENTS = ["doliprane", "clamoxil", "maxilase", "gripex"];
+
 const FC = () => {
   const [FCList, setFCList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currC, setCurrC] = useState("ALL");
   const navigate = useNavigate();
   const location = useLocation();
-
-  const arr = ["doliprane", "clamoxil", "maxilase", "gripex"];
 
   // Fetch all FC on initial load
   useEffect(() => {
@@ -54,7 +54,7 @@ const FC = () => {
       setLoading(true);
       try {
         let res;
-        if (arr.includes(path)) {
+        if (MEDICAMENTS.includes(path)) {
           res = await axios.get(`${API_URL}/client/FC/${path}`);
         } else {
           res = await axios.get(`${API_URL}/client/${path}/all_FC`);
@@ -67,7 +67,7 @@ const FC = () => {
       }
     };
     fetchFilteredFC();
-  }, [location.pathname, arr]);
+  }, [location.pathname]);
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();

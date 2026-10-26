@@ -8,19 +8,19 @@ import axios from "axios";
 import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
+const DIABETIC_STATUSES = [
+  "Non_Diabetic",
+  "Diabete_Type1",
+  "Diabete_Type2",
+  "Diabete_Type3",
+];
+
 const VS = () => {
   const [VSList, setVSList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currP, setCurrP] = useState("ALL");
   const navigate = useNavigate();
   const location = useLocation();
-
-  const arr = [
-    "Non_Diabetic",
-    "Diabete_Type1",
-    "Diabete_Type2",
-    "Diabete_Type3",
-  ];
 
   // Fetch all VS on initial load
   useEffect(() => {
@@ -76,7 +76,7 @@ const VS = () => {
       setLoading(true);
       try {
         let res;
-        if (arr.includes(path)) {
+        if (DIABETIC_STATUSES.includes(path)) {
           res = await axios.get(`${API_URL}/patients/VS/${path}`);
         } else {
           res = await axios.get(`${API_URL}/patients/${path}/all_VS`);
@@ -89,7 +89,7 @@ const VS = () => {
       }
     };
     fetchFilteredVS();
-  }, [location.pathname, arr]);
+  }, [location.pathname]);
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();
