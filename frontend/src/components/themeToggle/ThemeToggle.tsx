@@ -2,13 +2,17 @@ import React from "react";
 import { useTheme } from "../../context/ThemeContext";
 import "./themeToggle.scss";
 
-const ThemeToggle = () => {
+export interface ThemeToggleProps {
+  className?: string;
+}
+
+const ThemeToggle: React.FC<ThemeToggleProps> = ({ className = "" }) => {
   const { isDark, toggleTheme } = useTheme();
 
   return (
     <button
       type="button"
-      className={`theme-toggle-btn ${isDark ? "dark" : "light"}`}
+      className={`theme-toggle-btn ${isDark ? "dark" : "light"} ${className}`.trim()}
       onClick={toggleTheme}
       title={isDark ? "Switch to light mode" : "Switch to dark mode"}
       aria-label="Toggle dark mode"

@@ -8,8 +8,12 @@ import { useLanguage } from "../../context/LanguageContext";
 import axios from "axios";
 import { API_URL } from "../../config";
 
-const Navbar = () => {
-  const { doctor, dispatch } = useContext(Context);
+export interface NavbarProps {
+  className?: string;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
+  const { doctor, dispatch } = useContext(Context) as any;
   const { t } = useLanguage();
 
   const handleLogout = async () => {
@@ -22,7 +26,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar">
+    <div className={`navbar ${className}`.trim()}>
       <div className="navbar-wrapper">
         <div className="left">
           <img
