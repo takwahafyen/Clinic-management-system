@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/ci.yml/badge.svg)](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/ci.yml)
 [![CD](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/deploy.yml/badge.svg)](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/deploy.yml)
+[![CodeQL](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/codeql.yml/badge.svg)](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/codeql.yml)
 
 A web application for managing a clinic's patients, clients, doctors, nurses and pharmacists — covering registration, consultation reports, vital signs tracking and medication records. Built as a MERN stack app with role-based authentication.
 
@@ -289,6 +290,7 @@ npm run test:e2e
 - [x] Live deployment (backend on Render + frontend on Vercel) with automated CI/CD
 - [x] Complete TypeScript migration for the frontend (strict typed components, contexts, and domain models)
 - [x] Hardened backend security with `helmet` HTTP headers and `express-mongo-sanitize` NoSQL injection defenses
+- [x] Automated Static Application Security Testing (SAST) with GitHub CodeQL across JavaScript & TypeScript
 
 ## License
 
