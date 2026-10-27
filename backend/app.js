@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+const { apiLimiter } = require("./middlewares/rateLimiter");
 const doctorAuthRoute = require("./routes/doctorauth");
 const nurseAuthRoute = require("./routes/nurseauth");
 const pharmacistAuthRoute = require("./routes/pharmacistauth");
@@ -15,6 +18,13 @@ const app = express();
 // Trust reverse proxies (Render, Nginx, Vercel) for accurate client IP detection in rate limiting
 app.set("trust proxy", 1);
 
+// Security headers (XSS, clickjacking, HSTS, MIME sniffing protection)
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
+
 // middleware
 app.use(
   cors({
@@ -25,10 +35,16 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-// health check (used by deployment platforms to verify the service is up)
+// NoSQL query injection prevention (sanitizes req.body, req.query, req.params)
+app.use(mongoSanitize());
+
+// health check (used by deployment platforms to verify the service is up — bypassed before general rate limiting)
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
+
+// General rate limiter for all API endpoints
+app.use(apiLimiter);
 
 // routes
 app.use("/doctor", doctorAuthRoute);

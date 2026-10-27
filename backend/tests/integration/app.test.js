@@ -14,4 +14,11 @@ describe("app", () => {
     expect(res.status).toBe(200);
     expect(res.body).toEqual({ status: "ok" });
   });
+
+  it("includes security headers from helmet", async () => {
+    const res = await request(app).get("/health");
+
+    expect(res.headers).toHaveProperty("x-content-type-options", "nosniff");
+    expect(res.headers).toHaveProperty("x-frame-options");
+  });
 });
