@@ -3,6 +3,10 @@
 [![CI](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/ci.yml/badge.svg)](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/ci.yml)
 [![CD](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/deploy.yml/badge.svg)](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/deploy.yml)
 [![CodeQL](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/codeql.yml/badge.svg)](https://github.com/takwahafyen/Clinic-management-system/actions/workflows/codeql.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-React%2018-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Docker](https://img.shields.io/badge/Docker-Multi--stage-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![Security: Trivy](https://img.shields.io/badge/Security-Trivy%20Scanned-success?logo=aqua&logoColor=white)](https://github.com/aquasecurity/trivy)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A web application for managing a clinic's patients, clients, doctors, nurses and pharmacists — covering registration, consultation reports, vital signs tracking and medication records. Built as a MERN stack app with role-based authentication.
 
@@ -293,6 +297,8 @@ npm run test:e2e
 - [x] Automated Static Application Security Testing (SAST) with GitHub CodeQL across JavaScript & TypeScript
 - [x] Global React ErrorBoundary with graceful medical-themed fallback UI & error recovery
 - [x] Animated, accessible Toast notification system (`useToast` hook with auto-dismiss & theme support)
+- [x] Container vulnerability scanning in CI with Aquasecurity Trivy (DevSecOps)
+- [x] Automated test coverage metrics with Jest (`--coverage`) across frontend and backend
 
 ## License
 
