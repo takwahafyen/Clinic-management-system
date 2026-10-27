@@ -291,6 +291,8 @@ npm run test:e2e
 - [x] Complete TypeScript migration for the frontend (strict typed components, contexts, and domain models)
 - [x] Hardened backend security with `helmet` HTTP headers and `express-mongo-sanitize` NoSQL injection defenses
 - [x] Automated Static Application Security Testing (SAST) with GitHub CodeQL across JavaScript & TypeScript
+- [x] Global React ErrorBoundary with graceful medical-themed fallback UI & error recovery
+- [x] Animated, accessible Toast notification system (`useToast` hook with auto-dismiss & theme support)
 
 ## License
 
