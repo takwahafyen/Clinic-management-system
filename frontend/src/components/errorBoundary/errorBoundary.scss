@@ -1,0 +1,102 @@
+.error-boundary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 24px;
+  background-color: var(--bg-primary);
+
+  .error-boundary-card {
+    max-width: 520px;
+    width: 100%;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.3s ease;
+
+    .error-icon {
+      margin-bottom: 20px;
+      display: inline-flex;
+      padding: 16px;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .error-message {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .error-details {
+      text-align: left;
+      margin-bottom: 24px;
+      padding: 12px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      font-size: 0.85rem;
+
+      summary {
+        cursor: pointer;
+        color: var(--text-secondary);
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+
+      pre {
+        color: #ef4444;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+    }
+
+    .error-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+
+      button {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .btn-retry {
+        background-color: #2563eb;
+        color: #ffffff;
+        border: none;
+
+        &:hover {
+          background-color: #1d4ed8;
+          transform: translateY(-1px);
+        }
+      }
+
+      .btn-home {
+        background-color: transparent;
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+
+        &:hover {
+          background-color: var(--bg-secondary);
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }
+}
