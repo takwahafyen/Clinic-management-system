@@ -4,20 +4,32 @@ import { PharmacistContext } from "../../context/PharmacistContext";
 import { useLanguage } from "../../context/LanguageContext";
 import "./pharmacist.scss";
 
-const Pharmacist = () => {
-  const { pharmacist, dispatch } = useContext(PharmacistContext);
+export interface PharmacistCardInfo {
+  id: number;
+  name: string;
+  specialty: string;
+  src: string;
+  license: string;
+}
+
+export interface PharmacistProps {
+  className?: string;
+}
+
+const Pharmacist: React.FC<PharmacistProps> = ({ className = "" }) => {
+  const { pharmacist, dispatch } = useContext(PharmacistContext) as any;
   const { t } = useLanguage();
 
   const handleLogout = () => {
     dispatch({ type: "p_LOGOUT" });
   };
 
-  const handleImageError = (e) => {
-    e.target.onerror = null;
-    e.target.src = "/assets/images/phar.jpg";
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = "/assets/images/phar.jpg";
   };
 
-  const pharmacistsList = [
+  const pharmacistsList: PharmacistCardInfo[] = [
     {
       id: 1,
       name: "Asma Trabelsi",
@@ -49,7 +61,7 @@ const Pharmacist = () => {
   ];
 
   return (
-    <section className="pharmacist pharmacists-section">
+    <section className={`pharmacist pharmacists-section ${className}`.trim()}>
       <div className="section-container">
         <div className="section-header">
           <span className="badge-tag">{t("pharmacists.tag")}</span>

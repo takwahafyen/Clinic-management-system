@@ -1,7 +1,25 @@
 import React from "react";
 import "./singleVS.scss";
 
-const SingleVS = ({ VS }) => {
+export interface VSData {
+  _id?: string;
+  firstName?: string;
+  lastName?: string;
+  age?: number | string;
+  dob?: string;
+  sex?: string;
+  blood_pressure?: string;
+  Diabetic_status?: string;
+  doctor?: string;
+  createdAt?: string;
+  [key: string]: any;
+}
+
+export interface SingleVSProps {
+  VS: VSData;
+}
+
+const SingleVS: React.FC<SingleVSProps> = ({ VS }) => {
   return (
     <div className="VS-item">
       <div className="VS-item-row">
@@ -32,9 +50,7 @@ const SingleVS = ({ VS }) => {
       </div>
       <div className="VS-item-row">
         <span>Treatment By: </span>
-        <p>
-          {VS.doctor} 
-        </p>
+        <p>{VS.doctor}</p>
       </div>
       <div className="VS-item-row">
         <span>Date: </span>

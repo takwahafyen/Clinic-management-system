@@ -4,20 +4,32 @@ import { Context } from "../../context/Context";
 import { useLanguage } from "../../context/LanguageContext";
 import "./speciality.scss";
 
-const Speciality = () => {
-  const { doctor, dispatch } = useContext(Context);
+export interface DoctorCardInfo {
+  id: number;
+  name: string;
+  specialty: string;
+  rating: string;
+  img: string;
+}
+
+export interface SpecialityProps {
+  className?: string;
+}
+
+const Speciality: React.FC<SpecialityProps> = ({ className = "" }) => {
+  const { doctor, dispatch } = useContext(Context) as any;
   const { t } = useLanguage();
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
   };
 
-  const handleImageError = (e) => {
-    e.target.onerror = null;
-    e.target.src = "/assets/images/team-1.jpg";
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = "/assets/images/team-1.jpg";
   };
 
-  const doctorsList = [
+  const doctorsList: DoctorCardInfo[] = [
     {
       id: 1,
       name: "Dr. Mohamed",
@@ -49,7 +61,7 @@ const Speciality = () => {
   ];
 
   return (
-    <section className="speciality practitioners-section">
+    <section className={`speciality practitioners-section ${className}`.trim()}>
       <div className="section-container">
         <div className="section-header">
           <span className="badge-tag">{t("doctors.tag")}</span>

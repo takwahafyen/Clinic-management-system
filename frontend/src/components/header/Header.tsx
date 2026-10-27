@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import "./header.scss";
 
-const Header = () => {
+export interface HeaderProps {
+  className?: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ className = "" }) => {
   const { t } = useLanguage();
 
   return (
-    <header className="header">
+    <header className={`header ${className}`.trim()}>
       <div className="header-container">
         {/* Left Column: Hero Copy & Actions */}
         <div className="hero-content">

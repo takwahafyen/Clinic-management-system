@@ -7,16 +7,16 @@ import Pharmacist from "../../components/pharmacist/Pharmacist";
 import Nurse from "../../components/nurse/Nurse";
 import Footer from "../../components/footer/Footer";
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
     <div className="home">
       <Navbar />
       <Header />
       <Features />
-      <Speciality/>
-      <Pharmacist/>
-      <Nurse/>
-      <Footer/>
+      <Speciality />
+      <Pharmacist />
+      <Nurse />
+      <Footer />
     </div>
   );
 };
