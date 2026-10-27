@@ -1,22 +1,33 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import en from "../locales/en.json";
 import fr from "../locales/fr.json";
 
-const translations = { en, fr };
+export type SupportedLanguage = "en" | "fr";
 
-const LanguageContext = createContext();
+const translations: Record<SupportedLanguage, any> = { en, fr };
 
-export const LanguageProvider = ({ children }) => {
-  const [language, setLanguageState] = useState(() => {
+export interface LanguageContextType {
+  language: SupportedLanguage;
+  setLanguage: (lang: SupportedLanguage) => void;
+  toggleLanguage: () => void;
+  isFrench: boolean;
+  isEnglish: boolean;
+  t: (key: string) => string;
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [language, setLanguageState] = useState<SupportedLanguage>(() => {
     try {
       const savedLang = localStorage.getItem("clinic_lang");
       if (savedLang === "en" || savedLang === "fr") {
-        return savedLang;
+        return savedLang as SupportedLanguage;
       }
     } catch (e) {
       // ignore
     }
-    return "en"; // Default to English as requested
+    return "en";
   });
 
   useEffect(() => {
@@ -28,7 +39,7 @@ export const LanguageProvider = ({ children }) => {
     }
   }, [language]);
 
-  const setLanguage = (lang) => {
+  const setLanguage = (lang: SupportedLanguage) => {
     if (lang === "en" || lang === "fr") {
       setLanguageState(lang);
     }
@@ -38,16 +49,11 @@ export const LanguageProvider = ({ children }) => {
     setLanguageState((prev) => (prev === "en" ? "fr" : "en"));
   };
 
-  /**
-   * Helper function for dot-notation translation lookups.
-   * Example: t("navbar.home") -> "Home" (en) / "Accueil" (fr)
-   */
-  const t = (key) => {
+  const t = (key: string): string => {
     if (!key) return "";
     const keys = key.split(".");
 
-    // Lookup in active language dictionary
-    let value = translations[language];
+    let value: any = translations[language];
     for (const k of keys) {
       if (value && value[k] !== undefined) {
         value = value[k];
@@ -57,10 +63,9 @@ export const LanguageProvider = ({ children }) => {
       }
     }
 
-    if (value !== undefined) return value;
+    if (value !== undefined) return String(value);
 
-    // Fallback to English dictionary
-    let fallback = translations.en;
+    let fallback: any = translations.en;
     for (const k of keys) {
       if (fallback && fallback[k] !== undefined) {
         fallback = fallback[k];
@@ -70,7 +75,7 @@ export const LanguageProvider = ({ children }) => {
       }
     }
 
-    return fallback !== undefined ? fallback : key;
+    return fallback !== undefined ? String(fallback) : key;
   };
 
   return (
@@ -89,20 +94,19 @@ export const LanguageProvider = ({ children }) => {
   );
 };
 
-export const useLanguage = () => {
+export const useLanguage = (): LanguageContextType => {
   const context = useContext(LanguageContext);
   if (!context) {
-    // Safe fallback for isolated unit tests rendered without LanguageProvider
     return {
       language: "en",
       setLanguage: () => {},
       toggleLanguage: () => {},
       isFrench: false,
       isEnglish: true,
-      t: (key) => {
+      t: (key: string) => {
         if (!key) return "";
         const keys = key.split(".");
-        let value = en;
+        let value: any = en;
         for (const k of keys) {
           if (value && value[k] !== undefined) {
             value = value[k];
@@ -110,7 +114,7 @@ export const useLanguage = () => {
             return key;
           }
         }
-        return value;
+        return String(value);
       },
     };
   }
