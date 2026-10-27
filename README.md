@@ -82,14 +82,15 @@ Backward compatibility: `phoneNum: String` is preserved alongside the new Object
 - Node.js / Express
 - MongoDB / Mongoose
 - Auth: JWT (`jsonwebtoken`) + `bcryptjs` for password hashing
+- Security: `helmet` (HTTP headers), `express-rate-limit` (brute-force defense), `express-mongo-sanitize` (NoSQL injection defense)
 - `cors`, `cookie-parser`, `dotenv`
 
 **Frontend** (`frontend/`)
-- React 18 (Create React App)
+- React 18 (Create React App) + TypeScript
 - React Router v6
 - Context API — unified `AuthContext` (wraps the three legacy role contexts for backward compatibility)
 - Sass for styling
-- Axios for API calls (`withCredentials: true` set globally in `index.js`)
+- Axios for API calls (`withCredentials: true` set globally in `index.tsx`)
 
 ## Project structure
 
@@ -286,6 +287,8 @@ npm run test:e2e
 - [x] Docker & Docker Compose containerization for single-command deployment
 - [x] LICENSE (MIT)
 - [x] Live deployment (backend on Render + frontend on Vercel) with automated CI/CD
+- [x] Complete TypeScript migration for the frontend (strict typed components, contexts, and domain models)
+- [x] Hardened backend security with `helmet` HTTP headers and `express-mongo-sanitize` NoSQL injection defenses
 
 ## License
 
