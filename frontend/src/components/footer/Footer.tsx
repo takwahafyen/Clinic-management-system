@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import "./footer.scss";
 
-const Footer = () => {
+export interface FooterProps {
+  className?: string;
+}
+
+const Footer: React.FC<FooterProps> = ({ className = "" }) => {
   const { t } = useLanguage();
 
   return (
-    <footer className="footer">
+    <footer className={`footer ${className}`.trim()}>
       <div className="footer-container">
         {/* Top Emergency & Quick Contact Bar */}
         <div className="footer-contact-banner">
@@ -66,7 +70,7 @@ const Footer = () => {
                 alt="Clinic Logo"
                 className="footer-logo"
                 onError={(e) => {
-                  e.currentTarget.style.display = "none";
+                  (e.currentTarget as HTMLElement).style.display = "none";
                 }}
               />
               <span className="brand-title">Clinic Management System</span>

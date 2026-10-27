@@ -1,11 +1,23 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import "./features.scss";
 
-const Features = () => {
+export interface FeatureItem {
+  id: number;
+  title: string;
+  desc: string;
+  badge: string;
+  iconSvg: ReactNode;
+}
+
+export interface FeaturesProps {
+  className?: string;
+}
+
+const Features: React.FC<FeaturesProps> = ({ className = "" }) => {
   const { t } = useLanguage();
 
-  const featuresList = [
+  const featuresList: FeatureItem[] = [
     {
       id: 1,
       title: t("features.f1Title"),
@@ -43,7 +55,7 @@ const Features = () => {
   ];
 
   return (
-    <section className="features features-section">
+    <section className={`features features-section ${className}`.trim()}>
       <div className="features-container">
         <div className="features-header">
           <span className="section-tag">{t("features.tag")}</span>

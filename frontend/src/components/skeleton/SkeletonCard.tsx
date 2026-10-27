@@ -1,7 +1,7 @@
 import React from "react";
 import "./skeleton.scss";
 
-export const SkeletonCard = () => {
+export const SkeletonCard: React.FC = () => {
   return (
     <div className="skeleton-card" aria-hidden="true" data-testid="skeleton-card">
       <div className="skeleton-header">
@@ -25,7 +25,11 @@ export const SkeletonCard = () => {
   );
 };
 
-export const SkeletonGrid = ({ count = 3 }) => {
+export interface SkeletonGridProps {
+  count?: number;
+}
+
+export const SkeletonGrid: React.FC<SkeletonGridProps> = ({ count = 3 }) => {
   return (
     <div className="skeleton-grid" role="status" aria-label="Loading clinical records">
       {Array.from({ length: count }).map((_, idx) => (
