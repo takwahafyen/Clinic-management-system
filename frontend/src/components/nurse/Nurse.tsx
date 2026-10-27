@@ -4,20 +4,32 @@ import { NurseContext } from "../../context/NurseContext";
 import { useLanguage } from "../../context/LanguageContext";
 import "./nurse.scss";
 
-const Nurse = () => {
-  const { nurse, dispatch } = useContext(NurseContext);
+export interface NurseCardInfo {
+  id: number;
+  name: string;
+  role: string;
+  src: string;
+  status: string;
+}
+
+export interface NurseProps {
+  className?: string;
+}
+
+const Nurse: React.FC<NurseProps> = ({ className = "" }) => {
+  const { nurse, dispatch } = useContext(NurseContext) as any;
   const { t } = useLanguage();
 
   const handleLogout = () => {
     dispatch({ type: "n_LOGOUT" });
   };
 
-  const handleImageError = (e) => {
-    e.target.onerror = null;
-    e.target.src = "/assets/images/nurse-1.jpg";
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = "/assets/images/nurse-1.jpg";
   };
 
-  const nursesList = [
+  const nursesList: NurseCardInfo[] = [
     {
       id: 1,
       name: "Florence Nightingale",
@@ -49,7 +61,7 @@ const Nurse = () => {
   ];
 
   return (
-    <section className="nurse nurses-section">
+    <section className={`nurse nurses-section ${className}`.trim()}>
       <div className="section-container">
         <div className="section-header">
           <span className="badge-tag">{t("nurses.tag")}</span>

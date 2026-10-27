@@ -1,7 +1,25 @@
 import React from "react";
 import "./singleReport.scss";
 
-const SingleReport = ({ report }) => {
+export interface ReportData {
+  _id?: string;
+  firstName?: string;
+  lastName?: string;
+  age?: number | string;
+  dob?: string;
+  sex?: string;
+  medicament?: string;
+  status?: string;
+  doctor?: string;
+  createdAt?: string;
+  [key: string]: any;
+}
+
+export interface SingleReportProps {
+  report: ReportData;
+}
+
+const SingleReport: React.FC<SingleReportProps> = ({ report }) => {
   return (
     <div className="report-item">
       <div className="report-item-row">
@@ -32,9 +50,7 @@ const SingleReport = ({ report }) => {
       </div>
       <div className="report-item-row">
         <span>Treatment By: </span>
-        <p>
-          {report.doctor} 
-        </p>
+        <p>{report.doctor}</p>
       </div>
       <div className="report-item-row">
         <span>Date: </span>

@@ -1,7 +1,25 @@
 import React from "react";
 import "./singleFC.scss";
 
-const SingleFC = ({ FC }) => {
+export interface FCData {
+  _id?: string;
+  firstName?: string;
+  lastName?: string;
+  age?: number | string;
+  dob?: string;
+  sex?: string;
+  quantite?: number | string;
+  medicament?: string;
+  doctor?: string;
+  createdAt?: string;
+  [key: string]: any;
+}
+
+export interface SingleFCProps {
+  FC: FCData;
+}
+
+const SingleFC: React.FC<SingleFCProps> = ({ FC }) => {
   return (
     <div className="FC-item">
       <div className="FC-item-row">
@@ -32,9 +50,7 @@ const SingleFC = ({ FC }) => {
       </div>
       <div className="FC-item-row">
         <span>Treatment By: </span>
-        <p>
-          {FC.doctor} 
-        </p>
+        <p>{FC.doctor}</p>
       </div>
       <div className="FC-item-row">
         <span>Date: </span>
