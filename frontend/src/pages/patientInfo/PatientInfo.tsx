@@ -1,0 +1,102 @@
+import React, { useEffect, useState } from "react";
+import "./patientInfo.scss";
+import Navbar from "../../components/navbar/Navbar";
+import { SkeletonCard } from "../../components/skeleton/SkeletonCard";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../../config";
+
+const PatientInfo = () => {
+  const [patient, setPatient] = useState<any>({});
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const path = location.pathname.split("/")[3];
+  const [updateMode, setUpdateMode] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const fetchPatient = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(`${API_URL}/patientauth/patientInfo/${path}`);
+        setPatient(res.data);
+        setPhone(res.data.phoneNo);
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPatient();
+  }, [path]);
+
+  const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setError(false);
+    try {
+      await axios.put(
+        `${API_URL}/patientauth/update/${path}`,
+        { phoneNo: phone },
+        { withCredentials: true }
+      );
+      setUpdateMode(false);
+    } catch (err) {
+      setError(true);
+    }
+  };
+
+  return (
+    <div>
+      <Navbar />
+      <div className="patient-info">
+        {loading ? (
+          <SkeletonCard />
+        ) : (
+          <div className="patient-info-wrapper">
+            <div className="patient-info-item">
+              <span>First name: </span>
+              <p>{patient.firstName}</p>
+            </div>
+            <div className="patient-info-item">
+              <span>Last name: </span>
+              <p>{patient.lastName}</p>
+            </div>
+            <div className="patient-info-item">
+              <span>Phone number: </span>
+              {updateMode ? (
+                <input
+                  type="text"
+                  placeholder="Phone number"
+                  value={phone}
+                  required
+                  autoFocus={true}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              ) : (
+                <p>{phone}</p>
+              )}
+            </div>
+            <div className="patient-info-item">
+              <Link to={`/patient/${path}/create_report`}>
+                <button>CREATE A REPORT</button>
+              </Link>
+              {updateMode ? (
+                <button onClick={handleUpdate}>CLICK TO UPDATE</button>
+              ) : (
+                <button onClick={() => setUpdateMode(true)}>UPDATE PATIENT</button>
+              )}
+              <Link to="/allReports">
+                <button>VIEW REPORTS</button>
+              </Link>
+            </div>
+            {error && (
+              <p className="errorMsg">Something went wrong! Please try again.</p>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default PatientInfo;
