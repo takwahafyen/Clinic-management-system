@@ -162,7 +162,7 @@ docker compose down
 ### Manual Setup (Without Docker)
 
 #### Prerequisites
-- Node.js ≥ 20
+- Node.js ≥ 22
 - A MongoDB instance (Atlas or local)
 
 ### Backend

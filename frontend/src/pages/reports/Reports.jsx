@@ -8,14 +8,14 @@ import axios from "axios";
 import { API_URL } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 
+const REPORT_STATUSES = ["Urgent", "Stable"];
+
 const Reports = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currP, setCurrP] = useState("ALL");
   const navigate = useNavigate();
   const location = useLocation();
-
-  const arr = ["Urgent", "Stable"];
 
   // Fetch all reports on initial load
   useEffect(() => {
@@ -54,7 +54,7 @@ const Reports = () => {
       setLoading(true);
       try {
         let res;
-        if (arr.includes(path)) {
+        if (REPORT_STATUSES.includes(path)) {
           res = await axios.get(`${API_URL}/patients/reports/${path}`);
         } else {
           res = await axios.get(`${API_URL}/patients/${path}/all_reports`);
@@ -67,7 +67,7 @@ const Reports = () => {
       }
     };
     fetchFilteredReports();
-  }, [location.pathname, arr]);
+  }, [location.pathname]);
 
   const handleRefreshClick = async (e) => {
     e.preventDefault();
