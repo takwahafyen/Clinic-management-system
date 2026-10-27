@@ -1,16 +1,24 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-const ThemeContext = createContext();
+export type Theme = "light" | "dark";
 
-export const ThemeProvider = ({ children }) => {
-  // Read stored preference, fallback to system dark mode preference, or default to light
-  const [theme, setTheme] = useState(() => {
+export interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
+  isDark: boolean;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [theme, setTheme] = useState<Theme>(() => {
     try {
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme === "dark" || savedTheme === "light") {
-        return savedTheme;
+        return savedTheme as Theme;
       }
       if (
+        typeof window !== "undefined" &&
         window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches
       ) {
@@ -28,7 +36,6 @@ export const ThemeProvider = ({ children }) => {
     } catch (e) {
       // ignore
     }
-    // Set attribute on document element for CSS variables
     document.documentElement.setAttribute("data-theme", theme);
     document.body.setAttribute("data-theme", theme);
   }, [theme]);
@@ -44,7 +51,7 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-export const useTheme = () => {
+export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (!context) {
     throw new Error("useTheme must be used within a ThemeProvider");
