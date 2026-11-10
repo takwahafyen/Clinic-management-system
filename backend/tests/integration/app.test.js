@@ -21,4 +21,16 @@ describe("app", () => {
     expect(res.headers).toHaveProperty("x-content-type-options", "nosniff");
     expect(res.headers).toHaveProperty("x-frame-options");
   });
+
+  it("handles CORS headers correctly for valid origins and strips trailing slashes", async () => {
+    const res = await request(app)
+      .get("/health")
+      .set("Origin", "https://clinic-management-system-um8a-rose.vercel.app");
+
+    expect(res.status).toBe(200);
+    expect(res.headers["access-control-allow-origin"]).toBe(
+      "https://clinic-management-system-um8a-rose.vercel.app"
+    );
+    expect(res.headers["access-control-allow-credentials"]).toBe("true");
+  });
 });

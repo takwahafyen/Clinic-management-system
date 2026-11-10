@@ -26,9 +26,24 @@ app.use(
 );
 
 // middleware
+const clientUrl = (process.env.CLIENT_URL || "http://localhost:3000").replace(/\/+$/, "");
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, server-to-server)
+      if (!origin) return callback(null, true);
+
+      const normalizedOrigin = origin.replace(/\/+$/, "");
+      if (
+        normalizedOrigin === clientUrl ||
+        normalizedOrigin === "http://localhost:3000" ||
+        normalizedOrigin.endsWith(".vercel.app")
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, false);
+    },
     credentials: true,
   })
 );
