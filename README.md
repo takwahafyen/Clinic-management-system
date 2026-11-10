@@ -299,6 +299,7 @@ npm run test:e2e
 - [x] Animated, accessible Toast notification system (`useToast` hook with auto-dismiss & theme support)
 - [x] Container vulnerability scanning in CI with Aquasecurity Trivy (DevSecOps)
 - [x] Automated test coverage metrics with Jest (`--coverage`) across frontend and backend
+- [x] Enterprise GitHub Issue Forms & Pull Request governance templates (Bugs, Features, Security, Tech-Debt)
 
 ## License
 

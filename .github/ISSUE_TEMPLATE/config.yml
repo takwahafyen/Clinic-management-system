@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Project Documentation & Architecture
+    url: https://github.com/takwahafyen/Clinic-management-system#readme
+    about: Please consult the documentation and architecture guidelines before opening a ticket.
+  - name: 💬 Security Vulnerability Reporting
+    url: https://github.com/takwahafyen/Clinic-management-system/security/policy
+    about: To report sensitive clinical or security vulnerabilities privately, please review our security policy.

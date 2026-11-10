@@ -1,0 +1,109 @@
+name: "🐛 Bug Report"
+description: File an actionable defect report for clinical workflows or technical regressions.
+title: "[BUG]: <concise description of the failure>"
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Thank you for reporting a defect!
+        Please fill out this report thoroughly. For medical software systems, reproducible steps and exact error traces are critical to rapid triage.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      description: Which architectural layer is failing?
+      options:
+        - "Frontend (React / TypeScript UI)"
+        - "Backend (Node.js / Express API)"
+        - "Database (MongoDB / Mongoose)"
+        - "Authentication & RBAC (JWT / Cookies)"
+        - "CI/CD & DevOps (GitHub Actions / Docker / Render / Vercel)"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity / Clinical Impact
+      description: How critical is this issue to clinic operations?
+      options:
+        - "P0 - Critical (Blocker: Data loss, authentication failure, system down)"
+        - "P1 - High (Core clinical workflow impaired, no immediate workaround)"
+        - "P2 - Medium (Feature degraded, viable workaround exists)"
+        - "P3 - Low (Minor cosmetic defect, styling inconsistency, typo)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Clear and concise explanation of what the bug is.
+      placeholder: "e.g., When attempting to create a vital signs entry for a patient, the submission spinner hangs indefinitely."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Specific, numbered steps to reproduce the issue.
+      value: |
+        1. Log in as a 'Nurse' (`florence@example.com`)
+        2. Navigate to '/patient/<id>/create_VS'
+        3. Fill in blood pressure '120/80' and submit
+        4. Observe the failure
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen under normal clinical operation?
+      placeholder: "The vital sign entry is persisted and redirects to the patient's record view."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: "Received HTTP 500 / Network Error in console."
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console Logs / Network Traces
+      description: Paste relevant browser DevTools console output, network payloads, or server traces.
+      render: shell
+      placeholder: "Access to XMLHttpRequest at '...' blocked by CORS policy..."
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      description: Where did you observe this bug?
+      options:
+        - "Production (Vercel + Render)"
+        - "Local Development (Docker Compose)"
+        - "Local Development (npm start)"
+        - "CI Pipeline (GitHub Actions)"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: "I have verified this is not a duplicate of an existing issue."
+          required: true
+        - label: "I have removed any real Personally Identifiable Information (PII) or Patient Health Info (PHI) from logs and screenshots."
+          required: true

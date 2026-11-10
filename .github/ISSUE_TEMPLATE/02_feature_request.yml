@@ -1,0 +1,79 @@
+name: "✨ Feature Request"
+description: Propose a new capability, clinical enhancement, or architectural improvement.
+title: "[FEAT]: <concise description of the proposed feature>"
+labels: ["enhancement", "product-backlog"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Feature Proposal
+        Thank you for helping evolve the Clinic Management System! High-impact feature requests focus on clinical efficiency, compliance, and user experience.
+
+  - type: dropdown
+    id: user-persona
+    attributes:
+      label: Target Clinical Persona
+      description: Who directly benefits from this capability?
+      options:
+        - "Doctor / Physician"
+        - "Nurse / Triage Staff"
+        - "Pharmacist / Dispensary Staff"
+        - "Clinic Administrator"
+        - "Patient / Client"
+        - "System Operator / DevOps Engineer"
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User Story
+      description: Follow the standard Agile format: "As a [role], I want to [action], so that [business/clinical outcome]."
+      placeholder: "As a Doctor, I want to export consultation reports to PDF, so that patients can bring physical copies to external specialists."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: Problem or Clinical Friction
+      description: What challenge or workflow bottleneck does this solve?
+      placeholder: "Currently, reports must be manually printed via browser print dialog, which often breaks formatting on mobile devices."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution / Technical Specification
+      description: Describe the ideal implementation, data model impact, or API endpoints needed.
+      placeholder: "Introduce an endpoint `GET /patients/:id/report/pdf` generating clean templated PDFs with hospital branding."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria (Definition of Done)
+      description: Checklist of verifiable outcomes required to close this story.
+      value: |
+        - [ ] Feature implemented and accessible only by authorized roles (RBAC verified).
+        - [ ] Unit and integration tests cover happy and edge-case paths.
+        - [ ] Dark Mode and Light Mode tested and visually consistent.
+        - [ ] Both English and French (i18n) translation strings included.
+        - [ ] E2E Cypress spec updated or created.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Strategic Priority
+      description: Urgency based on product roadmap.
+      options:
+        - "Must Have (Sprint Priority)"
+        - "Should Have (Next Release)"
+        - "Could Have (Backlog Exploration)"
+        - "Nice to Have (Future Innovation)"
+    validations:
+      required: true
