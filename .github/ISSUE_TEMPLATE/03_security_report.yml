@@ -1,0 +1,67 @@
+name: "🔒 Security Vulnerability Report"
+description: Report a security weakness, authorization bypass (IDOR), or CVE in compliance with DevSecOps guidelines.
+title: "[SEC]: <brief description of security finding>"
+labels: ["security", "high-priority"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### ⚠️ Medical Data Security Notice
+        If this issue exposes sensitive Patient Health Information (PHI) or allows arbitrary account takeover in production, please mark Severity as **CRITICAL**.
+
+  - type: dropdown
+    id: vulnerability-type
+    attributes:
+      label: Vulnerability Category
+      description: OWASP / CWE classification.
+      options:
+        - "Broken Access Control (IDOR / Role Bypass)"
+        - "Injection (NoSQL / Command / Code)"
+        - "Cryptographic / JWT Flaw"
+        - "Cross-Site Scripting (XSS)"
+        - "Sensitive Data Exposure (Unencrypted PHI/PII)"
+        - "Denial of Service / Rate Limiting Bypass"
+        - "Dependency CVE / Container Vulnerability"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: CVSS Estimated Severity
+      options:
+        - "Critical (CVSS 9.0 - 10.0)"
+        - "High (CVSS 7.0 - 8.9)"
+        - "Medium (CVSS 4.0 - 6.9)"
+        - "Low (CVSS 0.1 - 3.9)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Vulnerability Overview
+      description: What is the weakness and what is the potential threat vector?
+      placeholder: "Endpoint `PUT /doctor/update/:id` does not properly match `req.userId` against the target document id..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: poc
+    attributes:
+      label: Proof of Concept (PoC)
+      description: Safe, reproducible steps or curl commands demonstrating the vulnerability.
+      render: shell
+      placeholder: "curl -X PUT https://... -H 'Cookie: token=...' -d '{\"email\": \"attacker@test.com\"}'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: remediation
+    attributes:
+      label: Suggested Remediation
+      description: Proposed patch, middleware enforcement, or configuration change.
+      placeholder: "Enforce `verifyRole('doctor')` and strictly assert `req.userId === req.params.id`."
+    validations:
+      required: true

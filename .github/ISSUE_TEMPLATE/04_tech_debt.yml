@@ -1,0 +1,57 @@
+name: "🧹 Refactoring & Technical Debt"
+description: Propose non-functional improvements, architectural cleanup, dependency upgrades, or test expansions.
+title: "[TECH-DEBT]: <target module or refactoring goal>"
+labels: ["refactor", "tech-debt"]
+body:
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Technical Debt Area
+      options:
+        - "TypeScript Strictness & Type Refinements"
+        - "Backend Architecture & Controller Decomposition"
+        - "Test Suite Expansion (Jest / Cypress / Coverage)"
+        - "Performance Optimization & Bundle Size"
+        - "Dependency Updates & Version Alignments"
+        - "DevOps & CI/CD Pipeline Tuning"
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation & Context
+      description: Why should we address this technical debt now? What are the risks of leaving it unaddressed?
+      placeholder: "e.g. Several React components in `frontend/src/pages/` still utilize temporary `any` casts for context consumption..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-changes
+    attributes:
+      label: Proposed Architectural Changes
+      description: Technical breakdown of changes to be made.
+      placeholder: "1. Introduce explicit `AuthContextValue` typing across consumers\n2. Eliminate `(e as any)` type casts\n3. Run `npm run typecheck` in strict mode"
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact-analysis
+    attributes:
+      label: Regression Risk & Blast Radius
+      description: What could break if this refactoring is executed improperly?
+      placeholder: "Low risk; strictly internal types with zero runtime API contract changes."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: tasks
+    attributes:
+      label: Definition of Completion
+      options:
+        - label: "All automated test suites (Jest + Cypress) continue to pass green."
+          required: true
+        - label: "Zero regression in production build bundles or TypeScript compilation (`tsc --noEmit`)."
+          required: true
+        - label: "Relevant documentation and code comments updated."
+          required: true
